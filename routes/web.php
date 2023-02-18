@@ -42,6 +42,9 @@ Route::group(['middleware' => ['check.auth']], function () {
     Route::post('/master/master-car-name-params-category-brand', [MasterDropDownController::class, 'GetMasterListNameCarByCategoryBrand']);
     Route::post('master/master-car-brand', [MasterDropDownController::class, 'GetMasterListBrandCar']);
     Route::get('master/master-add-transaction-mechanic', [MasterDropDownController::class, 'GetDataListMechanic']);
+    Route::post('master/master-car-name-list-transaction', [MasterDropDownController::class, 'GetDataListCarNameTransactionListFilter']);
+    Route::post('master/master-car-license-list-transaction', [MasterDropDownController::class, 'GetDataListCarLicenseTransactionListFilter']);
+    Route::post('master/master-owner-name-list-transaction', [MasterDropDownController::class, 'GetDataListOwnerNameTransactionListFilter']);
 
     // ----------------------------- process data -----------------------------------------------------
 
@@ -78,6 +81,7 @@ Route::group(['middleware' => ['check.auth']], function () {
     //-------------------- management transaction servire ---------------------
     
     Route::post('transaction/create-data-transaction-service', [TransactionServiceController::class, 'CreateNewTransactionService']);
+    Route::get('transaction/load-data-list-transaction-service', [TransactionServiceController::class, 'GetDataListTransactionService']);
 
 
 

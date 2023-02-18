@@ -909,8 +909,8 @@
                         data: respon,
                         placeholder: 'Search for a repository',
                         minimumInputLength: 1,
-                        templateResult: formatRepo,
-                        templateSelection: formatRepoSelection
+                        templateResult: formatSelectionExistingOwnerTransactionAdd,
+                        templateSelection: formatSelectionExistingOwnerTransactionAddSelection
                     });
                 },
                 error: function(data) {
@@ -919,7 +919,7 @@
             })
         }
 
-        function formatRepo(repo) {
+        function formatSelectionExistingOwnerTransactionAdd(repo) {
             if (repo.loading) {
                 return repo.text;
             }
@@ -939,7 +939,7 @@
             return $container;
         }
 
-        function formatRepoSelection(repo) {
+        function formatSelectionExistingOwnerTransactionAddSelection(repo) {
             $('#transactionService_inpt_data_addressExistingOwner').val(repo.address);
             $('#transactionService_inpt_data_emailExistingOwner').val(repo.email);
             $('#transactionService_inpt_data_numberExistingOwner').val(repo.number);

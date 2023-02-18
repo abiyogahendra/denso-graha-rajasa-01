@@ -62,35 +62,18 @@
                                         <div class="row" style="margin-left: 0px">
                                             <div class="col-md-4">
                                                 <div class="form-group large-font">
-                                                    <div class="row">
-                                                        <div style="padding-left: 0px !important;">
-                                                            <label class="control-label">
-                                                                Car Type
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-11">
-                                                            <select id="ahmsdlog015p01GroupMDDD"
-                                                                class="form-control uppercase">
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <div class="form-group large-font">
-                                                    <div
-                                                        class="form-group large-font HiddenCustom ahmsdlog020_obj_md_hidden">
+                                                    <div class="form-group large-font">
                                                         <div class="row">
                                                             <div class="col-md-11 form-group"
                                                                 style="padding-left: 0px !important;">
                                                                 <label class="control-label"
-                                                                    for="ahmsdlog015p01maindealerHidden">
+                                                                    for="transactionService_fltr_data_carName_select">
                                                                     Car Name
                                                                 </label>
-                                                                <input id="ahmsdlog015p01maindealerHidden" type="text"
-                                                                    class="form-control uppercase" maxlength="50">
+                                                                <select id="transactionService_fltr_data_carName_select"
+                                                                    class="form-control uppercase">
+                                                                </select>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -98,17 +81,18 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <div class="form-group large-font">
-                                                    <div
-                                                        class="form-group large-font HiddenCustom ahmsdlog020_obj_md_hidden">
+                                                    <div class="form-group large-font">
                                                         <div class="row">
                                                             <div class="col-md-11 form-group"
                                                                 style="padding-left: 0px !important;">
                                                                 <label class="control-label"
-                                                                    for="ahmsdlog015p01maindealerHidden">
+                                                                    for="transactionService_fltr_data_licensePlate_select">
                                                                     Licence Plate
                                                                 </label>
-                                                                <input id="ahmsdlog015p01maindealerHidden" type="text"
-                                                                    class="form-control uppercase" maxlength="50">
+                                                                <select
+                                                                    id="transactionService_fltr_data_licensePlate_select"
+                                                                    class="form-control uppercase">
+                                                                </select>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -129,7 +113,7 @@
                                                 <div class="form-group large-font">
                                                     <div class="row">
                                                         <div style="padding-left: 0px !important;">
-                                                            <label class="control-label">
+                                                            <label class="control-label" for="transactionService_fltr_data_startTransaction_date">
                                                                 Transaction Date From
                                                             </label>
                                                         </div>
@@ -138,7 +122,7 @@
                                                         <div class="col-md-11">
                                                             <div class="input-group date datepickermmm"
                                                                 data-provide="datepicker">
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" id="transactionService_fltr_data_startTransaction_date" class="form-control">
                                                                 <div class="input-group-addon">
                                                                     <span class="fas fa-calendar"></span>
                                                                 </div>
@@ -151,7 +135,7 @@
                                                 <div class="form-group large-font">
                                                     <div class="row">
                                                         <div style="padding-left: 0px !important;">
-                                                            <label class="control-label">
+                                                            <label class="control-label" for="transactionService_fltr_data_endTransaction_date">
                                                                 Transaction Date To
                                                             </label>
                                                         </div>
@@ -160,7 +144,7 @@
                                                         <div class="col-md-11">
                                                             <div class="input-group date datepickermmm"
                                                                 data-provide="datepicker">
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" class="form-control" id="transactionService_fltr_data_endTransaction_date">
                                                                 <div class="input-group-addon">
                                                                     <span class="fas fa-calendar"></span>
                                                                 </div>
@@ -186,11 +170,12 @@
                                                         <div class="col-md-11 form-group"
                                                             style="padding-left: 0px !important;">
                                                             <label class="control-label"
-                                                                for="ahmsdlog015p01maindealerHidden">
+                                                                for="transactionService_fltr_data_ownerName_select">
                                                                 Owner Name
                                                             </label>
-                                                            <input id="ahmsdlog015p01maindealerHidden" type="text"
-                                                                class="form-control uppercase" maxlength="50">
+                                                            <select id="transactionService_fltr_data_ownerName_select"
+                                                                    class="form-control uppercase">
+                                                                </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -203,7 +188,7 @@
                             <div class="d-flex bd-highlight">
                                 <div class="mr-auto p-2 bd-highlight">
                                     <button class="btn btn-primary" id="ahmsdlog015SearchTableListp01"
-                                        onclick="ahmsdlog015p01t01SearchBtn(this);">
+                                        onclick="densoTableListofTransactionServiceHistorySearchGenerate(this);">
                                         <i class="fas fa-search"></i>
                                         Search</button>
                                     <button class="btn btn-warning" onclick="ahmsdlog015p01t01Reset(this);"
@@ -224,7 +209,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     {{-- Action Page --}}
                     <div class="d-flex flex-row-reverse bd-highlight">
                         <div class="p-2 bd-highlight">
@@ -242,22 +227,24 @@
                     </div>
 
                     {{-- Table List of Transaction --}}
-                    <table id="ahmsdlog015p01t01SearchTableList" data-toggle="table" data-ajax="ajaxRequest"
+                    <table id="densoTableListofTransactionServiceHistory" data-toggle="table"
+                        data-ajax="densoTableListofTransactionServiceHistoryGenerateData"
+                        data-query-params="densoTableListofTransactionServiceHistoryParamsGenerate"
                         data-side-pagination="server" data-page-list="[10, 25, 50, 100, all]" data-sortable="true"
                         data-content-type="application/json" data-data-type="json" data-pagination="true"
                         data-unique-id="vdocnogc">
                         <thead>
                             <tr>
                                 <th data-checkbox="true"></th>
-                                <th data-field="name" data-halign="center" data-sortable="true">Owner Name</th>
-                                <th data-field="name" data-halign="center">License Plate</th>
-                                <th data-field="name" data-halign="center">Car Category</th>
-                                <th data-field="name" data-halign="center">Engine Number</th>
-                                <th data-field="name" data-halign="center">Frame Number</th>
-                                <th data-field="name" data-halign="center">Miles</th>
-                                <th data-field="name" data-halign="center">Transaction Date</th>
-                                <th data-field="name" data-halign="center" data-align="center"
-                                    data-formatter="operateFormatter">Action</th>
+                                <th data-field="custName" data-halign="center" data-sortable="true">Owner Name</th>
+                                <th data-field="licensePlate" data-halign="center">License Plate</th>
+                                <th data-field="carName" data-halign="center">Car Name</th>
+                                <th data-field="carEngnNumber" data-halign="center">Engine Number</th>
+                                <th data-field="carFrmNumber" data-halign="center">Frame Number</th>
+                                <th data-field="miles" data-halign="center">Miles</th>
+                                <th data-field="txnDate" data-halign="center">Transaction Date</th>
+                                <th data-halign="center" data-align="center" data-formatter="operateFormatter">Action
+                                </th>
                             </tr>
                         </thead>
                     </table>
@@ -275,6 +262,7 @@
     <script type="text/javascript">
         $(document).ready(function() {
             $('#denso_transactiont01_collabse_filter').click();
+            densoSelectedListofTransactionListInputDataGenerateData();
         })
 
         $('.datepickermmm').datepicker({
@@ -291,12 +279,167 @@
 
         }
 
-        function ajaxRequest(params) {
-            var url = 'https://examples.wenzhixin.net.cn/examples/bootstrap_table/data'
+        function densoTableListofTransactionServiceHistoryParamsGenerate(params) {
+
+            params.search = {
+                // MAIN DEALER
+                'CARNAME': $("#transactionService_fltr_data_carName_select option:selected").val(),
+                'LICENSE': $("#transactionService_fltr_data_licensePLate_select option:selected").val(),
+                'STARDATE': $("#transactionService_fltr_data_licensePLate_select option:selected").val(),
+                'ENDDATE': $("#transactionService_fltr_data_licensePLate_select option:selected").val()
+            };
+
+            if (params.sort == undefined) {
+                return {
+                    limit: params.limit,
+                    offset: params.offset,
+                    search: params.search
+                }
+            }
+            return params;
+        }
+
+        function densoTableListofTransactionServiceHistorySearchGenerate(obj) {
+            $('#densoTableListofTransactionServiceHistory').bootstrapTable('refresh');
+            $("#densoTableListofTransactionServiceHistory").bootstrapTable("uncheckAll");
+        }
+
+        function densoTableListofTransactionServiceHistoryGenerateData(params) {
+            var url = 'transaction/load-data-list-transaction-service'
             $.get(url + '?' + $.param(params.data)).then(function(res) {
                 params.success(res)
                 console.log(res)
             })
+        }
+
+        function densoSelectedListofTransactionListInputDataGenerateData() {
+            $("#transactionService_fltr_data_carName_select").select2({
+                ajax: {
+                    url: '/master/master-car-name-list-transaction',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term, // search term
+                        };
+                    },
+                    processResults: function(data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 2,
+                placeholder: 'Search for a car name',
+                templateResult: formatSelectionTransactionFilterResultFilterSelect,
+                templateSelection: formatSelectionTransactionFilterResultSelectedData
+            });
+
+            $("#transactionService_fltr_data_ownerName_select").select2({
+                ajax: {
+                    url: '/master/master-owner-name-list-transaction',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term, // search term
+                        };
+                    },
+                    processResults: function(data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 2,
+                placeholder: 'Search for a car name',
+                templateResult: formatSelectionTransactionFilterResultFilterSelect,
+                templateSelection: formatSelectionTransactionFilterResultSelectedData
+            });
+
+            $("#transactionService_fltr_data_licensePlate_select").select2({
+                ajax: {
+                    url: '/master/master-car-license-list-transaction',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term, // search term
+                        };
+                    },
+                    processResults: function(data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 2,
+                placeholder: 'Search for Car License Plate',
+                templateResult: formatSelectionTransactionFilterResultFilterSelect,
+                templateSelection: formatSelectionTransactionFilterResultSelectedData
+            });
+
+            $("#transactionService_fltr_data_licensePlate_select").select2({
+                ajax: {
+                    url: '/master/master-car-license-list-transaction',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term, // search term
+                        };
+                    },
+                    processResults: function(data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 2,
+                placeholder: 'Search for Car License Plate',
+                templateResult: formatSelectionTransactionFilterResultFilterSelect,
+                templateSelection: formatSelectionTransactionFilterResultSelectedData
+            });
+        }
+
+        function formatSelectionTransactionFilterResultFilterSelect(repo) {
+            if (repo.loading) {
+                return repo.text;
+            }
+
+            var $container = $(
+                "<div class='select2-result-repository clearfix'>" +
+                "<div class='select2-result-repository__Name'></div>" +
+                "</div>"
+            );
+
+            $container.find(".select2-result-repository__Name").text(repo.text);
+
+            return $container;
+        }
+
+        function formatSelectionTransactionFilterResultSelectedData(repo) {
+            return repo.text;
         }
     </script>
 @endsection

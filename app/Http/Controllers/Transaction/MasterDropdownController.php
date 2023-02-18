@@ -110,4 +110,22 @@ class MasterDropDownController extends Controller
         return response()->json($dattaReturn, 200);
     }
 
+    public function GetDataListCarNameTransactionListFilter(Request $re)
+    {
+        $dattaReturn = DB::select('SELECT DISTINCT carMaintainID id, carName text FROM car_maintain_brand_category where carName like "%'.$re->search.'%" ');
+        return response()->json($dattaReturn, 200);
+    }
+
+    public function GetDataListCarLicenseTransactionListFilter(Request $re)
+    {
+        $dattaReturn = DB::select('SELECT DISTINCT licensePlate id, licensePlate text FROM HDR_Transaction where licensePlate like "%'.$re->search.'%" ');
+        return response()->json($dattaReturn, 200);
+    }
+
+    public function GetDataListOwnerNameTransactionListFilter(Request $re)
+    {
+        $dattaReturn = DB::select('SELECT DISTINCT customerID id, custName text FROM customer where custName like "%'.$re->search.'%" ');
+        return response()->json($dattaReturn, 200);
+    }
+
 }

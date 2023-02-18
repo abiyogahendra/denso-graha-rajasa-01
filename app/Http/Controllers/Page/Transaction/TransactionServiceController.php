@@ -15,12 +15,6 @@ class TransactionServiceController extends Controller
     {
         return view('page.transaction.list-of-transaction');
     }
-
-    public function TransactionServiceAddIndex()
-    {
-        return view('page.transaction.add-transaction');
-    }
-
     public function GetQueryDataTable(String $query, Request $req)
     {
         $dataSort = null;
@@ -42,13 +36,12 @@ class TransactionServiceController extends Controller
 
     }
 
-    public function GetDataListMaintainUserRoleManagament(Request $table)
+    public function GetDataListTransactionService(Request $table)
     {
 
-        $query = 'SELECT usrrlID no, U.username username, R.roleDescription description, M.updated_at, M.updated_by FROM maintain_user_role M
-        INNER JOIN USER U ON M.userID = U.userID INNER JOIN role R ON M.roleID = R.roleID';
+        $query = 'SELECT H.`hdrTransactionID`, H.licensePlate, H.`txnDate`, C.`custName`, M.carName, H.carEngnNumber, H.carFrmNumber, H.miles FROM HDR_Transaction H INNER JOIN CUSTOMER C ON H.`custID` = C.`customerID` INNER JOIN CAR_MAINTAIN_BRAND_CATEGORY M ON H.`carID` = M.carMaintainID';
 
-        $countDataUser = DB::select('select count(*) jumlah FROM maintain_user_role');
+        $countDataUser = DB::select('select count(*) jumlah FROM HDR_Transaction');
         $newQuery = $this->GetQueryDataTable($query, $table);
         try {
 
@@ -66,17 +59,23 @@ class TransactionServiceController extends Controller
         ]);
     }
 
+    public function TransactionServiceAddIndex()
+    {
+        return view('page.transaction.add-transaction');
+    }
+
     public function CreateNewTransactionService(Request $re)
     {
 
+        // try {
         $idOwner = 0;
-        if ($re->qnewOwner == 't') {
+        if ($re->qnewOwner == 'F') {
             $idOwner = DB::table('customer')
                 ->insertGetId([
                     'custName' => $re->qownerName,
                     'custAddress' => $re->qownerAddress,
-                    'custEmail' => $re->qownerNumber,
-                    'custNumber' => $re->qownerEmail,
+                    'custEmail' => $re->qownerEmail,
+                    'custNumber' => $re->qownerNumber,
                     'created_at' => Carbon::now(),
                     'created_by' => Auth::user()->userID,
                     'updated_at' => Carbon::now(),
@@ -85,10 +84,8 @@ class TransactionServiceController extends Controller
         } else {
             $idOwner = $re->qownerName;
         }
-
         //generate id hdr format = CST-ID CUST-PLAT-DDMMYY-HH:MM
         $generateDataHeaderID = 'CST-' . $idOwner . '-' . $re->qlicensePlate . '-' . Carbon::now()->isoFormat('DDMMYY') . '-' . Carbon::now()->isoFormat('HH:mm');
-
         $transactionDateOld = strtotime($re->qtransactionDate);
         $estimationDateOld = strtotime($re->qtransactionDate);
 
@@ -97,8 +94,6 @@ class TransactionServiceController extends Controller
 
         $techLead = DB::select('SELECT tchLeadID FROM Technical_Lead WHERE STATUS = "T"');
 
-        dd($re->toArray());
-
         $idNewTransaction = DB::table('hdr_transaction')
             ->insertGetId([
                 'hdrTransactionID' => $generateDataHeaderID,
@@ -106,7 +101,7 @@ class TransactionServiceController extends Controller
                 'estimationDate' => $estimationDateNew,
                 'custID' => $idOwner,
                 'carID' => $re->qcarName,
-                'techLeadID' => $techLead[0],
+                'techLeadID' => $techLead[0]->tchLeadID,
                 'totalPayment' => $re->qtotalPayment,
                 'created_at' => Carbon::now(),
                 'created_by' => Auth::user()->userID,
@@ -114,23 +109,88 @@ class TransactionServiceController extends Controller
                 'updated_by' => Auth::user()->userID,
             ]);
 
-        dd($re->toArray());
-        // qtransactionDate: transactionDate,
-        // qestimationDate: estimationDate,
-        // qcarCategory: carCategory,
-        // qcarBrand: carBrand,
-        // qcarName: carName,
-        // qlicensePlate: licensePlate,
-        // qmiles: miles,
-        // qnewOwner: toggleSwitch,
-        // qownerName: ownerName,
-        // qownerAddress: ownerAddress,
-        // qownerNumber: ownerNumber,
-        // qownerEmail: ownerEmail,
-        // dataComplaint: densoTableListofComplaintInputData_Obj_datas,
-        // dataEstimation: densoTableListofEstimationCostInputData_Obj_datas,
-        // dataServiceFee: densoTableListofServiceFeeInputData_Obj_datas,
-        // dataMechanic: dataTableMechanic
+        // create data list of complaint
+        DB::beginTransaction();
+        try {
+            //code...
+
+            foreach ($re->dataComplaint as $key => $d) {
+                $idNewDataComplaint = DB::table('dtl_cmpln_txn')
+                    ->insertGetId([
+                        'cmplntID' => $key,
+                        'hdrTxnID' => $generateDataHeaderID,
+                        'complaint' => $d['complaint'],
+                        'measure' => $d['handling'],
+                        'created_at' => Carbon::now(),
+                        'created_by' => Auth::user()->userID,
+                        'updated_at' => Carbon::now(),
+                        'updated_by' => Auth::user()->userID,
+                    ]);
+                # code...
+            }
+
+            //create data estimation
+            foreach ($re->dataEstimation as $key => $f) {
+                # code...
+                $idNewDataEstimationCost = DB::table('dtl_cost_txn')
+                    ->insertGetId([
+                        'costID' => $key,
+                        'hdrTxnID' => $generateDataHeaderID,
+                        'partName' => $f['name'],
+                        'partNumber' => $f['partNumber'],
+                        'qty' => $f['qty'],
+                        'totalCost' => $f['total'],
+                        'created_at' => Carbon::now(),
+                        'created_by' => Auth::user()->userID,
+                        'updated_at' => Carbon::now(),
+                        'updated_by' => Auth::user()->userID,
+                    ]);
+            }
+
+            // create data service fee
+            foreach ($re->dataServiceFee as $key => $g) {
+                # code...
+                $idNewDataEstimationCost = DB::table('dtl_srvc_cost_txn')
+                    ->insertGetId([
+                        'srvcID' => $key,
+                        'hdrTxnID' => $generateDataHeaderID,
+                        'srvcName' => $g['description'],
+                        'srvcCost' => $g['price'],
+                        'created_at' => Carbon::now(),
+                        'created_by' => Auth::user()->userID,
+                        'updated_at' => Carbon::now(),
+                        'updated_by' => Auth::user()->userID,
+                    ]);
+            }
+
+            // create data mechanic fee
+            foreach ($re->dataMechanic as $key => $g) {
+                # code...
+                $idNewDataEstimationCost = DB::table('dtl_mchnc_txn')
+                    ->insertGetId([
+                        'mechID' => $g['no'],
+                        'hdrTxnID' => $generateDataHeaderID,
+                        'created_at' => Carbon::now(),
+                        'created_by' => Auth::user()->userID,
+                        'updated_at' => Carbon::now(),
+                        'updated_by' => Auth::user()->userID,
+                    ]);
+            }
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            if ($re->qnewOwner == 'F') {
+                DB::delete('delete from hdr_transaction where hdrTransactionID = ? ', [$generateDataHeaderID]);
+                DB::delete('delete from customer where customerID = ?', [$idOwner]);
+            } else {
+                DB::delete('delete from hdr_transaction where hdrTransactionID = ? ', [$generateDataHeaderID]);
+            }
+            return response()->json("GAGAL", 500);
+        }
+
+        DB::commit();
+
+        return response()->json("sukses", 200);
 
     }
 
