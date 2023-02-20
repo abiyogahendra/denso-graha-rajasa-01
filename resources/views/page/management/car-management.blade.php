@@ -65,10 +65,10 @@
                         </div>
                     </div>
                     {{-- Table List of car --}}
-                    <table id="DensoTableManagementCarMaintainCarDataTable" data-toggle="table" data-ajax="DensoTableManagementCarMaintainCarDataTableGenerateData"
-                        data-side-pagination="server" data-page-list="[10, 25, 50, 100, all]" data-sortable="true"
-                        data-content-type="application/json" data-data-type="json" data-pagination="true"
-                        data-unique-id="vdocnogc">
+                    <table id="DensoTableManagementCarMaintainCarDataTable" data-toggle="table"
+                        data-ajax="DensoTableManagementCarMaintainCarDataTableGenerateData" data-side-pagination="server"
+                        data-page-list="[10, 25, 50, 100, all]" data-sortable="true" data-content-type="application/json"
+                        data-data-type="json" data-pagination="true" data-unique-id="vdocnogc">
                         <thead>
                             <tr>
                                 <th data-checkbox="true"></th>
@@ -78,7 +78,7 @@
                                 <th data-field="updated_at" data-halign="center">Update at</th>
                                 <th data-field="updated_by" data-halign="center">Update by</th>
                                 <th data-field="name" data-halign="center" data-align="center"
-                                    data-formatter="operateFormatter">Action</th>
+                                    data-formatter="DensoTableManagementCarMaintainCarDataTableActionFormater">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -145,9 +145,10 @@
                             <thead>
                                 <tr>
                                     <th data-field="name" data-halign="center" data-sortable="true">Category Name</th>
-                                    <th data-field="updated_at" data-halign="center">Create Date</th>
-                                    <th data-field="updated_by" data-halign="center">Create By</th>
-                                    <th data-halign="center" data-align="center" data-formatter="operateFormatter">Action
+                                    <th data-field="updated_at" data-halign="center">Update Date</th>
+                                    <th data-field="updated_by" data-halign="center">Update By</th>
+                                    <th data-halign="center" data-align="center"
+                                        data-formatter="DensoTableManagementCarCategoryDataTableActionFormater">Action
                                     </th>
                                 </tr>
                             </thead>
@@ -216,7 +217,8 @@
                                     <th data-field="name" data-halign="center" data-sortable="true">Brand Name</th>
                                     <th data-field="updated_at" data-halign="center">Update Date</th>
                                     <th data-field="updated_by" data-halign="center">Update By</th>
-                                    <th data-halign="center" data-align="center" data-formatter="operateFormatter">Action
+                                    <th data-halign="center" data-align="center"
+                                        data-formatter="DensoTableManagementCarBrandDataTableActionFormater">Action
                                     </th>
                                 </tr>
                             </thead>
@@ -228,6 +230,76 @@
         </div>
     </div>
     <div id="denso_management_car_carAddModal" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width:100%">
+            <div class="modal-content">
+                <div class="row justify-content-between ">
+                    <div class="col">
+                        <div class="modal-header">
+                            <h3>Management Car</h3>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="modal-header">
+                            <button type="button" id="ahmsdlog015CloseModalCancel" class="close" data-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <!--Date Table-->
+                    <div id="ahmsdlog015Historyt01">
+                        <div class="row">
+                            <div class="form-horizontal col-md-6">
+                                <div class="row">
+                                    <div class="col-md-10 form-group">
+                                        <label class="control-label" for="densoManagementCar_carNameInput">
+                                            Add Car
+                                        </label>
+                                        <input id="densoManagementCar_carNameInput" type="text"
+                                            class="form-control uppercase" maxlength="10">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10 form-group">
+                                        <label class="control-label" for="densoManagementCar_brandSelect">
+                                            Brand
+                                        </label>
+                                        <select id="densoManagementCar_brandSelect" class="form-control uppercase">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10 form-group">
+                                        <label class="control-label" for="densoManagementCar_categorySelect">
+                                            Category
+                                        </label>
+                                        <select id="densoManagementCar_categorySelect" class="form-control uppercase">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10 form-group">
+                                        <div class="p-2 bd-highlight">
+                                            <button type="button" onclick="ManagementDataCar_addNewCar()"
+                                                class="btn btn-success"><i class="fas fa-plus"></i>
+                                                Add
+                                                Car</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                    </div>
+                    <!----------->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="denso_management_car_carUpdateModal" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg" style="width:100%">
             <div class="modal-content">
                 <div class="row justify-content-between ">
@@ -387,10 +459,12 @@
             })
         }
 
-
         function ManagementDataCar_addNewCategory() {
-            if ($('#DensoManagementCarInput_dataCategory').val() == undefined) {
-                alert('username tidak boleh kosong!');
+            if ($('#DensoManagementCarInput_dataCategory').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Category cannot be empty", 'error'
+                )
+                return false
             }
 
             $.ajax({
@@ -404,17 +478,124 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
-                    console.log(respon);
+                    Swal.fire(
+                        'Successfully', "Category " + $("#DensoManagementCarInput_dataCategory").val() +
+                        " success created", 'success'
+                    );
+                    $("#DensoManagementCarInput_dataCategory").val('')
+                    $('#DensoTableManagementCarCategoryDataTable').bootstrapTable('refresh');
                 },
                 error: function(data) {
-                    alert('error')
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
+                }
+            })
+        }
+
+        function DensoTableManagementCarCategoryDataTableActionFormater(value, row, index) {
+            return `
+                    <a href="javascript:void(0)" onclick="ManagementDataCar_updateCategoryCar(this)">
+                        <i class="fas fa-edit"> Update</i>
+                    </a> |
+                    <a href="javascript:void(0)" onclick="ManagementDataCar_deleteCategoryCar(this)">
+                        <i class="fas fa-trash"> Delete</i>
+                    </a>
+                `
+        }
+
+        function ManagementDataCar_updateCategoryCar(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#DensoTableManagementCarCategoryDataTable').bootstrapTable('getData')[indexDt];
+            Swal.fire({
+                title: 'Update Category',
+                input: 'text',
+                inputPlaceholder: getUniqId.name,
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Submit Update',
+                showLoaderOnConfirm: true,
+                preConfirm: (dataSubmit) => {
+                    $.ajax({
+                        url: 'management/car/update-data-category',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.id,
+                            category: dataSubmit,
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            Swal.fire(
+                                'Successfully', "Category " + dataSubmit +
+                                " success Updated", 'success'
+                            );
+                            $('#DensoTableManagementCarCategoryDataTable').bootstrapTable(
+                                'refresh');
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+
+        }
+
+        function ManagementDataCar_deleteCategoryCar(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#DensoTableManagementCarCategoryDataTable').bootstrapTable('getData')[indexDt];
+            Swal.fire({
+                title: 'Do you want to delete ' + getUniqId.name + ' ?',
+                showCancelButton: true,
+                confirmButtonText: 'Delete Data',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'management/car/delete-data-category',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.id
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            Swal.fire(
+                                'Successfully', "Category " + getUniqId.name +
+                                " success deleted", 'success'
+                            );
+                            $('#DensoTableManagementCarCategoryDataTable').bootstrapTable(
+                                'refresh');
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
                 }
             })
         }
 
         function ManagementDataCar_addNewBrand() {
-            if ($('#DensoManagementCarInput_dataBrand').val() == undefined) {
-                alert('username tidak boleh kosong!');
+            if ($('#DensoManagementCarInput_dataBrand').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Brand cannot be empty", 'error'
+                )
+                return false
             }
 
             $.ajax({
@@ -428,23 +609,137 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
-                    console.log(respon);
+                    Swal.fire(
+                        'Successfully', "Brand " + $("#DensoManagementCarInput_dataBrand").val() +
+                        " success created", 'success'
+                    );
+                    $("#DensoManagementCarInput_dataBrand").val('');
+                    $('#DensoTableManagementCarBrandDataTable').bootstrapTable('refresh');
                 },
                 error: function(data) {
-                    alert('error')
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
+                }
+            })
+        }
+
+        function DensoTableManagementCarBrandDataTableActionFormater(value, row, index) {
+            return `
+                    <a href="javascript:void(0)" onclick="ManagementDataCar_updateBrandCar(this)">
+                        <i class="fas fa-edit"> Update</i>
+                    </a> |
+                    <a href="javascript:void(0)" onclick="ManagementDataCar_deleteBrandCar(this)">
+                        <i class="fas fa-trash"> Delete</i>
+                    </a>
+                `
+        }
+
+        function ManagementDataCar_updateBrandCar(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#DensoTableManagementCarBrandDataTable').bootstrapTable('getData')[indexDt];
+            console.log(getUniqId);
+            Swal.fire({
+                title: 'Update Brand',
+                input: 'text',
+                inputPlaceholder: getUniqId.name,
+                inputAttributes: {
+                    autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Submit Update',
+                showLoaderOnConfirm: true,
+                preConfirm: (dataSubmit) => {
+                    $.ajax({
+                        url: 'management/car/update-data-brand',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.id,
+                            brand: dataSubmit,
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            Swal.fire(
+                                'Successfully', "Brand " + dataSubmit +
+                                " success Updated", 'success'
+                            );
+                            $('#DensoTableManagementCarBrandDataTable').bootstrapTable(
+                                'refresh');
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+
+        }
+
+        function ManagementDataCar_deleteBrandCar(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#DensoTableManagementCarBrandDataTable').bootstrapTable('getData')[indexDt];
+            Swal.fire({
+                title: 'Do you want to delete ' + getUniqId.name + ' ?',
+                showCancelButton: true,
+                confirmButtonText: 'Delete Data',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'management/car/delete-data-brand',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.id
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            Swal.fire(
+                                'Successfully', "Brand " + getUniqId.name +
+                                " success deleted", 'success'
+                            );
+                            $('#DensoTableManagementCarBrandDataTable').bootstrapTable(
+                                'refresh');
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
                 }
             })
         }
 
         function ManagementDataCar_addNewCar() {
-            if ($('#densoManagementCar_carNameInput').val() == undefined) {
-                alert('Car tidak boleh kosong!');
+            if ($('#densoManagementCar_carNameInput').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Car Name cannot be empty", 'error'
+                )
+                return false
             }
-            if ($('#densoManagementCar_categorySelect option:selected').val() == undefined) {
-                alert('Category tidak boleh kosong!');
+            if ($('#densoManagementCar_categorySelect option:selected').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Category cannot be empty", 'error'
+                )
+                return false
             }
-            if ($('#densoManagementCar_brandSelect option:selected').val() == undefined) {
-                alert('Brand tidak boleh kosong!');
+            if ($('#densoManagementCar_brandSelect option:selected').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Brand cannot be empty", 'error'
+                )
+                return false
             }
 
             $.ajax({
@@ -460,10 +755,115 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
-                    console.log(respon);
+                    Swal.fire(
+                        'Successfully', "Car " + $("#densoManagementCar_carNameInput").val() +
+                        " success created", 'success'
+                    );
+                    $("#densoManagementCar_carNameInput").val('')
+                    $('#denso_management_car_carAddModal').modal('hide');
+                    $('#DensoTableManagementCarMaintainCarDataTable').bootstrapTable('refresh');
                 },
                 error: function(data) {
-                    alert('error')
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
+                }
+            })
+        }
+
+        function DensoTableManagementCarMaintainCarDataTableActionFormater(value, row, index) {
+            return `
+                    <a href="javascript:void(0)" onclick="ManagementDataCar_updateMaintainCar(this)">
+                        <i class="fas fa-edit"> Update</i>
+                    </a> |
+                    <a href="javascript:void(0)" onclick="ManagementDataCar_deleteMaintainCar(this)">
+                        <i class="fas fa-trash"> Delete</i>
+                    </a>
+                `
+        }
+
+        function ManagementDataCar_updateMaintainCar(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#DensoTableManagementCarMaintainCarDataTable').bootstrapTable('getData')[indexDt];
+            console.log(getUniqId);
+            Swal.fire({
+                title: 'Update Car Name',
+                html: '<input id="densoManagementCar_carNameInput_update" class="swal2-input" placeholder="' +
+                    getUniqId.carName + '">' +
+                    '<input id="densoManagementCar_carBrandInput" class="swal2-input" disabled value="' + getUniqId
+                    .brndName + '">' +
+                    '<input id="densoManagementCar_carCategoryInput" class="swal2-input" disabled value="' +
+                    getUniqId
+                    .ctgName + '">',
+                focusConfirm: false,
+                preConfirm: () => {
+                    let dataKirim = $('#densoManagementCar_carNameInput_update').val();
+                    $.ajax({
+                        url: 'management/car/update-data-car-maintain',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.number,
+                            carName: dataKirim,
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            Swal.fire(
+                                'Successfully', "Car " + dataKirim +
+                                " success Updated", 'success'
+                            );
+                            $('#DensoTableManagementCarMaintainCarDataTable').bootstrapTable(
+                                'refresh');
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
+                }
+            })
+        }
+
+        function ManagementDataCar_deleteMaintainCar(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#DensoTableManagementCarMaintainCarDataTable').bootstrapTable('getData')[indexDt];
+            Swal.fire({
+                title: 'Do you want to delete ' + getUniqId.carName + ' ?',
+                showCancelButton: true,
+                confirmButtonText: 'Delete Data',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'management/car/delete-data-car-maintain',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.number
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            Swal.fire(
+                                'Successfully', "Car Maintain " + getUniqId.carName +
+                                " success deleted", 'success'
+                            );
+                            $('#DensoTableManagementCarMaintainCarDataTable').bootstrapTable(
+                                'refresh');
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
                 }
             })
         }

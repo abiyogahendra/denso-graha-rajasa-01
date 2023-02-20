@@ -23,6 +23,33 @@ class TransactionServiceController extends Controller
         $dataLimit = null;
         $dataOffset = null;
 
+        if ($req->search['CARNAME'] != null || $req->search['LICENSE'] || $req->search['STARDATE'] || $req->search['ENDDATE'] || $req->search['OWNER']) {
+            $query = $query . ' WHERE 1 = 1 ';
+            if ($req->search['CARNAME'] != null) {
+                $query = $query . 'AND H.`carID` = "' . $req->search['CARNAME'] . '"';
+            }
+            if ($req->search['LICENSE'] != null) {
+                $query = $query . 'AND H.`licensePlate` = "' . $req->search['LICENSE'] . '"';
+            }
+            if ($req->search['STARDATE'] != null) {
+                $startDate = strtotime($req->search['STARDATE']);
+
+                $startDateNew = date('Y-m-d', $startDate);
+
+                $query = $query . 'AND H.txnDate >= "' . $startDateNew . '"';
+            }
+            if ($req->search['ENDDATE'] != null) {
+                $endDate = strtotime($req->search['ENDDATE']);
+
+                $endDateNew = date('Y-m-d', $endDate);
+
+                $query = $query . 'AND H.txnDate <= "' . $endDateNew . '"';
+            }
+            if ($req->search['OWNER'] != null) {
+                $query = $query . 'AND H.`custID` = "' . $req->search['OWNER'] . '"';
+            }
+        }
+
         if ($req->sort != null) {
             $query = $query . ' ORDER BY ' . $req->limit . ' ' . $req->order;
         }
@@ -32,6 +59,7 @@ class TransactionServiceController extends Controller
         if ($req->offset != null) {
             $query = $query . ' OFFSET ' . $req->offset;
         }
+
         return $query;
 
     }
@@ -101,6 +129,10 @@ class TransactionServiceController extends Controller
                 'estimationDate' => $estimationDateNew,
                 'custID' => $idOwner,
                 'carID' => $re->qcarName,
+                'carEngnNumber' => $re->qengnNumber,
+                'carFrmNumber' => $re->qfrmNumber,
+                'miles' => $re->qmiles,
+                'licensePlate' => $re->qlicensePlate,
                 'techLeadID' => $techLead[0]->tchLeadID,
                 'totalPayment' => $re->qtotalPayment,
                 'created_at' => Carbon::now(),
@@ -185,7 +217,7 @@ class TransactionServiceController extends Controller
             } else {
                 DB::delete('delete from hdr_transaction where hdrTransactionID = ? ', [$generateDataHeaderID]);
             }
-            return response()->json("GAGAL", 500);
+            return response()->json($th, 500);
         }
 
         DB::commit();

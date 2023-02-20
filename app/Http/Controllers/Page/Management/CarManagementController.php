@@ -33,9 +33,8 @@ class CarManagementController extends Controller
         if ($req->offset != null) {
             $query = $query . ' OFFSET ' . $req->offset;
         }
-        
-        return $query;
 
+        return $query;
 
     }
 
@@ -63,21 +62,72 @@ class CarManagementController extends Controller
 
     public function CreateNewCategory(Request $re)
     {
-        $idDataBaru = DB::table('car_category')
-            ->insertGetId([
-                'ctgName' => $re->category,
-                'created_at' => Carbon::now(),
-                'created_by' => Auth::user()->userID,
-                'updated_at' => Carbon::now(),
-                'updated_by' => Auth::user()->userID,
-            ]);
+        try {
+            //code...
+            $dataExisting = DB::select('select * from car_category where ctgName = ?', [$re->category]);
 
-        return response()->json(
-            [
-                'code' => 200,
-                'message' => "Data successfuly saved",
-            ]
-        );
+            if ($dataExisting != null) {
+                return response()->json(['message' => 'Data is Existing'], 500);
+            }
+
+            $idDataBaru = DB::table('car_category')
+                ->insertGetId([
+                    'ctgName' => $re->category,
+                    'created_at' => Carbon::now(),
+                    'created_by' => Auth::user()->userID,
+                    'updated_at' => Carbon::now(),
+                    'updated_by' => Auth::user()->userID,
+                ]);
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly saved",
+                ]
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'error while processing data'], 500);
+        }
+    }
+
+    public function UpdateCategory(Request $re)
+    {
+        try {
+            //code...
+            $idDataBaru = DB::table('car_category')
+                ->where('categoryID', $re->number)
+                ->update(['ctgName' => $re->category,
+                    'updated_by' => Auth::user()->userID,
+                    'updated_at' => Carbon::now(),
+                ]);
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly saved",
+                ]
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'error while processing data'], 500);
+        }
+    }
+
+    public function DeleteCategory(Request $re)
+    {
+        try {
+            //code...
+            DB::table('car_category')->where('categoryID', '=', $re->number)->delete();
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly Deleted",
+                ]
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'error while processing data'], 500);
+        }
+
     }
 
     public function GetDataListCarBrand(Request $table)
@@ -104,27 +154,76 @@ class CarManagementController extends Controller
 
     public function CreateNewBrand(Request $re)
     {
-        $idDataBaru = DB::table('car_brand')
-            ->insertGetId([
-                'brndName' => $re->brand,
-                'created_at' => Carbon::now(),
-                'created_by' => Auth::user()->userID,
-                'updated_at' => Carbon::now(),
-                'updated_by' => Auth::user()->userID,
-            ]);
+        try {
+            $dataExisting = DB::select('select * from car_brand where brndName = ?', [$re->brand]);
 
-        return response()->json(
-            [
-                'code' => 200,
-                'message' => "Data successfuly saved",
-            ]
-        );
+            if ($dataExisting != null) {
+                return response()->json(['message' => 'Data is Existing'], 500);
+            }
+
+            $idDataBaru = DB::table('car_brand')
+                ->insertGetId([
+                    'brndName' => $re->brand,
+                    'created_at' => Carbon::now(),
+                    'created_by' => Auth::user()->userID,
+                    'updated_at' => Carbon::now(),
+                    'updated_by' => Auth::user()->userID,
+                ]);
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly saved",
+                ]
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'error while processing data'], 500);
+        }
+    }
+
+    public function UpdateBrand(Request $re)
+    {
+        try {
+            //code...
+            $idDataBaru = DB::table('car_brand')
+                ->where('brandID', $re->number)
+                ->update(['brndName' => $re->brand,
+                    'updated_by' => Auth::user()->userID,
+                    'updated_at' => Carbon::now(),
+                ]);
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly saved",
+                ]
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'error while processing data'], 500);
+        }
+    }
+
+    public function DeleteBrand(Request $re)
+    {
+        try {
+            //code...
+            DB::table('car_brand')->where('brandID', '=', $re->number)->delete();
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly Deleted",
+                ]
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'error while processing data'], 500);
+        }
+
     }
 
     public function GetDataListCarMaintain(Request $table)
     {
-
-        $query = 'SELECT carName, ctgName, brndName, m.updated_at, m.updated_by FROM car_maintain_brand_category m INNER JOIN car_category c ON m.ctgryID = c.categoryID INNER JOIN car_brand b ON m.brandID = b.brandID';
+        $query = 'SELECT carMaintainID number, carName, ctgName, brndName, m.updated_at, m.updated_by FROM car_maintain_brand_category m INNER JOIN car_category c ON m.ctgryID = c.categoryID INNER JOIN car_brand b ON m.brandID = b.brandID';
         $countDataUser = DB::select('select count(*) jumlah FROM car_maintain_brand_category');
         $newQuery = $this->GetQueryDataTable($query, $table);
         try {
@@ -143,23 +242,81 @@ class CarManagementController extends Controller
 
     public function CreateNewCar(Request $re)
     {
-        $idDataBaru = DB::table('car_maintain_brand_category')
-            ->insertGetId([
-                'carName' => $re->car,
-                'brandID' => $re->brand,
-                'ctgryID' => $re->category,
-                'created_at' => Carbon::now(),
-                'created_by' => Auth::user()->userID,
-                'updated_at' => Carbon::now(),
-                'updated_by' => Auth::user()->userID,
-            ]);
+        try {
 
-        return response()->json(
-            [
-                'code' => 200,
-                'message' => "Data successfuly saved",
-            ]
-        );
+            $dataExisting = DB::select('select * from car_maintain_brand_category where carName = ?', [$re->car]);
+
+            if ($dataExisting != null) {
+                return response()->json(['message' => 'Data is Existing'], 500);
+            }
+
+            //code...
+
+            $idDataBaru = DB::table('car_maintain_brand_category')
+                ->insertGetId([
+                    'carName' => $re->car,
+                    'brandID' => $re->brand,
+                    'ctgryID' => $re->category,
+                    'created_at' => Carbon::now(),
+                    'created_by' => Auth::user()->userID,
+                    'updated_at' => Carbon::now(),
+                    'updated_by' => Auth::user()->userID,
+                ]);
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly saved",
+                ]
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'error while processing data'], 500);
+        }
     }
 
+    public function UpdateCarName(Request $re)
+    {
+        try {
+            //code...
+            $idDataBaru = DB::table('car_maintain_brand_category')
+                ->where('carMaintainID', $re->number)
+                ->update(['carName' => $re->carName,
+                    'updated_by' => Auth::user()->userID,
+                    'updated_at' => Carbon::now(),
+                ]);
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly saved",
+                ]
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'error while processing data'], 500);
+        }
+    }
+
+    public function DeleteCarMaintain(Request $re)
+    {
+        $dataExisting = DB::select('select created_at from hdr_transaction where carID = ?', [$re->number]);
+
+        if ($dataExisting != null) {
+            return response()->json(['message' => 'Data is Already Used Transaction'], 500);
+        }
+
+        try {
+            //code...
+            DB::table('car_maintain_brand_category')->where('carMaintainID', '=', $re->number)->delete();
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly Deleted",
+                ]
+            );
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'error while processing data'], 500);
+        }
+
+    }
 }

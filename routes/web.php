@@ -38,10 +38,10 @@ Route::group(['middleware' => ['check.auth']], function () {
     Route::post('master/master-role', [MasterDropDownController::class, 'GetMasterListRole']);
     Route::post('master/master-car-category', [MasterDropDownController::class, 'GetMasterListCategoryCar']);
     Route::post('master/master-car-category-add-transaction', [MasterDropDownController::class, 'GetMasterListCategoryCarAddTransaction']);
-    Route::post('/master/master-car-brand-params-category', [MasterDropDownController::class, 'GetMasterListBrandCarByCategory']);
     Route::post('/master/master-car-name-params-category-brand', [MasterDropDownController::class, 'GetMasterListNameCarByCategoryBrand']);
     Route::post('master/master-car-brand', [MasterDropDownController::class, 'GetMasterListBrandCar']);
     Route::get('master/master-add-transaction-mechanic', [MasterDropDownController::class, 'GetDataListMechanic']);
+    Route::post('master/master-car-name-list-transaction-select2', [MasterDropDownController::class, 'GetDataListCarCategoryBrandAddTransaction']);
     Route::post('master/master-car-name-list-transaction', [MasterDropDownController::class, 'GetDataListCarNameTransactionListFilter']);
     Route::post('master/master-car-license-list-transaction', [MasterDropDownController::class, 'GetDataListCarLicenseTransactionListFilter']);
     Route::post('master/master-owner-name-list-transaction', [MasterDropDownController::class, 'GetDataListOwnerNameTransactionListFilter']);
@@ -63,12 +63,18 @@ Route::group(['middleware' => ['check.auth']], function () {
 
     Route::get('management/car/load-data-list-category', [CarManagementController::class, 'GetDataListCarCategory']);
     Route::post('management/car/create-data-category', [CarManagementController::class, 'CreateNewCategory']);
+    Route::post('management/car/update-data-category', [CarManagementController::class, 'UpdateCategory']);
+    Route::post('management/car/delete-data-category', [CarManagementController::class, 'DeleteCategory']);
     
     Route::get('management/car/load-data-list-brand', [CarManagementController::class, 'GetDataListCarBrand']);
     Route::post('management/car/create-data-brand', [CarManagementController::class, 'CreateNewBrand']);
+    Route::post('management/car/update-data-brand', [CarManagementController::class, 'UpdateBrand']);
+    Route::post('management/car/delete-data-brand', [CarManagementController::class, 'DeleteBrand']);
     
     Route::get('management/car/load-data-list-car-maintain', [CarManagementController::class, 'GetDataListCarMaintain']);
     Route::post('management/car/create-data-car', [CarManagementController::class, 'CreateNewCar']);
+    Route::post('management/car/update-data-car-maintain', [CarManagementController::class, 'UpdateCarName']);
+    Route::post('management/car/delete-data-car-maintain', [CarManagementController::class, 'DeleteCarMaintain']);
 
     //-------------------- management mechanic ---------------------
 

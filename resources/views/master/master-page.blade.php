@@ -98,6 +98,7 @@
     <script src="{{ asset('template/vendor/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
     <script src="{{ asset('template/vendor/chartjs/Chart.bundle.min.js') }}"></script>
     <script src="{{ asset('template/vendor/select2/select2.min.js') }}"></script>
+    <script src="{{ asset('template/vendor/sweetalert/sweetalert.min.js') }}"></script>
 
     <!-- Main JS-->
     <script src="{{ asset('template/js/main.js') }}"></script>

@@ -285,8 +285,9 @@
                 // MAIN DEALER
                 'CARNAME': $("#transactionService_fltr_data_carName_select option:selected").val(),
                 'LICENSE': $("#transactionService_fltr_data_licensePLate_select option:selected").val(),
-                'STARDATE': $("#transactionService_fltr_data_licensePLate_select option:selected").val(),
-                'ENDDATE': $("#transactionService_fltr_data_licensePLate_select option:selected").val()
+                'STARDATE': $("#transactionService_fltr_data_startTransaction_date").val(),
+                'ENDDATE': $("#transactionService_fltr_data_endTransaction_date").val(),
+                'OWNER': $("#transactionService_fltr_data_ownerName_select option:selected").val()
             };
 
             if (params.sort == undefined) {

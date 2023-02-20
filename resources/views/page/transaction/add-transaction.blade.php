@@ -164,15 +164,14 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- Car Category --}}
+                            {{-- Car Name --}}
                             <div class="form-group large-font">
                                 <div class="row">
                                     <div class="col-md-4" style="padding-left: 0px !important;">
-                                        <label class="control-label" for="transactionService_inpt_data_carCategory">
-                                            Car Category
+                                        <label class="control-label" for="transactionService_inpt_data_carName">
+                                            Car Name
                                         </label>
-                                        <select id="transactionService_inpt_data_carCategory"
-                                            class="form-control uppercase">
+                                        <select id="transactionService_inpt_data_carName" class="form-control uppercase">
                                         </select>
                                     </div>
                                 </div>
@@ -184,22 +183,46 @@
                                         <label class="control-label" for="transactionService_inpt_data_carBrand">
                                             Car Brand
                                         </label>
-                                        <select id="transactionService_inpt_data_carBrand" class="form-control uppercase"
-                                            disabled>
-                                        </select>
+                                        <input type="text" id="transactionService_inpt_data_carBrand"
+                                            class="form-control uppercase" disabled>
+                                        <input type="hidden" id="transactionService_inpt_data_carBrand_hidden">
                                     </div>
                                 </div>
                             </div>
-                            {{-- Car Name --}}
+                            {{-- Car Category --}}
                             <div class="form-group large-font">
                                 <div class="row">
                                     <div class="col-md-4" style="padding-left: 0px !important;">
-                                        <label class="control-label" for="transactionService_inpt_data_carName">
-                                            Car Name
+                                        <label class="control-label" for="transactionService_inpt_data_carCategory">
+                                            Car Category
                                         </label>
-                                        <select id="transactionService_inpt_data_carName" class="form-control uppercase"
-                                            disabled>
-                                        </select>
+                                        <input type="text" id="transactionService_inpt_data_carCategory"
+                                            class="form-control uppercase" disabled>
+                                        <input type="hidden" id="transactionService_inpt_data_carCategory_hidden">
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- Freme Number --}}
+                            <div class="form-group large-font">
+                                <div class="row">
+                                    <div class="col-md-4" style="padding-left: 0px !important;">
+                                        <label class="control-label" for="transactionService_inpt_data_frameNumber">
+                                            Frame Number
+                                        </label>
+                                        <input id="transactionService_inpt_data_frameNumber" type="text"
+                                            class="form-control uppercase" maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- Engine Number --}}
+                            <div class="form-group large-font">
+                                <div class="row">
+                                    <div class="col-md-4" style="padding-left: 0px !important;">
+                                        <label class="control-label" for="transactionService_inpt_data_engineNumber">
+                                            Engine Number
+                                        </label>
+                                        <input id="transactionService_inpt_data_engineNumber" type="text"
+                                            class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                             </div>
@@ -658,19 +681,7 @@
         let densoTableListofServiceFeeInputData_Obj_datas = [];
 
         $(document).ready(function() {
-            denso_transaction_generate_option_car_category_selected();
             densoSelectedListofExistingOwnerInputDataGenerateData();
-            $('#transactionService_inpt_data_carCategory').change(function() {
-                $('#transactionService_inpt_data_carName option').remove();
-                $('#transactionService_inpt_data_carBrand').prop('disabled', false);
-                $('#transactionService_inpt_data_carName').prop('disabled', true);
-                denso_transaction_generate_option_car_brand_selected();
-            })
-
-            $('#transactionService_inpt_data_carBrand').change(function() {
-                $('#transactionService_inpt_data_carName').prop('disabled', false);
-                denso_transaction_generate_option_car_name_selected();
-            })
 
             $('#transactionService_inpt_data_userSelect').change(function() {
                 let toggleSwitch = 'N'
@@ -702,82 +713,6 @@
             let totalyOfAllTransactionPlusPPN = totalyOfAllTransaction + (totalyOfAllTransaction * 11 /
                 100);
             $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPN').val(totalyOfAllTransactionPlusPPN);
-        }
-
-        function denso_transaction_generate_option_car_brand_selected() {
-            $.ajax({
-                url: '/master/master-car-brand-params-category',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    category: $('#transactionService_inpt_data_carCategory option:selected').val()
-                },
-                type: 'post',
-                dataType: 'json',
-                success: function(respon) {
-                    $('#transactionService_inpt_data_carBrand option').remove();
-                    $('#transactionService_inpt_data_carBrand').append(
-                        `<option value='' disabled selected>Select Brand Car</option>`)
-                    for (let data in respon) {
-                        $('#transactionService_inpt_data_carBrand').append(
-                            `<option value='${respon[data].code}'>${respon[data].name}</option>`)
-                    }
-                },
-                error: function(data) {
-                    alert('error')
-                }
-            })
-        }
-
-        function denso_transaction_generate_option_car_name_selected() {
-            $.ajax({
-                url: '/master/master-car-name-params-category-brand',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: {
-                    category: $('#transactionService_inpt_data_carCategory option:selected').val(),
-                    brand: $('#transactionService_inpt_data_carBrand option:selected').val()
-                },
-                type: 'post',
-                dataType: 'json',
-                success: function(respon) {
-                    $('#transactionService_inpt_data_carName option').remove();
-                    $('#transactionService_inpt_data_carName').append(
-                        `<option value='' disabled selected>Select Brand Car</option>`)
-                    for (let data in respon) {
-                        $('#transactionService_inpt_data_carName').append(
-                            `<option value='${respon[data].code}'>${respon[data].name}</option>`)
-                    }
-                },
-                error: function(data) {
-                    alert('error')
-                }
-            })
-        }
-
-        function denso_transaction_generate_option_car_category_selected() {
-            $.ajax({
-                url: '/master/master-car-category-add-transaction',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: 'post',
-                dataType: 'json',
-                success: function(respon) {
-                    $('#transactionService_inpt_data_carCategory option').remove();
-                    $('#transactionService_inpt_data_carCategory').append(
-                        `<option value='' disabled selected>Select Category Car</option>`)
-                    for (let data in respon) {
-                        $('#transactionService_inpt_data_carCategory').append(
-                            `<option value='${respon[data].code}'>${respon[data].name}</option>`)
-                    }
-                },
-                error: function(data) {
-                    alert('error')
-                }
-            })
         }
 
         $(document).ready(function() {
@@ -841,7 +776,6 @@
             $('#densoTableListofServiceFeeInputData').bootstrapTable('refresh');
             $('#densoTableListofServiceFeeInputData').bootstrapTable('load', densoTableListofServiceFeeInputData_Obj_datas);
         }
-
 
         function densoTableListofEstimationCostInputData_InitAddDataTable_obj(obj) {
             if ($('#transactionService_inpt_tableEstimationCost_name').val() == undefined) {
@@ -914,9 +848,40 @@
                     });
                 },
                 error: function(data) {
-                    alert('error')
+                    swalWithBootstrapButtons.fire(
+                        'Error',
+                        'Something Wrong While Processing data',
+                        'error'
+                    )
                 }
             })
+
+            $("#transactionService_inpt_data_carName").select2({
+                ajax: {
+                    url: '/master/master-car-name-list-transaction-select2',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term, // search term
+                        };
+                    },
+                    processResults: function(data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 2,
+                placeholder: 'Search for a car name',
+                templateResult: formatSelectionCarCategoryBrandTransactionAdd,
+                templateSelection: formatSelectionCarCategoryBrandTransactionAddSelection
+            });
         }
 
         function formatSelectionExistingOwnerTransactionAdd(repo) {
@@ -948,14 +913,55 @@
             return repo.full_name || repo.text;
         }
 
-        function densoPushNewDataTransactionService() {
+        function formatSelectionCarCategoryBrandTransactionAdd(repo) {
+            if (repo.loading) {
+                return repo.text;
+            }
 
+            var $container = $(
+                "<div class='select2-result-repository clearfix'>" +
+                "<div class='select2-result-repository__Name'></div>" +
+                "<div class='select2-result-repository__Number'></div>" +
+                "<div class='select2-result-repository__Email'></div>" +
+                "</div>"
+            );
+
+            $container.find(".select2-result-repository__Name").text(repo.text);
+            $container.find(".select2-result-repository__Number").text(repo.brndName);
+            $container.find(".select2-result-repository__Email").text(repo.ctgName);
+
+            return $container;
+        }
+
+        function formatSelectionCarCategoryBrandTransactionAddSelection(repo) {
+            $('#transactionService_inpt_data_carBrand').val(repo.brndName);
+            $('#transactionService_inpt_data_carBrand_hidden').val(repo.brandID);
+            $('#transactionService_inpt_data_carCategory').val(repo.ctgName);
+            $('#transactionService_inpt_data_carCategory_hidden').val(repo.ctgryID);
+
+            if (repo.brndName == null) {
+                return repo.brndName || repo.text;
+            }
+
+            return repo.brndName + ' - ' + repo.text;
+        }
+
+        function densoPushNewDataTransactionService() {
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Your work has been saved',
+                showConfirmButton: false,
+                timer: 1500
+            })
 
             let transactionDate = $('#transactionService_inpt_data_transactionDate').val();
             let estimationDate = $('#transactionService_inpt_data_estimationDate').val();
-            let carCategory = $('#transactionService_inpt_data_carCategory option:selected').val();
-            let carBrand = $('#transactionService_inpt_data_carBrand option:selected').val();
+            let carCategory = $('#transactionService_inpt_data_carCategory_hidden').val();
+            let carBrand = $('#transactionService_inpt_data_carBrand_hidden').val();
             let carName = $('#transactionService_inpt_data_carName option:selected').val();
+            let frameNumber = $('#transactionService_inpt_data_frameNumber').val();
+            let engineNumber = $('#transactionService_inpt_data_engineNumber').val();
             let licensePlate = $('#transactionService_inpt_data_licensePlate').val();
             let miles = $('#transactionService_inpt_data_miles').val();
 
@@ -996,6 +1002,8 @@
                     qcarCategory: carCategory,
                     qcarBrand: carBrand,
                     qcarName: carName,
+                    qfrmNumber: frameNumber,
+                    qengnNumber: engineNumber,
                     qlicensePlate: licensePlate,
                     qmiles: miles,
                     qnewOwner: toggleSwitch,
@@ -1007,7 +1015,7 @@
                     dataEstimation: densoTableListofEstimationCostInputData_Obj_datas,
                     dataServiceFee: densoTableListofServiceFeeInputData_Obj_datas,
                     dataMechanic: dataTableMechanic,
-                    qtotalPayment : $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPN').val()
+                    qtotalPayment: $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPN').val()
                 },
                 type: 'post',
                 dataType: 'json',
@@ -1015,10 +1023,13 @@
                     console.log(respon);
                 },
                 error: function(data) {
-                    alert('error')
+                    swalWithBootstrapButtons.fire(
+                        'Error',
+                        'Something Wrong While Processing data',
+                        'error'
+                    )
                 }
             })
-
 
         }
     </script>

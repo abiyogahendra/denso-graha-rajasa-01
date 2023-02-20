@@ -75,13 +75,6 @@ class MasterDropDownController extends Controller
         return response()->json($dattaReturn, 200);
     }
 
-    public function GetMasterListBrandCarByCategory(Request $re)
-    {
-        $dattaReturn = DB::select('SELECT DISTINCT m.brandID code, brndName name FROM car_maintain_brand_category m INNER JOIN car_brand b ON m.brandID = b.brandID WHERE m.ctgryID = ?', [$re->category]);
-
-        return response()->json($dattaReturn, 200);
-    }
-
     public function GetMasterListNameCarByCategoryBrand(Request $re)
     {
         $dattaReturn = DB::select('SELECT DISTINCT carMaintainID code, m.carname name FROM car_maintain_brand_category m INNER JOIN car_brand b ON m.brandID = b.brandID WHERE m.ctgryID = ? and m.brandID = ?', [$re->category, $re->brand]);
@@ -125,6 +118,12 @@ class MasterDropDownController extends Controller
     public function GetDataListOwnerNameTransactionListFilter(Request $re)
     {
         $dattaReturn = DB::select('SELECT DISTINCT customerID id, custName text FROM customer where custName like "%'.$re->search.'%" ');
+        return response()->json($dattaReturn, 200);
+    }
+
+    public function GetDataListCarCategoryBrandAddTransaction(Request $re)
+    {
+        $dattaReturn = DB::select('SELECT m.`carMaintainID` id, m.`ctgryID`, m.`brandID`, carName text, ctgName, brndName, m.updated_at, m.updated_by FROM car_maintain_brand_category m INNER JOIN car_category c ON m.ctgryID = c.categoryID INNER JOIN car_brand b ON m.brandID = b.brandID where carName like "%'.$re->search.'%" ');
         return response()->json($dattaReturn, 200);
     }
 
