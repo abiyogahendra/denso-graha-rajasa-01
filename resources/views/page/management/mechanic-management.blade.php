@@ -76,8 +76,6 @@
                                 <th data-field="updated_at" data-halign="center" data-align="center"
                                     data-formatter="dataTableDateFormater" data-sortable="true">Updated Date</th>
                                 <th data-field="updated_by" data-halign="center">Updated By</th>
-                                <th data-halign="center" data-align="center"
-                                    data-formatter="DensoTableManagementMechanicDataTableActionFormater">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -216,14 +214,6 @@
             $('#denso_management_mechanic_addModal').modal('show');
         }
 
-        function DensoTableManagementMechanicDataTableActionFormater(value, row, index) {
-            return `
-                    <a class="like" href="javascript:void(0)" title="Like">
-                        <i class="fa fa-eye"> Detail</i>
-                    </a>
-                `
-        }
-
         function ManagementDataMechanic_addNewLeader() {
             if ($('#DensoManagementMechanicInput_dataMechanicLeader').val() == '') {
                 Swal.fire(
@@ -259,7 +249,7 @@
         }
 
         function ManagementDataMechanic_addNewMechanic() {
-            if ($('#DensoManagementMechanicInput_dataMechanic').val() == undefined) {
+            if ($('#DensoManagementMechanicInput_dataMechanic').val() == '') {
                 Swal.fire(
                     'Validation Failed', "Mechanic Name cannot be empty", 'error'
                 )

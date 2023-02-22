@@ -53,9 +53,14 @@ Route::group(['middleware' => ['check.auth']], function () {
 
     Route::get('management/load-data-list-user', [UserManagementController::class, 'GetDataListUserManagement']);
     Route::post('management/create-data-user', [UserManagementController::class, 'CreateNewUser']);
+    Route::post('management/change-status-data-maintain-user-role', [UserManagementController::class, 'ChangeStatusMaintainUserRole']);
+    Route::post('management/change-status-data-user', [UserManagementController::class, 'ChangeStatusUser']);
+    Route::post('management/change-password-data-user', [UserManagementController::class, 'ChangePasswordUser']);
+    Route::post('management/change-username-data-user', [UserManagementController::class, 'ChangeUsernameUser']);
 
     Route::get('management/load-data-list-role', [UserManagementController::class, 'GetDataListRoleManagement']);
     Route::post('management/create-data-role', [UserManagementController::class, 'CreteNewRole']);
+    Route::post('management/delete-data-role-user', [UserManagementController::class, 'DeleteDataRole']);
 
     Route::post('management/create-data-maintain-role', [UserManagementController::class, 'CreteNewMaintainUserRole']);
 

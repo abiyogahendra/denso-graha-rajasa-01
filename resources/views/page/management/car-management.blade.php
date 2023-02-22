@@ -796,7 +796,6 @@
         function ManagementDataCar_updateMaintainCar(obj) {
             var indexDt = $(obj).closest('tr').data('index');
             let getUniqId = $('#DensoTableManagementCarMaintainCarDataTable').bootstrapTable('getData')[indexDt];
-            console.log(getUniqId);
             Swal.fire({
                 title: 'Update Car Name',
                 html: '<input id="densoManagementCar_carNameInput_update" class="swal2-input" placeholder="' +

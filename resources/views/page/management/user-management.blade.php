@@ -77,9 +77,15 @@
                                     Username</th>
                                 <th data-field="username" data-halign="center" data-sortable="true">Username</th>
                                 <th data-field="description" data-halign="center">Role</th>
-                                <th data-field="updated_at" data-halign="center">Created Date</th>
+                                <th data-field="status" data-halign="center" data-align="center"
+                                    data-formatter="densoTableListofMaintainUserRoleManagementStatusFormater"
+                                    data-sortable="true">
+                                    Status</th>
+                                <th data-field="updated_at" data-formatter="dataTableDateFormater" data-halign="center">
+                                    Update Date</th>
                                 <th data-field="updated_by" data-halign="center">Updated By</th>
-                                <th data-halign="center" data-align="center" data-formatter="operateFormatter">Action</th>
+                                <th data-halign="center" data-align="center"
+                                    data-formatter="densoTableListofMaintainUserRoleManagementActionFormater">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -111,36 +117,43 @@
                     <!--Date Table-->
                     <div id="ahmsdlog015Historyt01">
                         <div class="row">
-                            <div class="form-horizontal col-md-6">
+                            <div class="form-horizontal col-md-8">
                                 <div class="row">
-                                    <div class="col-md-10 form-group">
-                                        <label class="control-label" for="ahmsdlog015p01h01GCDocumentNumber">
+                                    <div class="col-md-8 form-group">
+                                        <label class="control-label" for="managementUser_inpt_data_userCode">
                                             Code User
                                         </label>
                                         <input id="managementUser_inpt_data_userCode" type="text"
-                                            class="form-control uppercase" maxlength="6">
+                                            placeholder="Input user code" class="form-control uppercase" maxlength="6">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-10 form-group">
-                                        <label class="control-label" for="ahmsdlog015p01h01GCDocumentNumber">
+                                    <div class="col-md-8 form-group">
+                                        <label class="control-label" for="managementUser_inpt_data_username">
                                             Username
                                         </label>
                                         <input id="managementUser_inpt_data_username" type="text"
-                                            class="form-control uppercase" maxlength="50">
+                                            placeholder="Input username" class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-10 form-group">
-                                        <label class="control-label" for="ahmsdlog015p01h01GCDocumentNumber">
+                                    <div class="col-md-4 form-group">
+                                        <label class="control-label" for="managementUser_inpt_data_password">
                                             Password
                                         </label>
-                                        <input id="managementUser_inpt_data_password" type="text"
+                                        <input id="managementUser_inpt_data_password" type="password" placeholder="********"
                                             class="form-control uppercase" maxlength="50">
+                                    </div>
+                                    <div class="col-md-4 form-group">
+                                        <label class="control-label" for="managementUser_inpt_data_password_confirmation">
+                                            Confirmation Password
+                                        </label>
+                                        <input id="managementUser_inpt_data_password_confirmation" type="password"
+                                            placeholder="********" class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-10 form-group">
+                                    <div class="col-md-8 form-group">
                                         <div class="p-2 bd-highlight">
                                             <button type="button" onclick="ManagementDataUser_addNewUser()"
                                                 class="btn btn-success"><i class="fas fa-plus"></i>
@@ -160,13 +173,20 @@
                             data-unique-id="userID">
                             <thead>
                                 <tr>
-                                    <th data-field="userID" data-halign="center" data-visible="false"
-                                        data-sortable="false">
-                                        Username</th>
+                                    <th data-field="userID" data-halign="center" data-sortable="true">
+                                        User Code</th>
                                     <th data-field="username" data-halign="center" data-sortable="true">Username</th>
-                                    <th data-field="created_at" data-halign="center">Created Date</th>
+                                    <th data-field="status" data-halign="center" data-align="center"
+                                        data-formatter="densoTableListofUserManagementStatusFormater"
+                                        data-sortable="true">
+                                        Status</th>
+                                    <th data-field="updated_at" data-halign="center"
+                                        data-formatter="dataTableDateFormater" data-align="center" data-sortable="true">
+                                        Created Date
+                                    </th>
                                     <th data-field="updated_by" data-halign="center">Updated By</th>
-                                    <th data-halign="center" data-align="center" data-formatter="operateFormatter">Action
+                                    <th data-halign="center" data-align="center"
+                                        data-formatter="densoTableListofUserManagementActionFormater">Action
                                     </th>
                                 </tr>
                             </thead>
@@ -265,8 +285,8 @@
                                         <label class="control-label" for="ahmsdlog015p01h01GCDocumentNumber">
                                             Role
                                         </label>
-                                        <input id="managementRole_inpt_data_role" type="text"
-                                            class="form-control uppercase" maxlength="50">
+                                        <input id="managementRole_inpt_data_role" placeholder="Input Name Role"
+                                            type="text" class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -274,7 +294,8 @@
                                         <label class="control-label" for="ahmsdlog015p01h01GCDocumentNumber">
                                             Description Role
                                         </label>
-                                        <input id="managementRole_inpt_data_description" type="text"
+                                        <input id="managementRole_inpt_data_description"
+                                            placeholder="Input Description Role" type="text"
                                             class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
@@ -301,13 +322,75 @@
                                 <tr>
                                     <th data-field="role" data-halign="center" data-sortable="true">Role Code</th>
                                     <th data-field="description" data-halign="center">Role Description</th>
-                                    <th data-field="updated_at" data-halign="center">Created Date</th>
+                                    <th data-field="updated_at" data-formatter="dataTableDateFormater"
+                                        data-align="center" data-halign="center">Created Date</th>
                                     <th data-field="updated_by" data-halign="center">Updated By</th>
-                                    <th data-halign="center" data-align="center" data-formatter="operateFormatter">Action
+                                    <th data-halign="center" data-align="center"
+                                        data-formatter="densoTableListofRoleManagementActionFormater">Action
                                     </th>
                                 </tr>
                             </thead>
                         </table>
+                    </div>
+                    <!----------->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="denso_management_user_userRoleMaintainModalUpdate" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width:100%">
+            <div class="modal-content">
+                <div class="row justify-content-between ">
+                    <div class="col">
+                        <div class="modal-header">
+                            <h3>Update Maintain ROle</h3>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="modal-header">
+                            <button type="button" id="ahmsdlog015CloseModalCancel" class="close" data-dismiss="modal">
+                                &times;
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <!--Date Table-->
+                    <div id="ahmsdlog015Historyt01">
+                        <div class="row">
+                            <div class="form-horizontal col-md-6">
+                                <div class="row">
+                                    <div class="col-md-10 form-group">
+                                        <label class="control-label" for="densoManagementUser_userSelect">
+                                            User
+                                        </label>
+                                        <select id="densoManagementUser_userSelect" class="form-control uppercase">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10 form-group">
+                                        <label class="control-label" for="ahmsdlog015p01h01GCDocumentNumber">
+                                            Role
+                                        </label>
+                                        <select id="densoManagementUser_roleSelect" class="form-control uppercase">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-10 form-group">
+                                        <div class="p-2 bd-highlight">
+                                            <button type="button" onclick="ManagementDataMaintainUserRoles_addUserRole()"
+                                                class="btn btn-success"><i class="fas fa-plus"></i>
+                                                Add
+                                                Maintain User Roles</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <!----------->
                 </div>
@@ -323,6 +406,15 @@
 
         })
 
+        function dataTableDateFormater(value, row, index) {
+            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+            var t = new Date(value);
+            return t.getDate() + '-' + monthNames[t.getMonth()] + '-' + t.getFullYear();
+
+        }
+
         function denso_management_generate_option_user_selected() {
             $.ajax({
                 url: '/master/master-user',
@@ -332,11 +424,14 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
+                    $('.densoManagementUser_userSelect_deletedDataSelectUser').remove()
                     $('#densoManagementUser_userSelect').append(
-                        `<option value='' disabled selected>Select User</option>`)
+                        `<option class="densoManagementUser_userSelect_deletedDataSelectUser" value='' disabled selected>Select User</option>`
+                    )
                     for (let data in respon) {
                         $('#densoManagementUser_userSelect').append(
-                            `<option value='${respon[data].code}'>${respon[data].name}</option>`)
+                            `<option class="densoManagementUser_userSelect_deletedDataSelectUser" value='${respon[data].code}'>${respon[data].name}</option>`
+                        )
                     }
                 },
                 error: function(data) {
@@ -354,11 +449,14 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
+                    $('.densoManagementUser_roleSelect_deletedSelectRole').remove()
                     $('#densoManagementUser_roleSelect').append(
-                        `<option value='' disabled selected>Select Roles</option>`)
+                        `<option class="densoManagementUser_roleSelect_deletedSelectRole" value='' disabled selected>Select Roles</option>`
+                    )
                     for (let data in respon) {
                         $('#densoManagementUser_roleSelect').append(
-                            `<option value='${respon[data].code}'>${respon[data].name}</option>`)
+                            `<option class="densoManagementUser_roleSelect_deletedSelectRole" value='${respon[data].code}'>${respon[data].name}</option>`
+                        )
                     }
                 },
                 error: function(data) {
@@ -381,21 +479,296 @@
             $('#denso_management_user_userRoleMaintainModal').modal('show');
         }
 
-        function operateFormatter(value, row, index) {
+        function densoTableListofMaintainUserRoleManagementActionFormater(value, row, index) {
             return `
-                    <a class="like" href="javascript:void(0)" onclick="densoManagementServiceMantainUserRoleDetail(this)" title="Like">
-                        <i class="fa fa-eye"> Detail</i>
+                    <a class="like" href="javascript:void(0)" onclick="densoManagementServiceMantainUserRoleUpdate(this)" title="Like">
+                        <i class="fas fa-pencil-square-o">Change Role</i>
                     </a>
                 `
         }
 
-        function densoManagementServiceMantainUserRoleDetail(obj) {
-            var indexDt = $(obj).closest('tr').data('index');
-            let getUniqId = $('#densoTableListofMaintainUserRoleManagement').bootstrapTable('getData')[indexDt];
-
-            console.log(getUniqId);
+        function densoTableListofMaintainUserRoleManagementStatusFormater(value, row, index) {
+            if (value == "T") {
+                return '<button onclick="ManagementDataMaintainUser_changeStatusMaintain(this)" type="button" class="btn btn-success">ACTIVE</button>';
+            } else {
+                return '<button onclick="ManagementDataMaintainUser_changeStatusMaintain(this)" type="button" class="btn btn-danger">NOT ACTIVE</button>'
+            }
         }
 
+        function densoManagementServiceMantainUserRoleUpdate(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofMaintainUserRoleManagement').bootstrapTable('getData')[indexDt];
+            denso_management_generate_option_role_selected();
+            $('#denso_management_user_userRoleMaintainModalUpdate').modal('show')
+            
+
+        }
+
+        function ManagementDataMaintainUser_changeStatusMaintain(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofMaintainUserRoleManagement').bootstrapTable('getData')[indexDt];
+            let newStatus = ""
+            if (getUniqId.status == "T") {
+                newStatus = "F";
+            } else {
+                newStatus = "T";
+            }
+
+            $.ajax({
+                url: 'management/change-status-data-maintain-user-role',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    number: getUniqId.no,
+                    status: newStatus,
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function(respon) {
+                    $('#densoTableListofMaintainUserRoleManagement').bootstrapTable('refresh');
+                },
+                error: function(data) {
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
+                }
+            })
+        }
+
+        function densoTableListofUserManagementStatusFormater(value, row, index) {
+            if (value == "T") {
+                return '<button onclick="ManagementDataUser_changeStatusUser(this)" type="button" class="btn btn-success">ACTIVE</button>';
+            } else {
+                return '<button onclick="ManagementDataUser_changeStatusUser(this)" type="button" class="btn btn-danger">NOT ACTIVE</button>'
+            }
+        }
+
+        function ManagementDataUser_changeStatusUser(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofUserManagement').bootstrapTable('getData')[indexDt];
+            let newStatus = ""
+            if (getUniqId.status == "T") {
+                newStatus = "F";
+            } else {
+                newStatus = "T";
+            }
+
+            $.ajax({
+                url: 'management/change-status-data-user',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    number: getUniqId.userID,
+                    status: newStatus,
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function(respon) {
+                    $('#densoTableListofUserManagement').bootstrapTable('refresh');
+                },
+                error: function(data) {
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
+                }
+            })
+        }
+
+        function densoTableListofUserManagementActionFormater(value, row, index) {
+            return `<a href="javascript:void(0)" onclick="ManagementDataUser_changePassword(this)">
+                        <i class="fas fa-warning">Change Password</i>
+                    </a> |
+                    <a href="javascript:void(0)" onclick="ManagementDataUser_changeUsername(this)">
+                        <i class="fas fa-pencil-square-o">Change Username</i>
+                    </a>
+                `
+        }
+
+        function ManagementDataUser_changePassword(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofUserManagement').bootstrapTable('getData')[indexDt];
+            Swal.fire({
+                title: 'Update Password ' + getUniqId.username,
+                html: `<div class="row" style="text-align:left">
+                            <div class="col-md-6 form-group" >
+                                <label class="control-label" for="managementUser_inptChange_data_password" >
+                                    Password
+                                </label>
+                                <input id="managementUser_inptChange_data_password" type="password" placeholder="********"
+                                    class="form-control uppercase" maxlength="50">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="control-label" for="managementUser_inptChange_data_password_confirmation">
+                                    Confirmation Password
+                                </label>
+                                <input id="managementUser_inptChange_data_password_confirmation" type="password"
+                                    placeholder="********" class="form-control uppercase" maxlength="50">
+                            </div>
+                        </div>`,
+                focusConfirm: false,
+                showCancelButton: true,
+                preConfirm: () => {
+                    if ($('#managementUser_inptChange_data_password').val() != $(
+                            '#managementUser_inptChange_data_password_confirmation').val()) {
+                        Swal.showValidationMessage(
+                            "Password Confirmation is not same"
+                        )
+                        return false;
+                    }
+
+                    let dataKirim = $('#managementUser_inptChange_data_password').val();
+                    Swal.fire({
+                        title: 'Do you want to update password ' + getUniqId.username + ' ?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Change Password',
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: 'management/change-password-data-user',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data: {
+                                    number: getUniqId.userID,
+                                    password: dataKirim
+                                },
+                                type: 'post',
+                                dataType: 'json',
+                                success: function(respon) {
+                                    Swal.fire(
+                                        'Successfully', "Password user " + getUniqId
+                                        .username +
+                                        " success changed", 'success'
+                                    );
+                                    $('#densoTableListofUserManagement')
+                                        .bootstrapTable(
+                                            'refresh');
+                                },
+                                error: function(data) {
+                                    var a = data.responseJSON;
+                                    Swal.fire(
+                                        'Error', a.message, 'error'
+                                    )
+                                }
+                            })
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        }
+
+        function ManagementDataUser_changeUsername(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofUserManagement').bootstrapTable('getData')[indexDt];
+            Swal.fire({
+                title: 'Update Password ' + getUniqId.username,
+                html: `<input id="managementUser_inptChange_data_username" class="swal2-input" type="text" placeholder="${getUniqId.username}">`,
+                focusConfirm: false,
+                showCancelButton: true,
+                preConfirm: () => {
+                    if ($('#managementUser_inptChange_data_username').val() == '') {
+                        Swal.showValidationMessage(
+                            "Username cannot be empty"
+                        )
+                        return false;
+                    }
+
+                    let dataKirim = $('#managementUser_inptChange_data_username').val();
+                    Swal.fire({
+                        title: 'Do you want to update username ' + getUniqId.username + ' to  ' +
+                            dataKirim + ' ?',
+                        showCancelButton: true,
+                        confirmButtonText: 'Change Username',
+                    }).then((result) => {
+                        /* Read more about isConfirmed, isDenied below */
+                        if (result.isConfirmed) {
+                            $.ajax({
+                                url: 'management/change-username-data-user',
+                                headers: {
+                                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                },
+                                data: {
+                                    number: getUniqId.userID,
+                                    username: dataKirim
+                                },
+                                type: 'post',
+                                dataType: 'json',
+                                success: function(respon) {
+                                    Swal.fire(
+                                        'Successfully', "username user " + getUniqId
+                                        .username +
+                                        " success changed", 'success'
+                                    );
+                                    $('#densoTableListofUserManagement')
+                                        .bootstrapTable(
+                                            'refresh');
+                                },
+                                error: function(data) {
+                                    var a = data.responseJSON;
+                                    Swal.fire(
+                                        'Error', a.message, 'error'
+                                    )
+                                }
+                            })
+                        }
+                    })
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            })
+        }
+
+        function densoTableListofRoleManagementActionFormater(value, row, index) {
+            return `<a href="javascript:void(0)" onclick="ManagementDataMaintainUser_DeletedRole(this)">
+                        <i class="fas fa-trash"> Delete</i>
+                    </a>
+                `
+        }
+
+        function ManagementDataMaintainUser_DeletedRole(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofRoleManagement').bootstrapTable('getData')[indexDt];
+            console.log(getUniqId);
+            Swal.fire({
+                title: 'Do you want to delete Role' + getUniqId.role + ' ?',
+                showCancelButton: true,
+                confirmButtonText: 'Delete Data',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'management/delete-data-role-user',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.role
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            Swal.fire(
+                                'Successfully', "Role " + getUniqId.role +
+                                " success deleted", 'success'
+                            );
+                            $('#densoTableListofRoleManagement').bootstrapTable(
+                                'refresh');
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
+                }
+            })
+        }
 
         function densoTableListofUserManagementDatasGenerate(params) {
             var base_url = window.location.origin;
@@ -425,11 +798,32 @@
         }
 
         function ManagementDataUser_addNewUser() {
-            if ($('#managementUser_inpt_data_username').val() == undefined) {
-                alert('username tidak boleh kosong!');
+            if ($('#managementUser_inpt_data_userCode').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "User Code cannot be empty", 'error'
+                )
+                return false;
             }
-            if ($('#managementUser_inpt_data_password').val() == undefined) {
-                alert('password tidak boleh kosong!');
+            if ($('#managementUser_inpt_data_username').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Username cannot be empty", 'error'
+                )
+                return false;
+            }
+            if ($('#managementUser_inpt_data_password').val() == '' || $('#managementUser_inpt_data_password_confirmation')
+                .val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Password cannot be empty", 'error'
+                )
+                return false;
+            } else {
+                if ($('#managementUser_inpt_data_password').val() != $('#managementUser_inpt_data_password_confirmation')
+                    .val()) {
+                    Swal.fire(
+                        'Validation Failed', "Password Confirmation is not same", 'error'
+                    )
+                    return false;
+                }
             }
 
             $.ajax({
@@ -445,21 +839,38 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
-                    console.log(respon);
+                    Swal.fire(
+                        'Successfully', "Role " + $("#managementUser_inpt_data_username")
+                        .val() +
+                        " success created", 'success'
+                    );
+                    $("#managementUser_inpt_data_userCode").val('');
+                    $("#managementUser_inpt_data_username").val('');
+                    $("#managementUser_inpt_data_password").val('');
+                    $("#managementUser_inpt_data_password_confirmation").val('');
+                    $('#densoTableListofUserManagement').bootstrapTable('refresh');
                 },
                 error: function(data) {
-                    alert('error')
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
                 }
             })
         }
 
-
         function ManagementDataUser_addNewRole() {
-            if ($('#managementRole_inpt_data_role').val() == undefined) {
-                alert('Role tidak boleh kosong!');
+            if ($('#managementRole_inpt_data_role').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Role Name cannot be empty", 'error'
+                )
+                return false;
             }
-            if ($('#managementRole_inpt_data_description').val() == undefined) {
-                alert('Description tidak boleh kosong!');
+            if ($('#managementRole_inpt_data_description').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Description cannot be empty", 'error'
+                )
+                return false;
             }
 
             $.ajax({
@@ -474,20 +885,36 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
-                    console.log(respon);
+                    Swal.fire(
+                        'Successfully', "Role " + $("#managementRole_inpt_data_role")
+                        .val() +
+                        " success created", 'success'
+                    );
+                    $("#managementRole_inpt_data_role").val('');
+                    $("#managementRole_inpt_data_description").val('');
+                    $('#densoTableListofRoleManagement').bootstrapTable('refresh');
                 },
                 error: function(data) {
-                    alert('error')
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
                 }
             })
         }
 
         function ManagementDataMaintainUserRoles_addUserRole() {
             if ($('#densoManagementUser_roleSelect option:selected').val() == '') {
-                alert('Role tidak boleh kosong!');
+                Swal.fire(
+                    'Validation Failed', "Role cannot be empty", 'error'
+                )
+                return false;
             }
             if ($('#densoManagementUser_userSelect option:selected').val() == '') {
-                alert('Description tidak boleh kosong!');
+                Swal.fire(
+                    'Validation Failed', "User cannot be empty", 'error'
+                )
+                return false;
             }
 
             $.ajax({
@@ -502,10 +929,20 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
-                    console.log(respon);
+                    Swal.fire(
+                        'Successfully', "Maintain User Role " + $("#managementRole_inpt_data_role")
+                        .val() +
+                        " success created", 'success'
+                    );
+                    $("#densoManagementUser_userSelect").val('');
+                    $("#densoManagementUser_roleSelect").val('');
+                    $('#densoTableListofMaintainUserRoleManagement').bootstrapTable('refresh');
                 },
                 error: function(data) {
-                    alert('error')
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
                 }
             })
         }

@@ -227,9 +227,9 @@ class CarManagementController extends Controller
         $countDataUser = DB::select('select count(*) jumlah FROM car_maintain_brand_category');
         $newQuery = $this->GetQueryDataTable($query, $table);
         // try {
-// dd($newQuery);
-            $dataUser = DB::select($newQuery);
-            //code...
+        // dd($newQuery);
+        $dataUser = DB::select($newQuery);
+        //code...
         // } catch (\Throwable $th) {
         //     return response()->json("gagal", 500);
         // }
@@ -319,4 +319,6 @@ class CarManagementController extends Controller
         }
 
     }
+
+    
 }
