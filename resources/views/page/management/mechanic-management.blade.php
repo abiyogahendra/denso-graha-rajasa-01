@@ -63,17 +63,21 @@
                         </div>
                     </div>
                     {{-- Table List of car --}}
-                    <table id="DensoTableManagementMechanicDataTable" data-toggle="table" data-ajax="DensoTableManagementMechanicDataTableGenerateData"
-                        data-side-pagination="server" data-page-list="[10, 25, 50, 100, all]" data-sortable="true"
-                        data-content-type="application/json" data-data-type="json" data-pagination="true"
-                        data-unique-id="no">
+                    <table id="DensoTableManagementMechanicDataTable" data-toggle="table"
+                        data-ajax="DensoTableManagementMechanicDataTableGenerateData" data-side-pagination="server"
+                        data-page-list="[10, 25, 50, 100, all]" data-sortable="true" data-content-type="application/json"
+                        data-data-type="json" data-pagination="true" data-unique-id="no">
                         <thead>
                             <tr>
                                 <th data-field="name" data-halign="center" data-sortable="true">Username</th>
-                                <th data-field="updated_at" data-halign="center">Updated Date</th>
+                                <th data-field="status" data-halign="center" data-width="20" data-sortable="true"
+                                    data-formatter="DensoTableManagementMechanicDataTableStatusFormater"
+                                    data-align="center">Status</th>
+                                <th data-field="updated_at" data-halign="center" data-align="center"
+                                    data-formatter="dataTableDateFormater" data-sortable="true">Updated Date</th>
                                 <th data-field="updated_by" data-halign="center">Updated By</th>
                                 <th data-halign="center" data-align="center"
-                                    data-formatter="operateFormatter">Action</th>
+                                    data-formatter="DensoTableManagementMechanicDataTableActionFormater">Action</th>
                             </tr>
                         </thead>
                     </table>
@@ -118,7 +122,8 @@
                                 <div class="row">
                                     <div class="col-md-10 form-group">
                                         <div class="p-2 bd-highlight">
-                                            <button type="button" onclick="ManagementDataMechanic_addNewMechanic()" class="btn btn-success"><i class="fas fa-plus"></i>
+                                            <button type="button" onclick="ManagementDataMechanic_addNewMechanic()"
+                                                class="btn btn-success"><i class="fas fa-plus"></i>
                                                 Add Mechanic</button>
                                         </div>
                                     </div>
@@ -139,7 +144,7 @@
                 <div class="row justify-content-between ">
                     <div class="col">
                         <div class="modal-header">
-                            <h3>Change Mechanic Leader</h3>
+                            <h3> Mechanic Leader Now is <span id="denso_management_mechanicLeaderName_header"></span></h3>
                         </div>
                     </div>
                     <div class="col">
@@ -168,7 +173,8 @@
                                 <div class="row">
                                     <div class="col-md-10 form-group">
                                         <div class="p-2 bd-highlight">
-                                            <button type="button" onclick="ManagementDataMechanic_addNewLeader()" class="btn btn-success"><i class="fas fa-random"></i>
+                                            <button type="button" onclick="ManagementDataMechanic_addNewLeader()"
+                                                class="btn btn-success"><i class="fas fa-random"></i>
                                                 Change Mechanic Leader</button>
                                         </div>
                                     </div>
@@ -189,6 +195,20 @@
 @section('custom-js')
     <script type="text/javascript">
         function denso_management_mechanic_modal_mechanicLeaderChange() {
+            $.ajax({
+                url: 'management/mechanic/get-data-mechanic-leader',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function(respon) {
+                    $('#denso_management_mechanicLeaderName_header').html(respon.name)
+                },
+                error: function(data) {
+                    alert('error')
+                }
+            })
             $('#denso_management_mechanic_leaderChangeModal').modal('show');
         }
 
@@ -196,7 +216,7 @@
             $('#denso_management_mechanic_addModal').modal('show');
         }
 
-        function operateFormatter(value, row, index) {
+        function DensoTableManagementMechanicDataTableActionFormater(value, row, index) {
             return `
                     <a class="like" href="javascript:void(0)" title="Like">
                         <i class="fa fa-eye"> Detail</i>
@@ -205,8 +225,11 @@
         }
 
         function ManagementDataMechanic_addNewLeader() {
-            if ($('#DensoManagementMechanicInput_dataMechanicLeader').val() == undefined) {
-                alert('Mechanic leader tidak boleh kosong!');
+            if ($('#DensoManagementMechanicInput_dataMechanicLeader').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Mechanic Name cannot be empty", 'error'
+                )
+                return false;
             }
 
             $.ajax({
@@ -220,17 +243,27 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
-                    console.log(respon);
+                    Swal.fire(
+                        'Successfully', "Mechanic Leader success changed", 'success'
+                    );
+                    $('#denso_management_mechanic_leaderChangeModal').modal('hide');
+                    $("#DensoManagementMechanicInput_dataMechanicLeader").val('');
                 },
                 error: function(data) {
-                    alert('error')
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
                 }
             })
         }
 
         function ManagementDataMechanic_addNewMechanic() {
             if ($('#DensoManagementMechanicInput_dataMechanic').val() == undefined) {
-                alert('Mechanic tidak boleh kosong!');
+                Swal.fire(
+                    'Validation Failed', "Mechanic Name cannot be empty", 'error'
+                )
+                return false;
             }
 
             $.ajax({
@@ -244,13 +277,75 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
-                    console.log(respon);
+                    Swal.fire(
+                        'Successfully', "Mechanic " + $("#DensoManagementMechanicInput_dataMechanic")
+                        .val() +
+                        " success created", 'success'
+                    );
+                    $("#DensoManagementMechanicInput_dataMechanic").val('');
+                    $('#DensoTableManagementMechanicDataTable').bootstrapTable('refresh');
+                    $('#denso_management_mechanic_addModal').modal('hide');
                 },
                 error: function(data) {
-                    alert('error')
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
                 }
             })
         }
+
+        function DensoTableManagementMechanicDataTableStatusFormater(value, row, index) {
+            if (value == "T") {
+                return '<button onclick="ManagementDataMechanic_changeStatusMechanic(this)" type="button" class="btn btn-success">ACTIVE</button>';
+            } else {
+                return '<button onclick="ManagementDataMechanic_changeStatusMechanic(this)" type="button" class="btn btn-danger">NOT ACTIVE</button>'
+            }
+        }
+
+        function dataTableDateFormater(value, row, index) {
+            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+            var t = new Date(value);
+            return t.getDate() + '-' + monthNames[t.getMonth()] + '-' + t.getFullYear();
+
+        }
+
+        function ManagementDataMechanic_changeStatusMechanic(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#DensoTableManagementMechanicDataTable').bootstrapTable('getData')[indexDt];
+            let newStatus = ""
+            if (getUniqId.status == "T") {
+                newStatus = "F";
+            } else {
+                newStatus = "T";
+            }
+
+            $.ajax({
+                url: 'management/mechanic/change-status-data-mechanic',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    number: getUniqId.no,
+                    status: newStatus,
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function(respon) {
+                    $('#DensoTableManagementMechanicDataTable').bootstrapTable('refresh');
+                },
+                error: function(data) {
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
+                }
+            })
+
+        }
+
 
         function DensoTableManagementMechanicDataTableGenerateData(params) {
             var url = 'management/mechanic/load-data-list-mechanic'

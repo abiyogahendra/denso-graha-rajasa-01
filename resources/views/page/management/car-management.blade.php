@@ -68,14 +68,15 @@
                     <table id="DensoTableManagementCarMaintainCarDataTable" data-toggle="table"
                         data-ajax="DensoTableManagementCarMaintainCarDataTableGenerateData" data-side-pagination="server"
                         data-page-list="[10, 25, 50, 100, all]" data-sortable="true" data-content-type="application/json"
-                        data-data-type="json" data-pagination="true" data-unique-id="vdocnogc">
+                        data-data-type="json" data-pagination="true" data-unique-id="number">
                         <thead>
                             <tr>
                                 <th data-checkbox="true"></th>
                                 <th data-field="carName" data-halign="center" data-sortable="true">Name</th>
-                                <th data-field="ctgName" data-halign="center">Category</th>
-                                <th data-field="brndName" data-halign="center">Brand</th>
-                                <th data-field="updated_at" data-halign="center">Update at</th>
+                                <th data-field="ctgName" data-halign="center" data-sortable="true">Category</th>
+                                <th data-field="brndName" data-halign="center" data-sortable="true">Brand</th>
+                                <th data-field="updated_at" data-halign="center" data-sortable="true"
+                                    data-formatter="dataTableDateFormater">Update at</th>
                                 <th data-field="updated_by" data-halign="center">Update by</th>
                                 <th data-field="name" data-halign="center" data-align="center"
                                     data-formatter="DensoTableManagementCarMaintainCarDataTableActionFormater">Action</th>
@@ -145,7 +146,7 @@
                             <thead>
                                 <tr>
                                     <th data-field="name" data-halign="center" data-sortable="true">Category Name</th>
-                                    <th data-field="updated_at" data-halign="center">Update Date</th>
+                                    <th data-field="updated_at"  data-formatter="dataTableDateFormater" data-sortable="true" data-align="center" data-halign="center">Update Date</th>
                                     <th data-field="updated_by" data-halign="center">Update By</th>
                                     <th data-halign="center" data-align="center"
                                         data-formatter="DensoTableManagementCarCategoryDataTableActionFormater">Action
@@ -215,7 +216,7 @@
                                 <tr>
                                     <th data-checkbox="true"></th>
                                     <th data-field="name" data-halign="center" data-sortable="true">Brand Name</th>
-                                    <th data-field="updated_at" data-halign="center">Update Date</th>
+                                    <th data-field="updated_at"  data-formatter="dataTableDateFormater" data-sortable="true" data-align="center" data-halign="center">Update Date</th>
                                     <th data-field="updated_by" data-halign="center">Update By</th>
                                     <th data-halign="center" data-align="center"
                                         data-formatter="DensoTableManagementCarBrandDataTableActionFormater">Action
@@ -374,6 +375,15 @@
 
 @section('custom-js')
     <script type="text/javascript">
+        function dataTableDateFormater(value, row, index) {
+            var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+            ];
+            var t = new Date(value);
+            return t.getDate() + '-' + monthNames[t.getMonth()] + '-' + t.getFullYear();
+
+        }
+
         function denso_management_generate_option_car_category_selected() {
             $.ajax({
                 url: '/master/master-car-category',

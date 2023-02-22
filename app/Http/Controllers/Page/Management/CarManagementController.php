@@ -25,12 +25,12 @@ class CarManagementController extends Controller
         $dataOffset = null;
 
         if ($req->sort != null) {
-            $query = $query . ' ORDER BY ' . $req->limit . ' ' . $req->order;
+            $query = $query . ' ORDER BY ' . $req->sort . ' ' . $req->order;
         }
         if ($req->limit != null) {
             $query = $query . ' LIMIT ' . $req->limit;
         }
-        if ($req->offset != null) {
+        if ($req->offset != 0) {
             $query = $query . ' OFFSET ' . $req->offset;
         }
 
@@ -223,16 +223,16 @@ class CarManagementController extends Controller
 
     public function GetDataListCarMaintain(Request $table)
     {
-        $query = 'SELECT carMaintainID number, carName, ctgName, brndName, m.updated_at, m.updated_by FROM car_maintain_brand_category m INNER JOIN car_category c ON m.ctgryID = c.categoryID INNER JOIN car_brand b ON m.brandID = b.brandID';
+        $query = 'SELECT carMaintainID number, carName, ctgName, brndName, m.updated_at, m.updated_by FROM car_maintain_brand_category m LEFT JOIN car_category c ON m.ctgryID = c.categoryID LEFT JOIN car_brand b ON m.brandID = b.brandID';
         $countDataUser = DB::select('select count(*) jumlah FROM car_maintain_brand_category');
         $newQuery = $this->GetQueryDataTable($query, $table);
-        try {
-
+        // try {
+// dd($newQuery);
             $dataUser = DB::select($newQuery);
             //code...
-        } catch (\Throwable $th) {
-            return response()->json("gagal", 500);
-        }
+        // } catch (\Throwable $th) {
+        //     return response()->json("gagal", 500);
+        // }
         return response()->json([
             'total' => $countDataUser[0]->jumlah,
             'totalNotFiltered' => $countDataUser[0]->jumlah,

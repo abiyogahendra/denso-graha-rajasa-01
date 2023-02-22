@@ -82,6 +82,8 @@ Route::group(['middleware' => ['check.auth']], function () {
     Route::post('management/mechanic/create-data-mechanic', [MechanicManagementController::class, 'CreateMechanic']);
     
     Route::get('management/mechanic/load-data-list-mechanic', [MechanicManagementController::class, 'GetDataListMechanic']);
+    Route::post('management/mechanic/get-data-mechanic-leader', [MechanicManagementController::class, 'GetDataMechanicLeader']);
+    Route::post('management/mechanic/change-status-data-mechanic', [MechanicManagementController::class, 'ChangeStatusDataMechanicLeader']);
     
     
     //-------------------- management transaction servire ---------------------
