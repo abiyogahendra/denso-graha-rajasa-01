@@ -41,8 +41,8 @@ class CarManagementController extends Controller
     public function GetDataListCarCategory(Request $table)
     {
 
-        $query = 'SELECT categoryID id, ctgName name, updated_at, updated_by FROM CAR_CATEGORY';
-        $countDataUser = DB::select('select count(*) jumlah FROM CAR_CATEGORY');
+        $query = 'SELECT categoryID id, ctgName name, updated_at, updated_by FROM car_category';
+        $countDataUser = DB::select('select count(*) jumlah FROM car_category');
         $newQuery = $this->GetQueryDataTable($query, $table);
         try {
 
@@ -133,8 +133,8 @@ class CarManagementController extends Controller
     public function GetDataListCarBrand(Request $table)
     {
 
-        $query = 'SELECT brandID id, brndName name, updated_at, updated_by FROM CAR_BRAND';
-        $countDataUser = DB::select('select count(*) jumlah FROM CAR_BRAND');
+        $query = 'SELECT brandID id, brndName name, updated_at, updated_by FROM car_brand';
+        $countDataUser = DB::select('select count(*) jumlah FROM car_brand');
         $newQuery = $this->GetQueryDataTable($query, $table);
         try {
 
@@ -320,5 +320,5 @@ class CarManagementController extends Controller
 
     }
 
-    
+
 }

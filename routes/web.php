@@ -7,7 +7,7 @@ use App\Http\Controllers\Page\Management\CarManagementController;
 use App\Http\Controllers\Page\Management\MechanicManagementController;
 use App\Http\Controllers\Page\Management\UserManagementController;
 use App\Http\Controllers\Page\Transaction\TransactionServiceController;
-use App\Http\Controllers\Transaction\MasterDropDownController;
+use App\Http\Controllers\Transaction\MasterDropdownController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,18 +33,18 @@ Route::group(['middleware' => ['check.auth']], function () {
 
     // ----------------------------- Master data -----------------------------------------------------
 
-    Route::post('master/master-user', [MasterDropDownController::class, 'GetMasterListUser']);
-    Route::post('master/master-owner-existing', [MasterDropDownController::class, 'GetMasterListOwnerAddTransaction']);
-    Route::post('master/master-role', [MasterDropDownController::class, 'GetMasterListRole']);
-    Route::post('master/master-car-category', [MasterDropDownController::class, 'GetMasterListCategoryCar']);
-    Route::post('master/master-car-category-add-transaction', [MasterDropDownController::class, 'GetMasterListCategoryCarAddTransaction']);
-    Route::post('/master/master-car-name-params-category-brand', [MasterDropDownController::class, 'GetMasterListNameCarByCategoryBrand']);
-    Route::post('master/master-car-brand', [MasterDropDownController::class, 'GetMasterListBrandCar']);
-    Route::get('master/master-add-transaction-mechanic', [MasterDropDownController::class, 'GetDataListMechanic']);
-    Route::post('master/master-car-name-list-transaction-select2', [MasterDropDownController::class, 'GetDataListCarCategoryBrandAddTransaction']);
-    Route::post('master/master-car-name-list-transaction', [MasterDropDownController::class, 'GetDataListCarNameTransactionListFilter']);
-    Route::post('master/master-car-license-list-transaction', [MasterDropDownController::class, 'GetDataListCarLicenseTransactionListFilter']);
-    Route::post('master/master-owner-name-list-transaction', [MasterDropDownController::class, 'GetDataListOwnerNameTransactionListFilter']);
+    Route::post('master/master-user', [MasterDropdownController::class, 'GetMasterListUser']);
+    Route::post('master/master-owner-existing', [MasterDropdownController::class, 'GetMasterListOwnerAddTransaction']);
+    Route::post('master/master-role', [MasterDropdownController::class, 'GetMasterListRole']);
+    Route::post('master/master-car-category', [MasterDropdownController::class, 'GetMasterListCategoryCar']);
+    Route::post('master/master-car-category-add-transaction', [MasterDropdownController::class, 'GetMasterListCategoryCarAddTransaction']);
+    Route::post('/master/master-car-name-params-category-brand', [MasterDropdownController::class, 'GetMasterListNameCarByCategoryBrand']);
+    Route::post('master/master-car-brand', [MasterDropdownController::class, 'GetMasterListBrandCar']);
+    Route::get('master/master-add-transaction-mechanic', [MasterDropdownController::class, 'GetDataListMechanic']);
+    Route::post('master/master-car-name-list-transaction-select2', [MasterDropdownController::class, 'GetDataListCarCategoryBrandAddTransaction']);
+    Route::post('master/master-car-name-list-transaction', [MasterDropdownController::class, 'GetDataListCarNameTransactionListFilter']);
+    Route::post('master/master-car-license-list-transaction', [MasterDropdownController::class, 'GetDataListCarLicenseTransactionListFilter']);
+    Route::post('master/master-owner-name-list-transaction', [MasterDropdownController::class, 'GetDataListOwnerNameTransactionListFilter']);
 
     // ----------------------------- process data -----------------------------------------------------
 
