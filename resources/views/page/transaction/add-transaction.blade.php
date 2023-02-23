@@ -135,7 +135,7 @@
                                     <div class="col-md-4" style="padding-left: 0px !important;">
                                         <div class="input-group date datepickermmm" data-provide="datepicker">
                                             <input type="text" id="transactionService_inpt_data_transactionDate"
-                                                class="form-control">
+                                                class="form-control" placeholder="Day-Month-Year">
                                             <div class="input-group-addon">
                                                 <span class="fas fa-calendar"></span>
                                             </div>
@@ -156,7 +156,7 @@
                                     <div class="col-md-4" style="padding-left: 0px !important;">
                                         <div class="input-group date datepickermmm" data-provide="datepicker">
                                             <input type="text" id="transactionService_inpt_data_estimationDate"
-                                                class="form-control">
+                                                class="form-control" placeholder="Day-Month-Year">
                                             <div class="input-group-addon">
                                                 <span class="fas fa-calendar"></span>
                                             </div>
@@ -184,7 +184,7 @@
                                             Car Brand
                                         </label>
                                         <input type="text" id="transactionService_inpt_data_carBrand"
-                                            class="form-control uppercase" disabled>
+                                            class="form-control uppercase" disabled placeholder=" -- Auto Generated --">
                                         <input type="hidden" id="transactionService_inpt_data_carBrand_hidden">
                                     </div>
                                 </div>
@@ -197,7 +197,7 @@
                                             Car Category
                                         </label>
                                         <input type="text" id="transactionService_inpt_data_carCategory"
-                                            class="form-control uppercase" disabled>
+                                            class="form-control uppercase" disabled placeholder=" -- Auto Generated --">
                                         <input type="hidden" id="transactionService_inpt_data_carCategory_hidden">
                                     </div>
                                 </div>
@@ -210,7 +210,7 @@
                                             Frame Number
                                         </label>
                                         <input id="transactionService_inpt_data_frameNumber" type="text"
-                                            class="form-control uppercase" maxlength="50">
+                                            class="form-control uppercase" maxlength="15" placeholder="Input Frame Number">
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +222,7 @@
                                             Engine Number
                                         </label>
                                         <input id="transactionService_inpt_data_engineNumber" type="text"
-                                            class="form-control uppercase" maxlength="50">
+                                            placeholder="Input Engine Number" class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                             </div>
@@ -234,7 +234,8 @@
                                             License Plate
                                         </label>
                                         <input id="transactionService_inpt_data_licensePlate" type="text"
-                                            class="form-control uppercase" maxlength="50">
+                                            placeholder="Input License Plate" class="form-control uppercase"
+                                            maxlength="50">
                                     </div>
                                 </div>
                             </div>
@@ -246,7 +247,7 @@
                                             Miles
                                         </label>
                                         <input id="transactionService_inpt_data_miles" type="number"
-                                            class="form-control uppercase" maxlength="50">
+                                            placeholder="Input Car Mile" class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                             </div>
@@ -283,7 +284,8 @@
                                                         Owner Name
                                                     </label>
                                                     <input id="transactionService_inpt_data_newOwner_name" type="text"
-                                                        class="form-control uppercase" maxlength="50">
+                                                        placeholder="Input Owner Name" class="form-control uppercase"
+                                                        maxlength="25">
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-left: 0px">
@@ -293,7 +295,8 @@
                                                         Address
                                                     </label>
                                                     <input id="transactionService_inpt_data_newOwner_address"
-                                                        type="text" class="form-control uppercase" maxlength="50">
+                                                        placeholder="Input Owner Address" type="text"
+                                                        class="form-control uppercase" maxlength="50">
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-left: 0px">
@@ -303,7 +306,8 @@
                                                         Contact Number
                                                     </label>
                                                     <input id="transactionService_inpt_data_newOwner_number"
-                                                        type="text" class="form-control uppercase" maxlength="50">
+                                                        placeholder="Input Owner Contact Number" type="text"
+                                                        class="form-control uppercase" maxlength="15">
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-left: 0px">
@@ -313,7 +317,8 @@
                                                         E-mail
                                                     </label>
                                                     <input id="transactionService_inpt_data_newOwner_email" type="text"
-                                                        class="form-control uppercase" maxlength="50">
+                                                        placeholder="Input Owner E-mail" class="form-control uppercase"
+                                                        maxlength="50">
                                                 </div>
                                             </div>
                                         </div>
@@ -474,8 +479,8 @@
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input
                                                                     id="transactionService_inpt_tableEstimationCost_name"
-                                                                    type="text" class="form-control uppercase"
-                                                                    maxlength="50">
+                                                                    placeholder="Input Part Name" type="text"
+                                                                    class="form-control uppercase" maxlength="50">
                                                             </div>
                                                         </th>
 
@@ -484,8 +489,8 @@
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input
                                                                     id="transactionService_inpt_tableEstimationCost_partNumber"
-                                                                    type="text" class="form-control uppercase"
-                                                                    maxlength="50">
+                                                                    placeholder="Input Part Number" type="text"
+                                                                    class="form-control uppercase" maxlength="50">
                                                             </div>
                                                         </th>
 
@@ -493,8 +498,8 @@
                                                         <th data-field="qty" data-align="left">
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input id="transactionService_inpt_tableEstimationCost_qty"
-                                                                    type="number" class="form-control uppercase"
-                                                                    maxlength="50">
+                                                                    placeholder="Input Part Quantity" type="number"
+                                                                    class="form-control uppercase" maxlength="50">
                                                             </div>
                                                         </th>
 
@@ -503,8 +508,8 @@
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input
                                                                     id="transactionService_inpt_tableEstimationCost_price"
-                                                                    type="Price" class="form-control uppercase"
-                                                                    maxlength="50">
+                                                                    placeholder="Input Part Price" type="Price"
+                                                                    class="form-control uppercase" maxlength="50">
                                                             </div>
                                                         </th>
 
@@ -571,8 +576,8 @@
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input
                                                                     id="transactionService_inpt_tableServiceFee_description"
-                                                                    type="text" class="form-control uppercase"
-                                                                    maxlength="50">
+                                                                    placeholder="Input Service Description" type="text"
+                                                                    class="form-control uppercase" maxlength="50">
                                                             </div>
                                                         </th>
 
@@ -580,7 +585,8 @@
                                                         <th data-field="price" data-align="left">
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input id="transactionService_inpt_tableServiceFee_price"
-                                                                    type="number" class="form-control uppercase">
+                                                                    placeholder="Input Service Cost" type="number"
+                                                                    class="form-control uppercase">
                                                             </div>
                                                         </th>
 

@@ -67,9 +67,9 @@ class TransactionServiceController extends Controller
     public function GetDataListTransactionService(Request $table)
     {
 
-        $query = 'SELECT H.`hdrTransactionID`, H.licensePlate, H.`txnDate`, C.`custName`, M.carName, H.carEngnNumber, H.carFrmNumber, H.miles FROM HDR_Transaction H INNER JOIN CUSTOMER C ON H.`custID` = C.`customerID` INNER JOIN CAR_MAINTAIN_BRAND_CATEGORY M ON H.`carID` = M.carMaintainID';
+        $query = 'SELECT H.`hdrTransactionID`, H.licensePlate, H.`txnDate`, C.`custName`, M.carName, H.carEngnNumber, H.carFrmNumber, H.miles FROM hdr_transaction H INNER JOIN CUSTOMER C ON H.`custID` = C.`customerID` INNER JOIN CAR_MAINTAIN_BRAND_CATEGORY M ON H.`carID` = M.carMaintainID';
 
-        $countDataUser = DB::select('select count(*) jumlah FROM HDR_Transaction');
+        $countDataUser = DB::select('select count(*) jumlah FROM hdr_transaction');
         $newQuery = $this->GetQueryDataTable($query, $table);
         try {
 
@@ -120,7 +120,7 @@ class TransactionServiceController extends Controller
         $transactionDateNew = date('Y-m-d', $transactionDateOld);
         $estimationDateNew = date('Y-m-d', $estimationDateOld);
 
-        $techLead = DB::select('SELECT tchLeadID FROM Technical_Lead WHERE STATUS = "T"');
+        $techLead = DB::select('SELECT tchLeadID FROM technical_lead WHERE STATUS = "T"');
 
         $idNewTransaction = DB::table('hdr_transaction')
             ->insertGetId([

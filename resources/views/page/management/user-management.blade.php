@@ -343,11 +343,12 @@
                 <div class="row justify-content-between ">
                     <div class="col">
                         <div class="modal-header">
-                            <h3>Update Maintain ROle</h3>
+                            <h3>Update Maintain Role</h3>
                         </div>
                     </div>
                     <div class="col">
                         <div class="modal-header">
+                            <input type="hidden" id="densoManagementUser_roleSelect_hidden_number">
                             <button type="button" id="ahmsdlog015CloseModalCancel" class="close" data-dismiss="modal">
                                 &times;
                             </button>
@@ -362,29 +363,20 @@
                             <div class="form-horizontal col-md-6">
                                 <div class="row">
                                     <div class="col-md-10 form-group">
-                                        <label class="control-label" for="densoManagementUser_userSelect">
-                                            User
-                                        </label>
-                                        <select id="densoManagementUser_userSelect" class="form-control uppercase">
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-10 form-group">
-                                        <label class="control-label" for="ahmsdlog015p01h01GCDocumentNumber">
+                                        <label class="control-label" for="densoManagementUser_roleSelect_update">
                                             Role
                                         </label>
-                                        <select id="densoManagementUser_roleSelect" class="form-control uppercase">
+                                        <select id="densoManagementUser_roleSelect_update" class="form-control uppercase">
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-10 form-group">
                                         <div class="p-2 bd-highlight">
-                                            <button type="button" onclick="ManagementDataMaintainUserRoles_addUserRole()"
+                                            <button type="button"
+                                                onclick="ManagementDataMaintainUserRoles_UpdateUserRole()"
                                                 class="btn btn-success"><i class="fas fa-plus"></i>
-                                                Add
-                                                Maintain User Roles</button>
+                                                Update Users Role</button>
                                         </div>
                                     </div>
                                 </div>
@@ -440,7 +432,7 @@
             })
         }
 
-        function denso_management_generate_option_role_selected() {
+        function denso_management_generate_option_role_selected(obj) {
             $.ajax({
                 url: '/master/master-role',
                 headers: {
@@ -457,6 +449,12 @@
                         $('#densoManagementUser_roleSelect').append(
                             `<option class="densoManagementUser_roleSelect_deletedSelectRole" value='${respon[data].code}'>${respon[data].name}</option>`
                         )
+                        $('#densoManagementUser_roleSelect_update').append(
+                            `<option class="densoManagementUser_roleSelect_deletedSelectRole" value='${respon[data].code}'>${respon[data].name}</option>`
+                        )
+                    }
+                    if (obj != null) {
+                        $('#densoManagementUser_roleSelect_update').val(obj);
                     }
                 },
                 error: function(data) {
@@ -475,7 +473,7 @@
 
         function denso_management_user_modal_userRoleMaintainAdd() {
             denso_management_generate_option_user_selected();
-            denso_management_generate_option_role_selected();
+            denso_management_generate_option_role_selected(null);
             $('#denso_management_user_userRoleMaintainModal').modal('show');
         }
 
@@ -498,10 +496,10 @@
         function densoManagementServiceMantainUserRoleUpdate(obj) {
             var indexDt = $(obj).closest('tr').data('index');
             let getUniqId = $('#densoTableListofMaintainUserRoleManagement').bootstrapTable('getData')[indexDt];
-            denso_management_generate_option_role_selected();
-            $('#denso_management_user_userRoleMaintainModalUpdate').modal('show')
-            
+            denso_management_generate_option_role_selected(getUniqId.roleID);
 
+            $('#densoManagementUser_roleSelect_hidden_number').val(getUniqId.no)
+            $('#denso_management_user_userRoleMaintainModalUpdate').modal('show')
         }
 
         function ManagementDataMaintainUser_changeStatusMaintain(obj) {
@@ -733,7 +731,6 @@
         function ManagementDataMaintainUser_DeletedRole(obj) {
             var indexDt = $(obj).closest('tr').data('index');
             let getUniqId = $('#densoTableListofRoleManagement').bootstrapTable('getData')[indexDt];
-            console.log(getUniqId);
             Swal.fire({
                 title: 'Do you want to delete Role' + getUniqId.role + ' ?',
                 showCancelButton: true,
@@ -773,10 +770,7 @@
         function densoTableListofUserManagementDatasGenerate(params) {
             var base_url = window.location.origin;
             var url = '/management/load-data-list-user'
-            $.get(url + '?' + $.param(params.data)).then(function(res) {
-                params.success(res)
-                console.log(res)
-            })
+            $.get(url + '?' + $.param(params.data)).then(function(res) {})
         }
 
         function densoTableListofRoleManagementDatasGenerate(params) {
@@ -784,7 +778,6 @@
             var url = '/management/load-data-list-role'
             $.get(url + '?' + $.param(params.data)).then(function(res) {
                 params.success(res)
-                console.log(res)
             })
         }
 
@@ -793,7 +786,6 @@
             var url = '/management/load-data-list-maintain-user-role'
             $.get(url + '?' + $.param(params.data)).then(function(res) {
                 params.success(res)
-                console.log(res)
             })
         }
 
@@ -943,6 +935,44 @@
                     Swal.fire(
                         'Error', a.message, 'error'
                     )
+                }
+            })
+        }
+
+        function ManagementDataMaintainUserRoles_UpdateUserRole() {
+            Swal.fire({
+                title: 'Do you want to change this role ?',
+                showCancelButton: true,
+                confirmButtonText: 'Change Role',
+            }).then((result) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: 'management/change-data-role-maintain-user-role',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: $('#densoManagementUser_roleSelect_hidden_number').val(),
+                            role: $('#densoManagementUser_roleSelect_update').val()
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            Swal.fire(
+                                'Successfully', "Role has changed", 'success'
+                            );
+                            $('#denso_management_user_userRoleMaintainModalUpdate').modal('hide')
+                            $('#densoTableListofMaintainUserRoleManagement').bootstrapTable(
+                                'refresh');
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
                 }
             })
         }

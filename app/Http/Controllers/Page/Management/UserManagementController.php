@@ -42,7 +42,7 @@ class UserManagementController extends Controller
     public function GetDataListMaintainUserRoleManagament(Request $table)
     {
 
-        $query = 'SELECT usrrlID no, M.status, U.username username, R.roleDescription description, M.updated_at, M.updated_by FROM maintain_user_role M
+        $query = 'SELECT usrrlID no, M.status, U.username username,M.roleID, R.roleDescription description, M.updated_at, M.updated_by FROM maintain_user_role M
         INNER JOIN USER U ON M.userID = U.userID INNER JOIN role R ON M.roleID = R.roleID';
 
         $countDataUser = DB::select('select count(*) jumlah FROM maintain_user_role');
@@ -61,8 +61,8 @@ class UserManagementController extends Controller
             'totalNotFiltered' => $countDataUser[0]->jumlah,
             "rows" => $dataUser,
         ]);
-    } 
-    
+    }
+
     public function ChangeStatusMaintainUserRole(Request $re)
     {
         try {
@@ -71,6 +71,30 @@ class UserManagementController extends Controller
                 ->where('usrrlID', '=', $re->number)
                 ->update([
                     'status' => $re->status,
+                    'updated_at' => Carbon::now(),
+                    'updated_by' => Auth::user()->userID,
+                ]);
+
+            return response()->json(
+                [
+                    'code' => 200,
+                    'message' => "Data successfuly saved",
+                ]
+            );
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json(['message' => 'Error while processing data'], 500);
+        }
+    }
+
+    public function ChangeRoleUserMaintain(Request $re)
+    {
+        try {
+            //code...
+            $idDataBaru = DB::table('maintain_user_role')
+                ->where('usrrlID', '=', $re->number)
+                ->update([
+                    'roleID' => $re->role,
                     'updated_at' => Carbon::now(),
                     'updated_by' => Auth::user()->userID,
                 ]);

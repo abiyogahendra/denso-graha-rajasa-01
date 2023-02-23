@@ -18,7 +18,7 @@ class MasterDropDownController extends Controller
         $dataOffset = null;
 
         if ($req->sort != null) {
-            $query = $query . ' ORDER BY ' . $req->limit . ' ' . $req->order;
+            $query = $query . ' ORDER BY ' . $req->sort . ' ' . $req->order;
         }
         if ($req->limit != null) {
             $query = $query . ' LIMIT ' . $req->limit;
@@ -34,7 +34,7 @@ class MasterDropDownController extends Controller
     {
 
         $query = 'SELECT mechanicName name, mechanicID no, updated_at, updated_by FROM mechanic';
-        $countDataUser = DB::select('select count(*) jumlah FROM CAR_CATEGORY');
+        $countDataUser = DB::select('select count(*) jumlah FROM mechanic');
         $newQuery = $this->GetQueryDataTable($query, $table);
         try {
 
@@ -105,25 +105,25 @@ class MasterDropDownController extends Controller
 
     public function GetDataListCarNameTransactionListFilter(Request $re)
     {
-        $dattaReturn = DB::select('SELECT DISTINCT carMaintainID id, carName text FROM car_maintain_brand_category where carName like "%'.$re->search.'%" ');
+        $dattaReturn = DB::select('SELECT DISTINCT carMaintainID id, carName text FROM car_maintain_brand_category where carName like "%' . $re->search . '%" ');
         return response()->json($dattaReturn, 200);
     }
 
     public function GetDataListCarLicenseTransactionListFilter(Request $re)
     {
-        $dattaReturn = DB::select('SELECT DISTINCT licensePlate id, licensePlate text FROM HDR_Transaction where licensePlate like "%'.$re->search.'%" ');
+        $dattaReturn = DB::select('SELECT DISTINCT licensePlate id, licensePlate text FROM hdr_transaction where licensePlate like "%' . $re->search . '%" ');
         return response()->json($dattaReturn, 200);
     }
 
     public function GetDataListOwnerNameTransactionListFilter(Request $re)
     {
-        $dattaReturn = DB::select('SELECT DISTINCT customerID id, custName text FROM customer where custName like "%'.$re->search.'%" ');
+        $dattaReturn = DB::select('SELECT DISTINCT customerID id, custName text FROM customer where custName like "%' . $re->search . '%" ');
         return response()->json($dattaReturn, 200);
     }
 
     public function GetDataListCarCategoryBrandAddTransaction(Request $re)
     {
-        $dattaReturn = DB::select('SELECT m.`carMaintainID` id, m.`ctgryID`, m.`brandID`, carName text, ctgName, brndName, m.updated_at, m.updated_by FROM car_maintain_brand_category m INNER JOIN car_category c ON m.ctgryID = c.categoryID INNER JOIN car_brand b ON m.brandID = b.brandID where carName like "%'.$re->search.'%" ');
+        $dattaReturn = DB::select('SELECT m.`carMaintainID` id, m.`ctgryID`, m.`brandID`, carName text, ctgName, brndName, m.updated_at, m.updated_by FROM car_maintain_brand_category m INNER JOIN car_category c ON m.ctgryID = c.categoryID INNER JOIN car_brand b ON m.brandID = b.brandID where carName like "%' . $re->search . '%" ');
         return response()->json($dattaReturn, 200);
     }
 
