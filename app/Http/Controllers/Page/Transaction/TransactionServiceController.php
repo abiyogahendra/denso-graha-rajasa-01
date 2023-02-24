@@ -51,7 +51,7 @@ class TransactionServiceController extends Controller
         }
 
         if ($req->sort != null) {
-            $query = $query . ' ORDER BY ' . $req->limit . ' ' . $req->order;
+            $query = $query . ' ORDER BY ' . $req->sort . ' ' . $req->order;
         }
         if ($req->limit != null) {
             $query = $query . ' LIMIT ' . $req->limit;
@@ -67,7 +67,7 @@ class TransactionServiceController extends Controller
     public function GetDataListTransactionService(Request $table)
     {
 
-        $query = 'SELECT H.`hdrTransactionID`, H.licensePlate, H.`txnDate`, C.`custName`, M.carName, H.carEngnNumber, H.carFrmNumber, H.miles FROM hdr_transaction H INNER JOIN CUSTOMER C ON H.`custID` = C.`customerID` INNER JOIN CAR_MAINTAIN_BRAND_CATEGORY M ON H.`carID` = M.carMaintainID';
+        $query = 'SELECT H.`hdrTransactionID` number, H.licensePlate, H.`txnDate`, C.`custName`, M.carName, H.carEngnNumber, H.carFrmNumber, H.miles FROM hdr_transaction H INNER JOIN CUSTOMER C ON H.`custID` = C.`customerID` INNER JOIN CAR_MAINTAIN_BRAND_CATEGORY M ON H.`carID` = M.carMaintainID';
 
         $countDataUser = DB::select('select count(*) jumlah FROM hdr_transaction');
         $newQuery = $this->GetQueryDataTable($query, $table);
@@ -224,6 +224,39 @@ class TransactionServiceController extends Controller
 
         return response()->json("sukses", 200);
 
+    }
+
+    public function GetDataDetailServiceTransactionModal(Request $re)
+    {
+
+        try {
+            //code...
+
+            $dataDetail = DB::select('SELECT
+                H.`txnDate`,
+                H.`estimationDate`,
+                M.`carName`,
+                CC.`ctgName`,
+                CB.`brndName`,
+                H.`carfrmNumber`,
+                H.`carEngnNumber`,
+                H.`licensePlate`,
+                H.`miles`,
+                C.`custName`,
+                C.`custAddress`,
+                C.`custEmail`,
+                C.`custNumber`
+                FROM hdr_transaction H
+                INNER JOIN customer C ON H.`custID` = C.`customerID`
+                INNER JOIN car_maintain_brand_category M ON H.`carID` = M.carMaintainID
+                INNER JOIN car_category CC ON M.`ctgryID` = CC.`categoryID`
+                INNER JOIN car_brand CB ON M.`brandID` = CB.`brandID` where H.hdrTransactionID = ?', [$re->number]);
+
+            return response()->json($dataDetail[0], 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json("Gagal", 500);
+        }
     }
 
 }

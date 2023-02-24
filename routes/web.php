@@ -96,6 +96,7 @@ Route::group(['middleware' => ['check.auth']], function () {
     
     Route::post('transaction/create-data-transaction-service', [TransactionServiceController::class, 'CreateNewTransactionService']);
     Route::get('transaction/load-data-list-transaction-service', [TransactionServiceController::class, 'GetDataListTransactionService']);
+    Route::post('transaction/loda-data-detail-transaction-service', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModal']);
 
 
 
