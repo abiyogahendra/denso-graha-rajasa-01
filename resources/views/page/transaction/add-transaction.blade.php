@@ -858,6 +858,7 @@
             let CostTotal = $('#transactionService_inpt_data_TotalCostOfPart').val();
             let updateTotalCost = parseInt(CostTotal) - getUniqId.total;
             $('#transactionService_inpt_data_TotalCostOfPart').val(updateTotalCost);
+            densoChangeTotalyOffAllTransactionInputDataGenerateData();
             $('#densoTableListofEstimationCostInputData').bootstrapTable('removeByUniqueId', getUniqId.concat);
         }
 
@@ -875,6 +876,7 @@
             let CostTotal = $('#transactionService_inpt_data_TotalCostOfService').val();
             let updateTotalCost = parseInt(CostTotal) - getUniqId.price;
             $('#transactionService_inpt_data_TotalCostOfService').val(updateTotalCost);
+            densoChangeTotalyOffAllTransactionInputDataGenerateData();
             $('#densoTableListofServiceFeeInputData').bootstrapTable('removeByUniqueId', getUniqId.concat);
         }
 
