@@ -30,6 +30,7 @@ Route::group(['middleware' => ['check.auth']], function () {
     Route::get('mechanic-management', [MechanicManagementController::class, 'MechanicManagementIndex'])->name('mechanic-management');
     Route::get('transaction-dashboard', [TransactionServiceController::class, 'TransactionServiceIndex'])->name('transaction-list');
     Route::get('transaction-add', [TransactionServiceController::class, 'TransactionServiceAddIndex'])->name('transaction-add');
+    Route::get('transaction-print-data-service-detail/{d}', [TransactionServiceController::class, 'TransactionServicePrintPDF'])->name('transaction-print');
 
     // ----------------------------- Master data -----------------------------------------------------
 
@@ -95,8 +96,13 @@ Route::group(['middleware' => ['check.auth']], function () {
     //-------------------- management transaction servire ---------------------
     
     Route::post('transaction/create-data-transaction-service', [TransactionServiceController::class, 'CreateNewTransactionService']);
+    Route::post('transaction/update-data-transaction-service', [TransactionServiceController::class, 'UpdateTransactionService']);
     Route::get('transaction/load-data-list-transaction-service', [TransactionServiceController::class, 'GetDataListTransactionService']);
-    Route::post('transaction/loda-data-detail-transaction-service', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModal']);
+    Route::post('transaction/load-data-detail-transaction-service', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModal']);
+    Route::post('transaction/load-data-detail-transaction-service-table-complaint', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModalTableComplaint']);
+    Route::post('transaction/load-data-detail-transaction-service-table-estimation-cost', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModalTableEstimationCost']);
+    Route::post('transaction/load-data-detail-transaction-service-table-service-fee', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModalTableServiceFee']);
+    Route::post('transaction/load-data-detail-transaction-service-table-mechanic', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModalTableMechanic']);
 
 
 

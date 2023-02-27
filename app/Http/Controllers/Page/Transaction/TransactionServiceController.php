@@ -15,6 +15,12 @@ class TransactionServiceController extends Controller
     {
         return view('page.transaction.list-of-transaction');
     }
+
+    public function TransactionServicePrintPDF(String $d){
+        
+        return view('page.transaction.transaction-download-pdf');
+    }
+
     public function GetQueryDataTable(String $query, Request $req)
     {
         $dataSort = null;
@@ -115,7 +121,7 @@ class TransactionServiceController extends Controller
         //generate id hdr format = CST-ID CUST-PLAT-DDMMYY-HH:MM
         $generateDataHeaderID = 'CST-' . $idOwner . '-' . $re->qlicensePlate . '-' . Carbon::now()->isoFormat('DDMMYY') . '-' . Carbon::now()->isoFormat('HH:mm');
         $transactionDateOld = strtotime($re->qtransactionDate);
-        $estimationDateOld = strtotime($re->qtransactionDate);
+        $estimationDateOld = strtotime($re->qestimationDate);
 
         $transactionDateNew = date('Y-m-d', $transactionDateOld);
         $estimationDateNew = date('Y-m-d', $estimationDateOld);
@@ -171,7 +177,7 @@ class TransactionServiceController extends Controller
                         'partName' => $f['name'],
                         'partNumber' => $f['partNumber'],
                         'qty' => $f['qty'],
-                        'totalCost' => $f['total'],
+                        'totalCost' => $f['price'],
                         'created_at' => Carbon::now(),
                         'created_by' => Auth::user()->userID,
                         'updated_at' => Carbon::now(),
@@ -259,4 +265,160 @@ class TransactionServiceController extends Controller
         }
     }
 
+    public function GetDataDetailServiceTransactionModalTableComplaint(Request $re)
+    {
+        try {
+            //code...
+
+            $dataDetail = DB::select('SELECT CONCAT(complaint , "-" , measure) concat, complaint, measure handling FROM dtl_cmpln_txn WHERE `hdrTxnID` = ?', [$re->number]);
+
+            return response()->json($dataDetail, 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json("Gagal", 500);
+        }
+    }
+
+    public function GetDataDetailServiceTransactionModalTableEstimationCost(Request $re)
+    {
+        try {
+            //code...
+
+            $dataDetail = DB::select('SELECT CONCAT(partName,partNumber,qty,totalCost) concat, partName name, partNumber, qty, totalCost price, (qty*totalCost) total FROM dtl_cost_txn WHERE hdrTxnID = ?', [$re->number]);
+
+            return response()->json($dataDetail, 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json("Gagal", 500);
+        }
+    }
+
+    public function GetDataDetailServiceTransactionModalTableServiceFee(Request $re)
+    {
+        try {
+            //code...
+
+            $dataDetail = DB::select('SELECT CONCAT(`srvcName`,`srvcCost`) concat, srvcName description, srvcCost price FROM dtl_srvc_cost_txn WHERE hdrTxnID = ?', [$re->number]);
+
+            return response()->json($dataDetail, 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json("Gagal", 500);
+        }
+    }
+
+    public function GetDataDetailServiceTransactionModalTableMechanic(Request $re)
+    {
+        try {
+            //code...
+
+            $dataDetail = DB::select('SELECT mechID FROM dtl_mchnc_txn WHERE `hdrTxnID` = ?', [$re->number]);
+
+            return response()->json($dataDetail, 200);
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json("Gagal", 500);
+        }
+    }
+
+    public function UpdateTransactionService(Request $re)
+    {
+
+        $transactionDateOld = strtotime($re->qtransactionDate);
+        $estimationDateOld = strtotime($re->qestimationDate);
+
+        $transactionDateNew = date('Y-m-d', $transactionDateOld);
+        $estimationDateNew = date('Y-m-d', $estimationDateOld);
+
+        DB::beginTransaction();
+        try {
+
+            DB::table('hdr_transaction')
+                ->where('hdrTransactionID', $re->number)
+                ->update([
+                    'txnDate' => $transactionDateNew,
+                    'estimationDate' => $estimationDateNew,
+                    'updated_by' => Auth::user()->userID,
+                    'updated_at' => Carbon::now(),
+                ]);
+
+            DB::table('dtl_cmpln_txn')->where('hdrTxnID', '=', $re->number)->delete();
+
+            //code...
+            foreach ($re->dataComplaint as $key => $d) {
+                $idNewDataComplaint = DB::table('dtl_cmpln_txn')
+                    ->insertGetId([
+                        'cmplntID' => $key,
+                        'hdrTxnID' => $re->number,
+                        'complaint' => $d['complaint'],
+                        'measure' => $d['handling'],
+                        'created_at' => Carbon::now(),
+                        'created_by' => Auth::user()->userID,
+                        'updated_at' => Carbon::now(),
+                        'updated_by' => Auth::user()->userID,
+                    ]);
+                # code...
+            }
+
+            DB::table('dtl_cost_txn')->where('hdrTxnID', '=', $re->number)->delete();
+
+            foreach ($re->dataEstimation as $key => $f) {
+                # code...
+                DB::table('dtl_cost_txn')
+                    ->insertGetId([
+                        'costID' => $key,
+                        'hdrTxnID' => $re->number,
+                        'partName' => $f['name'],
+                        'partNumber' => $f['partNumber'],
+                        'qty' => $f['qty'],
+                        'totalCost' => $f['price'],
+                        'created_at' => Carbon::now(),
+                        'created_by' => Auth::user()->userID,
+                        'updated_at' => Carbon::now(),
+                        'updated_by' => Auth::user()->userID,
+                    ]);
+            }
+
+            DB::table('dtl_srvc_cost_txn')->where('hdrTxnID', '=', $re->number)->delete();
+
+            foreach ($re->dataServiceFee as $key => $g) {
+                # code...
+                DB::table('dtl_srvc_cost_txn')
+                    ->insertGetId([
+                        'srvcID' => $key,
+                        'hdrTxnID' => $re->number,
+                        'srvcName' => $g['description'],
+                        'srvcCost' => $g['price'],
+                        'created_at' => Carbon::now(),
+                        'created_by' => Auth::user()->userID,
+                        'updated_at' => Carbon::now(),
+                        'updated_by' => Auth::user()->userID,
+                    ]);
+            }
+
+            DB::table('dtl_mchnc_txn')->where('hdrTxnID', '=', $re->number)->delete();
+
+            foreach ($re->dataMechanic as $key => $g) {
+                # code...
+                $idNewDataEstimationCost = DB::table('dtl_mchnc_txn')
+                    ->insertGetId([
+                        'mechID' => $g['no'],
+                        'hdrTxnID' => $re->number,
+                        'created_at' => Carbon::now(),
+                        'created_by' => Auth::user()->userID,
+                        'updated_at' => Carbon::now(),
+                        'updated_by' => Auth::user()->userID,
+                    ]);
+            }
+
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return response()->json(['message' => $th], 500);
+        }
+
+        DB::commit();
+
+        return response()->json("sukses", 200);
+
+    }
 }

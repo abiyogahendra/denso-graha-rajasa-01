@@ -146,7 +146,8 @@
                             <thead>
                                 <tr>
                                     <th data-field="name" data-halign="center" data-sortable="true">Category Name</th>
-                                    <th data-field="updated_at"  data-formatter="dataTableDateFormater" data-sortable="true" data-align="center" data-halign="center">Update Date</th>
+                                    <th data-field="updated_at" data-formatter="dataTableDateFormater" data-sortable="true"
+                                        data-align="center" data-halign="center">Update Date</th>
                                     <th data-field="updated_by" data-halign="center">Update By</th>
                                     <th data-halign="center" data-align="center"
                                         data-formatter="DensoTableManagementCarCategoryDataTableActionFormater">Action
@@ -216,7 +217,8 @@
                                 <tr>
                                     <th data-checkbox="true"></th>
                                     <th data-field="name" data-halign="center" data-sortable="true">Brand Name</th>
-                                    <th data-field="updated_at"  data-formatter="dataTableDateFormater" data-sortable="true" data-align="center" data-halign="center">Update Date</th>
+                                    <th data-field="updated_at" data-formatter="dataTableDateFormater"
+                                        data-sortable="true" data-align="center" data-halign="center">Update Date</th>
                                     <th data-field="updated_by" data-halign="center">Update By</th>
                                     <th data-halign="center" data-align="center"
                                         data-formatter="DensoTableManagementCarBrandDataTableActionFormater">Action

@@ -294,9 +294,8 @@
                                                         for="transactionService_inpt_data_newOwner_address">
                                                         Address
                                                     </label>
-                                                    <input id="transactionService_inpt_data_newOwner_address"
-                                                        placeholder="Input Owner Address" type="text"
-                                                        class="form-control uppercase" maxlength="50">
+                                                    <textarea style="border: 1px solid silver;" id="transactionService_inpt_data_newOwner_address" rows="2"
+                                                        cols="84%" placeholder=" -- Input Owner Address -- "></textarea>
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-left: 0px">
@@ -307,7 +306,7 @@
                                                     </label>
                                                     <input id="transactionService_inpt_data_newOwner_number"
                                                         placeholder="Input Owner Contact Number" type="text"
-                                                        class="form-control uppercase" maxlength="15">
+                                                        class="form-control uppercase" maxlength="30">
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-left: 0px">
@@ -349,9 +348,8 @@
                                                         for="transactionService_inpt_data_addressExistingOwner">
                                                         Address
                                                     </label>
-                                                    <input id="transactionService_inpt_data_addressExistingOwner"
-                                                        type="text" class="form-control uppercase" maxlength="50"
-                                                        disabled>
+                                                    <textarea style="border: 1px solid silver;" id="transactionService_inpt_data_addressExistingOwner" rows="2"
+                                                        cols="82%" placeholder=" -- Input Owner Address -- " disabled></textarea>
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-left: 0px">
@@ -557,8 +555,8 @@
                                         </legend>
                                         <div class="form-horizontal">
                                             <table class="" id="densoTableListofServiceFeeInputData"
-                                                data-toggle="table" data-data-type="json" data-query-params-type="limit" data-unique-id="concat"
-                                                data-pagination="true">
+                                                data-toggle="table" data-data-type="json" data-query-params-type="limit"
+                                                data-unique-id="concat" data-pagination="true">
                                                 <thead>
                                                     <tr>
                                                         <th data-field="description" data-halign="center"
@@ -566,7 +564,8 @@
                                                             Service Description</th>
                                                         <th data-field="price" data-halign="center">Price</th>
                                                         <th data-halign="center" data-align="center"
-                                                            data-formatter="densoTableListofServiceFeeInputDataActionFormater">Action</th>
+                                                            data-formatter="densoTableListofServiceFeeInputDataActionFormater">
+                                                            Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody></tbody>
@@ -662,7 +661,10 @@
 
                             <div class="d-flex flex-row-reverse bd-highlight">
                                 <div class="p-2 bd-highlight">
-                                    <button type="button" class="btn btn-danger" style="color: white">Cancel</button>
+                                    <a href="{{ route('transaction-list') }}">
+                                        <button type="button" class="btn btn-danger"
+                                            id="densoButtonBackTransactionServiceAdd" style="color: white">Cancel</button>
+                                    </a>
                                 </div>
                                 <div class="p-2 bd-highlight">
                                     <button type="button" class="btn btn-success"
@@ -727,18 +729,9 @@
         })
 
         $('.datepickermmm').datepicker({
-            format: 'dd-MM-yyyy',
-            startDate: '-3d'
+            format: 'dd-MM-yyyy'
         });
 
-        function operateFormatter(value, row, index) {
-            return `
-                    <a class="like" href="javascript:void(0)" title="Like">
-                        <i class="fa fa-eye"> Detail</i>
-                    </a>
-                `
-
-        }
 
         function densoTableListofComplaintInputData_InitAddDataTable_obj(obj) {
             if ($('#transactionService_inpt_tableComplaint_complaint').val() == '') {
@@ -769,11 +762,17 @@
         }
 
         function densoTableListofServiceFeeInputData_InitAddDataTable_obj(obj) {
-            if ($('#transactionService_inpt_tableServiceFee_description').val() == undefined) {
-                alert('Complaint tidak boleh kosong!');
+            if ($('#transactionService_inpt_tableServiceFee_description').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Service Name cannot be empty", 'error'
+                )
+                return false;
             }
-            if ($('#transactionService_inpt_tableServiceFee_price').val() == undefined) {
-                alert('Handling tidak boleh kosong!');
+            if ($('#transactionService_inpt_tableServiceFee_price').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Service Price cannot be empty", 'error'
+                )
+                return false;
             }
 
             let data_obj = {};
@@ -862,7 +861,7 @@
             $('#densoTableListofEstimationCostInputData').bootstrapTable('removeByUniqueId', getUniqId.concat);
         }
 
-        function densoTableListofServiceFeeInputDataActionFormater(value, row, index){
+        function densoTableListofServiceFeeInputDataActionFormater(value, row, index) {
             return `
                     <a class="like" href="javascript:void(0)" onclick="densoTableListofServiceFeeInputData_InitDeletedDataTable_obj(this)" title="Like">
                         <i class="fa fa-trash"></i>
@@ -870,7 +869,7 @@
                 `
         }
 
-        function densoTableListofServiceFeeInputData_InitDeletedDataTable_obj(obj){
+        function densoTableListofServiceFeeInputData_InitDeletedDataTable_obj(obj) {
             var indexDt = $(obj).closest('tr').data('index');
             let getUniqId = $('#densoTableListofServiceFeeInputData').bootstrapTable('getData')[indexDt];
             let CostTotal = $('#transactionService_inpt_data_TotalCostOfService').val();
@@ -879,7 +878,6 @@
             densoChangeTotalyOffAllTransactionInputDataGenerateData();
             $('#densoTableListofServiceFeeInputData').bootstrapTable('removeByUniqueId', getUniqId.concat);
         }
-
 
         function densoTableListofComplaintInputDataFormaterAction(value, row, index) {
             return `
@@ -1020,14 +1018,50 @@
         }
 
         function densoPushNewDataTransactionService() {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Your work has been saved',
-                showConfirmButton: false,
-                timer: 1500
-            })
 
+            if ($('#transactionService_inpt_data_transactionDate').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Transaction Date cannot be empty", 'error'
+                )
+                return false
+            }
+            if ($('#transactionService_inpt_data_estimationDate').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Estimation Date cannot be empty", 'error'
+                )
+                return false
+            }
+
+            if ($('#transactionService_inpt_data_carName').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Car Name cannot be empty", 'error'
+                )
+                return false
+            }
+            if ($('#transactionService_inpt_data_frameNumber').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Frame Number cannot be empty", 'error'
+                )
+                return false
+            }
+            if ($('#transactionService_inpt_data_engineNumber').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Engine Number cannot be empty", 'error'
+                )
+                return false
+            }
+            if ($('#transactionService_inpt_data_licensePlate').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "License Plate cannot be empty", 'error'
+                )
+                return false
+            }
+            if ($('#transactionService_inpt_data_miles').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Car Miles cannot be empty", 'error'
+                )
+                return false
+            }
             let transactionDate = $('#transactionService_inpt_data_transactionDate').val();
             let estimationDate = $('#transactionService_inpt_data_estimationDate').val();
             let carCategory = $('#transactionService_inpt_data_carCategory_hidden').val();
@@ -1050,6 +1084,8 @@
             let ownerNumber = null;
             let ownerEmail = null;
 
+
+
             if (toggleSwitch == 'F') {
                 ownerName = $('#transactionService_inpt_data_newOwner_name').val();
                 ownerAddress = $('#transactionService_inpt_data_newOwner_address').val();
@@ -1061,8 +1097,58 @@
                 ownerNumber = $('#transactionService_inpt_data_numberExistingOwner').val();
                 ownerEmail = $('#transactionService_inpt_data_emailExistingOwner').val();
             }
+            if (ownerName == '') {
+                Swal.fire(
+                    'Validation Failed', "Owner Name cannot be empty", 'error'
+                )
+                return false
+            }
+            if (ownerAddress == '') {
+                Swal.fire(
+                    'Validation Failed', "Owner Address cannot be empty", 'error'
+                )
+                return false
+            }
+            if (ownerNumber == '') {
+                Swal.fire(
+                    'Validation Failed', "Owner Number cannot be empty", 'error'
+                )
+                return false
+            }
+            if (ownerEmail == '') {
+                Swal.fire(
+                    'Validation Failed', "Owner Email cannot be empty", 'error'
+                )
+                return false
+            }
+
+
+            if (densoTableListofComplaintInputData_Obj_datas.length == 0) {
+                Swal.fire(
+                    'Validation Failed', "Complaint cannot be empty", 'error'
+                )
+                return false
+            }
+            if (densoTableListofEstimationCostInputData_Obj_datas.length == 0) {
+                Swal.fire(
+                    'Validation Failed', "Estimation Cost cannot be empty", 'error'
+                )
+                return false
+            }
+            if (densoTableListofServiceFeeInputData_Obj_datas.length == 0) {
+                Swal.fire(
+                    'Validation Failed', "Service cannot be empty", 'error'
+                )
+                return false
+            }
 
             let dataTableMechanic = $('#densoTableListofMechanicInputData').bootstrapTable("getSelections");
+            if (dataTableMechanic.length == 0) {
+                Swal.fire(
+                    'Validation Failed', "Mechanic cannot be empty", 'error'
+                )
+                return false
+            }
 
             $.ajax({
                 url: 'transaction/create-data-transaction-service',
@@ -1093,13 +1179,15 @@
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
-                    console.log(respon);
+                    Swal.fire(
+                        'Successfully', "Transaction success created", 'success'
+                    );
+                    $('#densoButtonBackTransactionServiceAdd').click();
                 },
                 error: function(data) {
-                    swalWithBootstrapButtons.fire(
-                        'Error',
-                        'Something Wrong While Processing data',
-                        'error'
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
                     )
                 }
             })

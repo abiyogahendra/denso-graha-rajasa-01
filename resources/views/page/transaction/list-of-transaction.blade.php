@@ -190,7 +190,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-11">
+                                                        <div class="col-md-11" style="padding-left: 0px !important">
                                                             <div class="input-group date datepickermmm"
                                                                 data-provide="datepicker">
                                                                 <input type="text" placeholder="Day - Month - Year"
@@ -215,7 +215,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="row">
-                                                        <div class="col-md-11">
+                                                        <div class="col-md-11" style="padding-left: 0px !important">
                                                             <div class="input-group date datepickermmm"
                                                                 data-provide="datepicker">
                                                                 <input type="text" class="form-control"
@@ -296,7 +296,7 @@
                         </div>
                         <div class="p-2 bd-highlight">
                             <a href="{{ route('transaction-add') }}">
-                                <button type="button" onclick="redirectDataTransactionAdd()" class="btn btn-primary">Add
+                                <button type="button" class="btn btn-primary">Add
                                     Transaction</button>
                             </a>
                         </div>
@@ -312,14 +312,17 @@
                         <thead>
                             <tr>
                                 <th data-checkbox="true"></th>
-                                <th data-field="number" data-halign="center" data-sortable="true">No. Transaction</th>
-                                <th data-field="custName" data-halign="center" data-sortable="true">Owner Name</th>
-                                <th data-field="licensePlate" data-halign="center">License Plate</th>
-                                <th data-field="carName" data-halign="center">Car Name</th>
-                                <th data-field="carEngnNumber" data-halign="center">Engine Number</th>
-                                <th data-field="carFrmNumber" data-halign="center">Frame Number</th>
-                                <th data-field="miles" data-halign="center">Miles</th>
-                                <th data-field="txnDate" data-halign="center">Transaction Date</th>
+                                <th data-field="number" data-align="left" data-halign="center" data-sortable="true">No.
+                                    Transaction</th>
+                                <th data-field="custName" data-align="left" data-halign="center" data-sortable="true">
+                                    Owner Name</th>
+                                <th data-field="licensePlate" data-align="left" data-halign="center">License Plate</th>
+                                <th data-field="carName" data-align="left" data-halign="center">Car Name</th>
+                                <th data-field="carEngnNumber" data-align="left" data-halign="center">Engine Number</th>
+                                <th data-field="carFrmNumber" data-align="left" data-halign="center">Frame Number</th>
+                                <th data-field="miles" data-align="right" data-halign="center">Miles</th>
+                                <th data-field="txnDate" data-formatter="dataTableDateFormater" data-align="center"
+                                    data-halign="center">Transaction Date</th>
                                 <th data-halign="center" data-align="center"
                                     data-formatter="densoTableListofTransactionServiceHistoryActionFormater">Action
                                 </th>
@@ -562,6 +565,8 @@
                                 </div>
                                 {{-- table complaint description --}}
                                 <div class="row" style="padding-left: 0px !important;">
+                                    <input type="hidden" name="-"
+                                        id="transactionService_inpt_update_data_hiddenNumber">
                                     <div class="col" style="padding-left: 0px !important;">
                                         <fieldset class="color-fieldset form-horizontal">
                                             <legend class="color-legend">
@@ -569,7 +574,7 @@
                                             </legend>
                                             <table class="" id="densoTableListofComplaintInputDataUpdate"
                                                 data-toggle="table" data-data-type="json" data-query-params-type="limit"
-                                                data-pagination="true" data-width="10">
+                                                data-unique-id="concat" data-pagination="true" data-width="10">
                                                 <thead>
                                                     <tr>
                                                         <th data-field="complaint" data-halign="center" data-width="20"
@@ -638,7 +643,7 @@
                                             </legend>
                                             <div class="form-horizontal">
                                                 <table class="" id="densoTableListofEstimationCostInputDataUpdate"
-                                                    data-toggle="table" data-data-type="json"
+                                                    data-toggle="table" data-data-type="json" data-unique-id="concat"
                                                     data-query-params-type="limit" data-pagination="true">
                                                     <thead>
                                                         <tr>
@@ -651,7 +656,8 @@
                                                             <th data-field="price" data-halign="center">Price</th>
                                                             <th data-field="total" data-halign="center">Total</th>
                                                             <th data-halign="center" data-align="center"
-                                                                data-formatter="operateFormatter">Action</th>
+                                                                data-formatter="densoTableListofEstimationCostInputDataUpdateActionFormater">
+                                                                Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -705,9 +711,8 @@
                                                             <!-- action ---->
                                                             <th data-align="center" data-valign="middle"
                                                                 data-halign="center" style="text-align: center">
-                                                                <a href="#" style="display:block !important"
-                                                                    onclick="densoTableListofEstimationCostInputDataUpdate_InitAddDataTable_obj(this);
-                                                                        return false;"
+                                                                <a href="#"
+                                                                    onclick="densoTableListofEstimationCostInputDataUpdate_InitAddDataTable_obj(this); return false;"
                                                                     title="Edit Part"><i class="fas fa-plus"></i>
                                                                     Add &nbsp</a>
                                                             </th>
@@ -741,7 +746,7 @@
                                             </legend>
                                             <div class="form-horizontal">
                                                 <table class="" id="densoTableListofServiceFeeInputDataUpdate"
-                                                    data-toggle="table" data-data-type="json"
+                                                    data-toggle="table" data-data-type="json" data-unique-id="concat"
                                                     data-query-params-type="limit" data-pagination="true">
                                                     <thead>
                                                         <tr>
@@ -750,7 +755,9 @@
                                                                 Service Description</th>
                                                             <th data-field="price" data-halign="center">Price</th>
                                                             <th data-halign="center" data-align="center"
-                                                                data-formatter="operateFormatter">Action</th>
+                                                                data-valign="center"
+                                                                data-formatter="densoTableListofServiceFeeInputDataUpdateActionFormater">
+                                                                Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody></tbody>
@@ -851,6 +858,7 @@
                                 <div class="d-flex flex-row-reverse bd-highlight">
                                     <div class="p-2 bd-highlight">
                                         <button type="button" class="btn btn-danger"
+                                            onclick="$('#denso_transaction_detailTransaction_modal').modal('hide')"
                                             style="color: white">Cancel</button>
                                     </div>
                                     <div class="p-2 bd-highlight">
@@ -882,12 +890,69 @@
             densoSelectedListofTransactionListInputDataGenerateData();
         })
 
+        function dataTableDateFormater(value, row, index) {
+            var monthNames = ["January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            var t = new Date(value);
+            return t.getDate() + '-' + monthNames[t.getMonth()] + '-' + t.getFullYear();
+
+        }
+
         $('.datepickermmm').datepicker({
             format: 'dd-MM-yyyy',
-            startDate: '-3d'
         });
 
-        function densoTableListofComplaintInputDataUpdate_InitAddDataTableUpdate_obj(obj) {
+        function densoTableListofServiceFeeInputDataUpdateActionFormater(value, row, index) {
+            return `
+                    <a class="like" href="javascript:void(0)" onclick="densoTableListofServiceFeeInputDataUpdate_InitDeletedDataTable_obj(this)" title="Like">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                `
+        }
+
+        function densoTableListofServiceFeeInputDataUpdate_InitDeletedDataTable_obj(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofServiceFeeInputDataUpdate').bootstrapTable('getData')[indexDt];
+            let CostTotal = $('#transactionService_inpt_update_data_TotalCostOfService').val();
+            let updateTotalCost = parseInt(CostTotal) - getUniqId.price;
+            $('#transactionService_inpt_update_data_TotalCostOfService').val(updateTotalCost);
+            densoChangeTotalyOffAllTransactionInputDataGenerateDataUpdate();
+            $('#densoTableListofServiceFeeInputDataUpdate').bootstrapTable('removeByUniqueId', getUniqId.concat);
+        }
+
+
+        function densoTableListofEstimationCostInputDataUpdateActionFormater(value, row, index) {
+            return `
+                    <a class="like" href="javascript:void(0)" onclick="densoTableListofEstimationCostInputDataUpdate_InitDeletedDataTable_obj(this)" title="Like">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                `
+        }
+
+        function densoTableListofEstimationCostInputDataUpdate_InitDeletedDataTable_obj(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofEstimationCostInputDataUpdate').bootstrapTable('getData')[indexDt];
+            let CostTotal = $('#transactionService_inpt_update_data_TotalCostOfPart').val();
+            let updateTotalCost = parseInt(CostTotal) - getUniqId.total;
+            $('#transactionService_inpt_update_data_TotalCostOfPart').val(updateTotalCost);
+            densoChangeTotalyOffAllTransactionInputDataGenerateDataUpdate();
+            $('#densoTableListofEstimationCostInputDataUpdate').bootstrapTable('removeByUniqueId', getUniqId.concat);
+        }
+
+        function densoChangeTotalyOffAllTransactionInputDataGenerateDataUpdate() {
+            let totalCostofPart = parseInt($('#transactionService_inpt_update_data_TotalCostOfPart').val());
+            let totalServiceFee = parseInt($('#transactionService_inpt_update_data_TotalCostOfService').val())
+            let totalyOfAllTransaction = totalCostofPart + totalServiceFee;
+
+            $('#transactionService_inpt_update_data_totalyOfAllTransaction').val(totalyOfAllTransaction);
+
+            let totalyOfAllTransactionPlusPPN = totalyOfAllTransaction + (totalyOfAllTransaction * 11 /
+                100);
+            $('#transactionService_inpt_update_data_totalyOfAllTransactionPlusPPN').val(totalyOfAllTransactionPlusPPN);
+        }
+
+        function densoTableListofComplaintInputDataUpdate_InitAddDataTable_obj(obj) {
             if ($('#transactionService_inpt_update_tableComplaint_complaint').val() == undefined) {
                 alert('Complaint tidak boleh kosong!');
             }
@@ -900,24 +965,35 @@
             data_obj.handling = $('#transactionService_inpt_update_tableComplaint_handling').val();
             data_obj.concat = $('#transactionService_inpt_update_tableComplaint_handling').val() + " - " + $(
                 '#transactionService_inpt_update_tableComplaint_complaint').val();
-            densoChangeTotalyOffAllTransactionInputDataGenerateData();
-            densoTableListofComplaintInputDataUpdate_Obj_datas.push(data_obj);
+            densoChangeTotalyOffAllTransactionInputDataGenerateDataUpdate();
+            densoTableListofComplaintInputDataUpdate_Obj_datas_update.push(data_obj);
+
+            $('#transactionService_inpt_update_tableComplaint_complaint').val('')
+            $('#transactionService_inpt_update_tableComplaint_handling').val('')
 
             $('#densoTableListofComplaintInputDataUpdate').bootstrapTable('refresh');
             $('#densoTableListofComplaintInputDataUpdate').bootstrapTable('load',
-                densoTableListofComplaintInputDataUpdate_Obj_datas);
+                densoTableListofComplaintInputDataUpdate_Obj_datas_update);
+
+
 
         }
 
         function densoTableListofComplaintInputDataUpdateFormaterAction(value, row, index) {
             return `
-                    <a class="like" href="javascript:void(0)" title="Like">
-                        <i class="fa fa-eye"> Detail</i>
+                    <a class="like" href="javascript:void(0)" onclick="densoTableListofComplaintInputDataUpdate_InitDeletedDataTable_obj(this)" title="Like">
+                        <i class="fa fa-trash"></i>
                     </a>
                 `
         }
 
-        function densoTableListofServiceFeeInputDataUpdate_InitAddDataTableUpdate_obj(obj) {
+        function densoTableListofComplaintInputDataUpdate_InitDeletedDataTable_obj(obj) {
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofComplaintInputDataUpdate').bootstrapTable('getData')[indexDt];
+            $('#densoTableListofComplaintInputDataUpdate').bootstrapTable('removeByUniqueId', getUniqId.concat);
+        }
+
+        function densoTableListofServiceFeeInputDataUpdate_InitAddDataTable_obj(obj) {
             if ($('#transactionService_inpt_update_tableServiceFee_description').val() == undefined) {
                 alert('Complaint tidak boleh kosong!');
             }
@@ -935,68 +1011,100 @@
                     data_obj.price);
             $('#transactionService_inpt_update_data_TotalCostOfService').val(sumTotalCostOfService)
 
-            densoTableListofServiceFeeInputDataUpdate_Obj_datas.push(data_obj);
-            densoChangeTotalyOffAllTransactionInputDataGenerateData();
+            densoTableListofServiceFeeInputDataUpdate_Obj_datas_update.push(data_obj);
+            densoChangeTotalyOffAllTransactionInputDataGenerateDataUpdate();
+            $('#transactionService_inpt_update_tableServiceFee_description').val('')
+            $('#transactionService_inpt_update_tableServiceFee_price').val('')
+
             $('#densoTableListofServiceFeeInputDataUpdateUpdate').bootstrapTable('refresh');
             $('#densoTableListofServiceFeeInputDataUpdate').bootstrapTable('load',
-                densoTableListofServiceFeeInputDataUpdate_Obj_datas);
+                densoTableListofServiceFeeInputDataUpdate_Obj_datas_update);
         }
 
-        function densoTableListofEstimationCostInputDataUpdate_InitAddDataTableUpdate_obj(obj) {
-            if ($('#transactionService_inpt_tableEstimationCost_name').val() == undefined) {
-                alert('Complaint tidak boleh kosong!');
+        function densoTableListofEstimationCostInputDataUpdate_InitAddDataTable_obj(obj) {
+            if ($('#transactionService_inpt_update_tableEstimationCost_name').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Part Name cannot be empty", 'error'
+                )
+                return false;
             }
-            if ($('#transactionService_inpt_tableEstimationCost_partNumber').val() == undefined) {
-                alert('Handling tidak boleh kosong!');
+            if ($('#transactionService_inpt_update_tableEstimationCost_partNumber').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Part Number cannot be empty", 'error'
+                )
+                return false;
             }
-            if ($('#transactionService_inpt_tableEstimationCost_qty').val() == undefined) {
-                alert('Handling tidak boleh kosong!');
+            if ($('#transactionService_inpt_update_tableEstimationCost_qty').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Part Quantity cannot be empty", 'error'
+                )
+                return false;
             }
-            if ($('#transactionService_inpt_tableEstimationCost_price').val() == undefined) {
-                alert('Handling tidak boleh kosong!');
+            if ($('#transactionService_inpt_update_tableEstimationCost_price').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Part Price cannot be empty", 'error'
+                )
+                return false;
             }
 
             let data_obj = {};
-            data_obj.name = $('#transactionService_inpt_tableEstimationCost_name').val();
-            data_obj.partNumber = $('#transactionService_inpt_tableEstimationCost_partNumber').val();
-            data_obj.qty = $('#transactionService_inpt_tableEstimationCost_qty').val();
-            data_obj.price = $('#transactionService_inpt_tableEstimationCost_price').val();
+            data_obj.name = $('#transactionService_inpt_update_tableEstimationCost_name').val();
+            data_obj.partNumber = $('#transactionService_inpt_update_tableEstimationCost_partNumber').val();
+            data_obj.qty = $('#transactionService_inpt_update_tableEstimationCost_qty').val();
+            data_obj.price = $('#transactionService_inpt_update_tableEstimationCost_price').val();
             data_obj.total = data_obj.qty * data_obj.price;
-            data_obj.concat = $('#transactionService_inpt_tableEstimationCost_name').val() + " - " +
-                $('#transactionService_inpt_tableEstimationCost_partNumber').val() + " - " +
-                $('#transactionService_inpt_tableEstimationCost_qty').val() + " - " +
-                $('#transactionService_inpt_tableEstimationCost_price').val();
+            data_obj.concat = $('#transactionService_inpt_update_tableEstimationCost_name').val() + " - " +
+                $('#transactionService_inpt_update_tableEstimationCost_partNumber').val() + " - " +
+                $('#transactionService_inpt_update_tableEstimationCost_qty').val() + " - " +
+                $('#transactionService_inpt_update_tableEstimationCost_price').val();
 
-            let sumTotalCostOfPart = parseInt($('#transactionService_inpt_data_TotalCostOfPart').val()) + data_obj.total;
-            $('#transactionService_inpt_data_TotalCostOfPart').val(sumTotalCostOfPart)
+            let sumTotalCostOfPart = parseInt($('#transactionService_inpt_update_data_TotalCostOfPart').val()) + data_obj
+                .total;
+            $('#transactionService_inpt_update_data_TotalCostOfPart').val(sumTotalCostOfPart)
 
 
-            densoTableListofEstimationCostInputDataUpdate_Obj_datas.push(data_obj);
-            densoChangeTotalyOffAllTransactionInputDataGenerateData();
+            densoTableListofEstimationCostInputDataUpdate_Obj_datas_update.push(data_obj);
+            densoChangeTotalyOffAllTransactionInputDataGenerateDataUpdate();
+            $('#transactionService_inpt_update_tableEstimationCost_name').val('')
+            $('#transactionService_inpt_update_tableEstimationCost_partNumber').val('')
+            $('#transactionService_inpt_update_tableEstimationCost_qty').val('')
+            $('#transactionService_inpt_update_tableEstimationCost_price').val('')
             $('#densoTableListofEstimationCostInputDataUpdate').bootstrapTable('refresh');
             $('#densoTableListofEstimationCostInputDataUpdate').bootstrapTable('load',
-                densoTableListofEstimationCostInputDataUpdate_Obj_datas);
+                densoTableListofEstimationCostInputDataUpdate_Obj_datas_update);
         }
 
         function densoTableListofTransactionServiceHistoryActionFormater(value, row, index) {
             return `
                     <a class="like" href="javascript:void(0)" onclick="DensoTableListOpenModalTransactionDetail(this)" title="Like">
                         <i class="fa fa-eye"> Detail</i>
+                    </a> | 
+                    <a class="like" href="javascript:void(0)" onclick="DensoTableListOpenDetailPDF(this)" title="Like">
+                        <i class="fa fa-file-text"> PDF</i>
                     </a>
                 `
         }
 
-        function DensoTableListOpenModalTransactionDetail(obj) {
+        function DensoTableListOpenDetailPDF(obj){
             var indexDt = $(obj).closest('tr').data('index');
             let getUniqId = $('#densoTableListofTransactionServiceHistory').bootstrapTable('getData')[indexDt];
+            window.location.href = "transaction-print-data-service-detail/" + getUniqId.number;
+        }
+
+        function DensoTableListOpenModalTransactionDetail(obj) {
+            $('#densoTableListofMechanicInputDataUpdate').bootstrapTable('uncheckAll')
+            var indexDt = $(obj).closest('tr').data('index');
+            let getUniqId = $('#densoTableListofTransactionServiceHistory').bootstrapTable('getData')[indexDt];
+            $('#transactionService_inpt_update_data_hiddenNumber').val(getUniqId.number);
             $.ajax({
-                url: 'transaction/loda-data-detail-transaction-service',
+                url: 'transaction/load-data-detail-transaction-service',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 data: {
                     number: getUniqId.number
                 },
+                async: false,
                 type: 'post',
                 dataType: 'json',
                 success: function(respon) {
@@ -1017,6 +1125,126 @@
                     $('#transactionService_inpt_update_data_newOwner_address').val(respon.custAddress);
                     $('#transactionService_inpt_update_data_newOwner_number').val(respon.custNumber);
                     $('#transactionService_inpt_update_data_newOwner_email').val(respon.custEmail);
+
+
+                    $.ajax({
+                        url: 'transaction/load-data-detail-transaction-service-table-complaint',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.number
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            densoTableListofComplaintInputDataUpdate_Obj_datas_update = respon;
+                            $('#densoTableListofComplaintInputDataUpdate').bootstrapTable('load',
+                                densoTableListofComplaintInputDataUpdate_Obj_datas_update);
+
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
+
+                    $.ajax({
+                        url: 'transaction/load-data-detail-transaction-service-table-estimation-cost',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.number
+                        },
+                        async: true,
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            densoTableListofEstimationCostInputDataUpdate_Obj_datas_update = respon;
+                            $('#densoTableListofEstimationCostInputDataUpdate').bootstrapTable(
+                                'load',
+                                densoTableListofEstimationCostInputDataUpdate_Obj_datas_update);
+                            let total = 0;
+                            for (let i in respon) {
+                                total = total + respon[i].total
+                            }
+                            $('#transactionService_inpt_update_data_TotalCostOfPart').val(total);
+                            densoChangeTotalyOffAllTransactionInputDataGenerateDataUpdate();
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
+
+                    $.ajax({
+                        url: 'transaction/load-data-detail-transaction-service-table-service-fee',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.number
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            densoTableListofServiceFeeInputDataUpdate_Obj_datas_update = respon;
+                            $('#densoTableListofServiceFeeInputDataUpdate').bootstrapTable('load',
+                                densoTableListofServiceFeeInputDataUpdate_Obj_datas_update);
+                            let total = 0;
+                            for (let i in respon) {
+                                total = total + respon[i].price
+                            }
+                            $('#transactionService_inpt_update_data_TotalCostOfService').val(total)
+                            densoChangeTotalyOffAllTransactionInputDataGenerateDataUpdate();
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
+
+                    $.ajax({
+                        url: 'transaction/load-data-detail-transaction-service-table-mechanic',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {
+                            number: getUniqId.number
+                        },
+                        type: 'post',
+                        dataType: 'json',
+                        success: function(respon) {
+                            let dataMechanic = [];
+                            for (let d in respon) {
+                                let dataRe = respon[d].mechID;
+                                dataMechanic.push(dataRe);
+                            }
+                            $('#densoTableListofMechanicInputDataUpdate').bootstrapTable(
+                                'checkBy', {
+                                    field: 'no',
+                                    values: dataMechanic
+                                })
+                        },
+                        error: function(data) {
+                            var a = data.responseJSON;
+                            Swal.fire(
+                                'Error', a.message, 'error'
+                            )
+                        }
+                    })
+
+
+                    densoChangeTotalyOffAllTransactionInputDataGenerateDataUpdate();
+
+
                 },
                 error: function(data) {
                     swalWithBootstrapButtons.fire(
@@ -1188,8 +1416,87 @@
             return $container;
         }
 
+        function densoTableListofMechanicInputDataUpdateGenerateData(params) {
+            var url = 'master/master-add-transaction-mechanic'
+            $.get(url + '?' + $.param(params.data)).then(function(res) {
+                params.success(res)
+                console.log(res)
+            })
+        }
+
         function formatSelectionTransactionFilterResultSelectedData(repo) {
             return repo.text;
+        }
+
+        function densoPushUpdateDataTransactionService() {
+            if (densoTableListofComplaintInputDataUpdate_Obj_datas_update.lenght == 0) {
+                Swal.fire(
+                    'Validation Failed', "Complaint cannot be empty", 'error'
+                )
+                return false
+            }
+            if (densoTableListofEstimationCostInputDataUpdate_Obj_datas_update.lenght == 0) {
+                Swal.fire(
+                    'Validation Failed', "Estimation Cost cannot be empty", 'error'
+                )
+                return false
+            }
+            if (densoTableListofServiceFeeInputDataUpdate_Obj_datas_update.lenght == 0) {
+                Swal.fire(
+                    'Validation Failed', "Service Cost cannot be empty", 'error'
+                )
+                return false
+            }
+
+
+            let dataTableMechanic = $('#densoTableListofMechanicInputDataUpdate').bootstrapTable("getSelections");
+            if (dataTableMechanic.length == 0) {
+                Swal.fire(
+                    'Validation Failed', "Mechanic cannot be empty", 'error'
+                )
+                return false
+            }
+            let transactionDate = $('#transactionService_inpt_update_data_transactionDate').val();
+            let estimationDate = $('#transactionService_inpt_update_data_estimationDate').val();
+
+            $.ajax({
+                url: 'transaction/update-data-transaction-service',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: {
+                    number: $('#transactionService_inpt_update_data_hiddenNumber').val(),
+                    qtransactionDate: transactionDate,
+                    qestimationDate: estimationDate,
+
+                    dataComplaint: densoTableListofComplaintInputDataUpdate_Obj_datas_update,
+                    dataEstimation: densoTableListofEstimationCostInputDataUpdate_Obj_datas_update,
+                    dataServiceFee: densoTableListofServiceFeeInputDataUpdate_Obj_datas_update,
+                    dataMechanic: dataTableMechanic,
+                    qtotalPayment: $('#transactionService_inpt_update_data_totalyOfAllTransactionPlusPPN').val()
+                },
+                type: 'post',
+                dataType: 'json',
+                success: function(respon) {
+                    Swal.fire(
+                        'Successfully', "Transaction " + $(
+                            '#transactionService_inpt_update_data_hiddenNumber').val() + " success updated",
+                        'success'
+                    );
+                    densoTableListofComplaintInputDataUpdate_Obj_datas_update = [];
+                    densoTableListofEstimationCostInputDataUpdate_Obj_datas_update = [];
+                    densoTableListofServiceFeeInputDataUpdate_Obj_datas_update = [];
+                    $('#densoTableListofTransactionServiceHistory').bootstrapTable('refresh');
+                    $('#denso_transaction_detailTransaction_modal').modal('hide');
+                },
+                error: function(data) {
+                    var a = data.responseJSON;
+                    Swal.fire(
+                        'Error', a.message, 'error'
+                    )
+                }
+            })
+
         }
     </script>
 @endsection
