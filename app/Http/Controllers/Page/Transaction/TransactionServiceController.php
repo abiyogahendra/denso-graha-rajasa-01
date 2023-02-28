@@ -7,6 +7,7 @@ use Auth;
 use Carbon\Carbon;
 use DB;
 use Illuminate\Http\Request;
+use PDF;
 
 class TransactionServiceController extends Controller
 {
@@ -16,9 +17,51 @@ class TransactionServiceController extends Controller
         return view('page.transaction.list-of-transaction');
     }
 
-    public function TransactionServicePrintPDF(String $d){
-        
-        return view('page.transaction.transaction-download-pdf');
+    public function TransactionServicePrintPDF(String $d)
+    {
+
+        $dataMaster = DB::select('SELECT
+        H.`hdrTransactionID`,
+        DATE_FORMAT(H.txnDate,"%e-%M-%Y") txnDate,
+        H.`estimationDate`,
+        M.`carName`,
+        CC.`ctgName`,
+        CB.`brndName`,
+        H.`carfrmNumber`,
+        H.`carEngnNumber`,
+        H.`licensePlate`,
+        H.`miles`,
+        C.`custName`,
+        C.`custAddress`,
+        C.`custEmail`,
+        C.`custNumber`
+        FROM hdr_transaction H
+        INNER JOIN customer C ON H.`custID` = C.`customerID`
+        INNER JOIN car_maintain_brand_category M ON H.`carID` = M.carMaintainID
+        INNER JOIN car_category CC ON M.`ctgryID` = CC.`categoryID`
+        INNER JOIN car_brand CB ON M.`brandID` = CB.`brandID` where H.hdrTransactionID = ?', [$d]);
+
+        $dataComplaint = DB::select('SELECT complaint, measure FROM dtl_cmpln_txn WHERE `hdrTxnID` = ?', [$d]);
+
+        $dataEstimation = DB::select('SELECT CONCAT(partName,partNumber,qty,totalCost) d, partName name, partNumber partNumber, qty, 
+        CONCAT("RP. ", FORMAT(totalCost,2,"id_ID")) price, (totalCost * qty) total, CONCAT("RP. ", FORMAT((totalCost * qty),2,"id_ID")) totalRP FROM dtl_cost_txn WHERE hdrTxnID = ?', [$d]);
+        $dataService = DB::select('SELECT CONCAT(`srvcName`,`srvcCost`) d, srvcName n, CONCAT("RP. ", FORMAT(srvcCost,2,"id_ID")) c FROM dtl_srvc_cost_txn WHERE hdrTxnID = ?', [$d]);
+
+        $dataSum = DB::select('WITH sumdatacost AS 
+        (SELECT SUM(totalCost * qty) jumlah FROM dtl_cost_txn WHERE hdrTxnID = ? ),
+        sumdataservice AS (SELECT SUM(srvcCost) jumlah FROM dtl_srvc_cost_txn WHERE hdrTxnID = ?),
+        sumalldata AS (SELECT (SELECT * FROM sumdatacost) + (SELECT * FROM sumdataservice) jumlah FROM DUAL)
+        SELECT CONCAT("RP. ", FORMAT((SELECT * FROM sumalldata),2,"id_ID")) dataSum, CONCAT("RP. ", FORMAT(ROUND((SELECT * FROM sumalldata) + (((SELECT * FROM sumalldata)) * 11 / 100)),2,"id_ID")) dataPPN FROM DUAL', [$d,$d]);
+        // return view('page.transaction.transaction-download-pdf', ['data' => $dataMaster[0]]);
+        // dd($dataSum);
+        $pdf = PDF::loadview('page.transaction.transaction-download-pdf', [
+            'data' => $dataMaster[0],
+            'dataComplaint' => $dataComplaint,
+            'dataEstimation' => $dataEstimation,
+            'dataService' => $dataService,
+            'dataSum' => $dataSum[0]
+        ])->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'potrait');
+        return $pdf->stream();
     }
 
     public function GetQueryDataTable(String $query, Request $req)
@@ -230,6 +273,18 @@ class TransactionServiceController extends Controller
 
         return response()->json("sukses", 200);
 
+    }
+
+    public function GetALLDataTableTransactionComplaintEstimationandService(Request $re)
+    {
+        $dataComplaint = DB::select('SELECT CONCAT(complaint , measure) DATACONCAT, complaint, measure FROM dtl_cmpln_txn WHERE `hdrTxnID` = ?', [$re->number]);
+        $dataEstimation = DB::select('SELECT CONCAT(partName,partNumber,qty,totalCost) d, partName na, partNumber nu, qty, totalCost FROM dtl_cost_txn WHERE hdrTxnID = ?', [$re->number]);
+        $dataService = DB::select('SELECT CONCAT(`srvcName`,`srvcCost`) d, srvcName n, srvcCost c FROM dtl_srvc_cost_txn WHERE hdrTxnID = ?', [$re->number]);
+        return response()->json([
+            'dataComplaint' => $dataComplaint,
+            'dataEstimation' => $dataEstimation,
+            'dataService' => $dataService,
+        ], 200);
     }
 
     public function GetDataDetailServiceTransactionModal(Request $re)

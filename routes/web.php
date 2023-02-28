@@ -103,6 +103,7 @@ Route::group(['middleware' => ['check.auth']], function () {
     Route::post('transaction/load-data-detail-transaction-service-table-estimation-cost', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModalTableEstimationCost']);
     Route::post('transaction/load-data-detail-transaction-service-table-service-fee', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModalTableServiceFee']);
     Route::post('transaction/load-data-detail-transaction-service-table-mechanic', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModalTableMechanic']);
+    Route::post('transaction/get-all-data-transaction-service-table-complaint-estimation-service', [TransactionServiceController::class, 'GetALLDataTableTransactionComplaintEstimationandService']);
 
 
 
