@@ -116,7 +116,7 @@ class TransactionServiceController extends Controller
     public function GetDataListTransactionService(Request $table)
     {
 
-        $query = 'SELECT H.`hdrTransactionID` number, H.licensePlate, H.`txnDate`, C.`custName`, M.carName, H.carEngnNumber, H.carFrmNumber, H.miles FROM hdr_transaction H INNER JOIN CUSTOMER C ON H.`custID` = C.`customerID` INNER JOIN CAR_MAINTAIN_BRAND_CATEGORY M ON H.`carID` = M.carMaintainID';
+        $query = 'SELECT H.`hdrTransactionID` number, H.licensePlate, H.`txnDate`, C.`custName`, M.carName, H.carEngnNumber, H.carFrmNumber, H.miles FROM hdr_transaction H INNER JOIN customer C ON H.`custID` = C.`customerID` INNER JOIN CAR_MAINTAIN_BRAND_CATEGORY M ON H.`carID` = M.carMaintainID';
 
         $countDataUser = DB::select('select count(*) jumlah FROM hdr_transaction');
         $newQuery = $this->GetQueryDataTable($query, $table);
