@@ -120,15 +120,15 @@ class TransactionServiceController extends Controller
 
         $countDataUser = DB::select('select count(*) jumlah FROM hdr_transaction');
         $newQuery = $this->GetQueryDataTable($query, $table);
-        try {
+        // try {
 
             $dataUser = DB::select($newQuery);
             //code...
-        } catch (\Throwable $th) {
-            return response()->json([
-                'gagal' => 404,
-            ]);
-        }
+        // } catch (\Throwable $th) {
+        //     return response()->json([
+        //         'gagal' => 404,
+        //     ]);
+        // }
         return response()->json([
             'total' => $countDataUser[0]->jumlah,
             'totalNotFiltered' => $countDataUser[0]->jumlah,
