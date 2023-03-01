@@ -246,7 +246,7 @@
                                         <label class="control-label" for="transactionService_inpt_data_miles">
                                             Miles
                                         </label>
-                                        <input id="transactionService_inpt_data_miles" type="number"
+                                        <input id="transactionService_inpt_data_miles" type="number" oninput="this.value = Math.abs(this.value)" 
                                             placeholder="Input Car Mile" class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
@@ -463,8 +463,10 @@
                                                             Name Part</th>
                                                         <th data-field="partNumber" data-halign="center">Part Number</th>
                                                         <th data-field="qty" data-halign="center">Quantity</th>
-                                                        <th data-field="price" data-halign="center">Price</th>
-                                                        <th data-field="total" data-halign="center">Total</th>
+                                                        <th data-field="price" data-formatter="formatRupiah"
+                                                            data-halign="center">Price</th>
+                                                        <th data-field="total" data-formatter="formatRupiah"
+                                                            data-halign="center">Total</th>
                                                         <th data-halign="center" data-align="center"
                                                             data-formatter="densoTableListofEstimationCostInputDataActionFormater">
                                                             Action</th>
@@ -497,8 +499,9 @@
                                                         <th data-field="qty" data-align="left">
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input id="transactionService_inpt_tableEstimationCost_qty"
-                                                                    placeholder="Input Part Quantity" type="number"
-                                                                    class="form-control uppercase" maxlength="50">
+                                                                    placeholder="Input Part Quantity" type="number" oninput="this.value = Math.abs(this.value)"
+                                                                    min="0" class="form-control uppercase"
+                                                                    maxlength="50">
                                                             </div>
                                                         </th>
 
@@ -507,8 +510,9 @@
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input
                                                                     id="transactionService_inpt_tableEstimationCost_price"
-                                                                    placeholder="Input Part Price" type="Price"
-                                                                    class="form-control uppercase" maxlength="50">
+                                                                    placeholder="Input Part Price" type="number" oninput="this.value = Math.abs(this.value)" 
+                                                                    min="0" class="form-control uppercase"
+                                                                    maxlength="50">
                                                             </div>
                                                         </th>
 
@@ -562,7 +566,8 @@
                                                         <th data-field="description" data-halign="center"
                                                             data-sortable="true">
                                                             Service Description</th>
-                                                        <th data-field="price" data-halign="center">Price</th>
+                                                        <th data-field="price" data-formatter="formatRupiah"
+                                                            data-halign="center">Price</th>
                                                         <th data-halign="center" data-align="center"
                                                             data-formatter="densoTableListofServiceFeeInputDataActionFormater">
                                                             Action</th>
@@ -585,7 +590,7 @@
                                                         <th data-field="price" data-align="left">
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input id="transactionService_inpt_tableServiceFee_price"
-                                                                    placeholder="Input Service Cost" type="number"
+                                                                    placeholder="Input Service Cost" type="number" oninput="this.value = Math.abs(this.value)" 
                                                                     class="form-control uppercase">
                                                             </div>
                                                         </th>
@@ -655,6 +660,9 @@
                                         <input id="transactionService_inpt_data_totalyOfAllTransactionPlusPPN"
                                             type="text" class="form-control uppercase" value="0" maxlength="50"
                                             disabled>
+                                        <input id="transactionService_inpt_data_totalyOfAllTransactionPlusPPNHidden"
+                                            type="hidden" class="form-control uppercase" value="0" maxlength="50"
+                                            disabled>
                                     </div>
                                 </div>
                             </div>
@@ -710,6 +718,13 @@
             })
         })
 
+
+        function densoonchangedataquantityincreaselimit(value, id) {
+            if (value.length === 8) {
+                $(`#${id}`).val(0);
+            }
+        }
+
         function densoChangeTotalyOffAllTransactionInputDataGenerateData() {
             let totalCostofPart = parseInt($('#transactionService_inpt_data_TotalCostOfPart').val());
             let totalServiceFee = parseInt($('#transactionService_inpt_data_TotalCostOfService').val())
@@ -717,11 +732,14 @@
 
             console.log(totalyOfAllTransaction);
 
-            $('#transactionService_inpt_data_totalyOfAllTransaction').val(totalyOfAllTransaction);
+
+            $('#transactionService_inpt_data_totalyOfAllTransaction').val(formatRupiah(totalyOfAllTransaction, null, null));
 
             let totalyOfAllTransactionPlusPPN = totalyOfAllTransaction + (totalyOfAllTransaction * 11 /
                 100);
-            $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPN').val(totalyOfAllTransactionPlusPPN);
+            $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPNHidden').val(totalyOfAllTransactionPlusPPN);
+            $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPN').val(formatRupiah(totalyOfAllTransactionPlusPPN,
+                null, null));
         }
 
         $(document).ready(function() {
@@ -731,6 +749,23 @@
         $('.datepickermmm').datepicker({
             format: 'dd-MM-yyyy'
         });
+
+        function formatRupiah(value, row, index) {
+            var number_string = String(value).replace(/[^,\d]/g, '').toString(),
+                split = String(number_string).split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return 'Rp. ' + rupiah + ',-';
+        }
 
 
         function densoTableListofComplaintInputData_InitAddDataTable_obj(obj) {
@@ -1174,7 +1209,7 @@
                     dataEstimation: densoTableListofEstimationCostInputData_Obj_datas,
                     dataServiceFee: densoTableListofServiceFeeInputData_Obj_datas,
                     dataMechanic: dataTableMechanic,
-                    qtotalPayment: $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPN').val()
+                    qtotalPayment: $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPNHidden').val()
                 },
                 type: 'post',
                 dataType: 'json',

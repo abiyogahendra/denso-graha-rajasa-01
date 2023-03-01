@@ -267,8 +267,8 @@
                                         onclick="densoTableListofTransactionServiceHistorySearchGenerate(this);">
                                         <i class="fas fa-search"></i>
                                         Search</button>
-                                    <button class="btn btn-warning" onclick="ahmsdlog015p01t01Reset(this);"
-                                        style="color: white">
+                                    <button class="btn btn-warning"
+                                        onclick="DensoResetFilterTransactionServiceHistory(this);" style="color: white">
                                         <i class="fas fa-repeat"></i>
                                         Reset</button>
                                     <button class="btn btn-success" onclick="ahmsdlog015p01ExportBtn(this);">
@@ -508,8 +508,9 @@
                                                         Miles
                                                     </label>
                                                     <input id="transactionService_inpt_update_data_miles" type="number"
-                                                        disabled placeholder="Input Car Mile"
-                                                        class="form-control uppercase" maxlength="50">
+                                                        oninput="this.value = Math.abs(this.value)" disabled
+                                                        placeholder="Input Car Mile" class="form-control uppercase"
+                                                        maxlength="50">
                                                 </div>
                                             </div>
                                         </div>
@@ -653,8 +654,10 @@
                                                             <th data-field="partNumber" data-halign="center">Part Number
                                                             </th>
                                                             <th data-field="qty" data-halign="center">Quantity</th>
-                                                            <th data-field="price" data-halign="center">Price</th>
-                                                            <th data-field="total" data-halign="center">Total</th>
+                                                            <th data-field="price" data-formatter="formatRupiah"
+                                                                data-halign="center">Price</th>
+                                                            <th data-field="total" data-formatter="formatRupiah"
+                                                                data-halign="center">Total</th>
                                                             <th data-halign="center" data-align="center"
                                                                 data-formatter="densoTableListofEstimationCostInputDataUpdateActionFormater">
                                                                 Action</th>
@@ -689,6 +692,7 @@
                                                                     <input
                                                                         id="transactionService_inpt_update_tableEstimationCost_qty"
                                                                         placeholder="Input Part Quantity" type="number"
+                                                                        oninput="this.value = Math.abs(this.value)"
                                                                         class="form-control uppercase" maxlength="50">
                                                                 </div>
                                                             </th>
@@ -698,7 +702,8 @@
                                                                 <div class="col-md-12 lookup-wrapper">
                                                                     <input
                                                                         id="transactionService_inpt_update_tableEstimationCost_price"
-                                                                        placeholder="Input Part Price" type="Price"
+                                                                        placeholder="Input Part Price" type="number"
+                                                                        oninput="this.value = Math.abs(this.value)"
                                                                         class="form-control uppercase" maxlength="50">
                                                                 </div>
                                                             </th>
@@ -753,7 +758,8 @@
                                                             <th data-field="description" data-halign="center"
                                                                 data-sortable="true">
                                                                 Service Description</th>
-                                                            <th data-field="price" data-halign="center">Price</th>
+                                                            <th data-field="price" data-formatter="formatRupiah"
+                                                                data-halign="center">Price</th>
                                                             <th data-halign="center" data-align="center"
                                                                 data-valign="center"
                                                                 data-formatter="densoTableListofServiceFeeInputDataUpdateActionFormater">
@@ -780,6 +786,7 @@
                                                                     <input
                                                                         id="transactionService_inpt_update_tableServiceFee_price"
                                                                         placeholder="Input Service Cost" type="number"
+                                                                        oninput="this.value = Math.abs(this.value)"
                                                                         class="form-control uppercase">
                                                                 </div>
                                                             </th>
@@ -851,6 +858,10 @@
                                             <input id="transactionService_inpt_update_data_totalyOfAllTransactionPlusPPN"
                                                 type="text" class="form-control uppercase" value="0"
                                                 maxlength="50" disabled>
+                                            <input
+                                                id="transactionService_inpt_update_data_totalyOfAllTransactionPlusPPNHidden"
+                                                type="hidden" class="form-control uppercase" value="0"
+                                                maxlength="50" disabled>
                                         </div>
                                     </div>
                                 </div>
@@ -890,6 +901,15 @@
             densoSelectedListofTransactionListInputDataGenerateData();
         })
 
+        function DensoResetFilterTransactionServiceHistory() {
+            $("#transactionService_fltr_data_carName_select").empty().trigger('change')
+            $("#transactionService_fltr_data_licensePlate_select").empty().trigger('change')
+            $("#transactionService_fltr_data_startTransaction_date").val('');
+            $("#transactionService_fltr_data_endTransaction_date").val('');
+            $("#transactionService_fltr_data_ownerName_select").empty().trigger('change')
+
+        }
+
         function dataTableDateFormater(value, row, index) {
             var monthNames = ["January", "February", "March", "April", "May", "June",
                 "July", "August", "September", "October", "November", "December"
@@ -902,6 +922,24 @@
         $('.datepickermmm').datepicker({
             format: 'dd-MM-yyyy',
         });
+
+        function formatRupiah(value, row, index) {
+            var number_string = String(value).replace(/[^,\d]/g, '').toString(),
+                split = String(number_string).split(','),
+                sisa = split[0].length % 3,
+                rupiah = split[0].substr(0, sisa),
+                ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+            // tambahkan titik jika yang di input sudah menjadi angka ribuan
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+
+            rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+            return 'Rp. ' + rupiah + ',-';
+        }
+
 
         function densoTableListofServiceFeeInputDataUpdateActionFormater(value, row, index) {
             return `
@@ -945,11 +983,15 @@
             let totalServiceFee = parseInt($('#transactionService_inpt_update_data_TotalCostOfService').val())
             let totalyOfAllTransaction = totalCostofPart + totalServiceFee;
 
-            $('#transactionService_inpt_update_data_totalyOfAllTransaction').val(totalyOfAllTransaction);
+            $('#transactionService_inpt_update_data_totalyOfAllTransaction').val(formatRupiah(totalyOfAllTransaction, null,
+                null));
 
             let totalyOfAllTransactionPlusPPN = totalyOfAllTransaction + (totalyOfAllTransaction * 11 /
                 100);
-            $('#transactionService_inpt_update_data_totalyOfAllTransactionPlusPPN').val(totalyOfAllTransactionPlusPPN);
+            $('#transactionService_inpt_update_data_totalyOfAllTransactionPlusPPNHidden').val(
+                totalyOfAllTransactionPlusPPN);
+            $('#transactionService_inpt_update_data_totalyOfAllTransactionPlusPPN').val(formatRupiah(
+                totalyOfAllTransactionPlusPPN, null, null));
         }
 
         function densoTableListofComplaintInputDataUpdate_InitAddDataTable_obj(obj) {
@@ -1077,7 +1119,7 @@
         function densoTableListofTransactionServiceHistoryActionFormater(value, row, index) {
             return `
                     <a class="like" href="javascript:void(0)" onclick="DensoTableListOpenModalTransactionDetail(this)" title="Like">
-                        <i class="fa fa-eye"> Detail</i>
+                        <i class="fa fa-edit"> Update</i>
                     </a> | 
                     <a class="like" href="javascript:void(0)" onclick="DensoTableListOpenDetailPDF(this)" title="Like">
                         <i class="fa fa-file-text"> PDF</i>
@@ -1085,7 +1127,7 @@
                 `
         }
 
-        function DensoTableListOpenDetailPDF(obj){
+        function DensoTableListOpenDetailPDF(obj) {
             var indexDt = $(obj).closest('tr').data('index');
             let getUniqId = $('#densoTableListofTransactionServiceHistory').bootstrapTable('getData')[indexDt];
             window.location.href = "transaction-print-data-service-detail/" + getUniqId.number;
@@ -1262,7 +1304,7 @@
             params.search = {
                 // MAIN DEALER
                 'CARNAME': $("#transactionService_fltr_data_carName_select option:selected").val(),
-                'LICENSE': $("#transactionService_fltr_data_licensePLate_select option:selected").val(),
+                'LICENSE': $("#transactionService_fltr_data_licensePlate_select option:selected").val(),
                 'STARDATE': $("#transactionService_fltr_data_startTransaction_date").val(),
                 'ENDDATE': $("#transactionService_fltr_data_endTransaction_date").val(),
                 'OWNER': $("#transactionService_fltr_data_ownerName_select option:selected").val()
@@ -1314,6 +1356,7 @@
                 },
                 minimumInputLength: 2,
                 placeholder: 'Search for a car name',
+                allowClear: true,
                 templateResult: formatSelectionTransactionFilterResultFilterSelect,
                 templateSelection: formatSelectionTransactionFilterResultSelectedData
             });
@@ -1341,6 +1384,7 @@
                 },
                 minimumInputLength: 2,
                 placeholder: 'Search for a car name',
+                allowClear: true,
                 templateResult: formatSelectionTransactionFilterResultFilterSelect,
                 templateSelection: formatSelectionTransactionFilterResultSelectedData
             });
@@ -1368,6 +1412,7 @@
                 },
                 minimumInputLength: 2,
                 placeholder: 'Search for Car License Plate',
+                allowClear: true,
                 templateResult: formatSelectionTransactionFilterResultFilterSelect,
                 templateSelection: formatSelectionTransactionFilterResultSelectedData
             });
@@ -1395,6 +1440,7 @@
                 },
                 minimumInputLength: 2,
                 placeholder: 'Search for Car License Plate',
+                allowClear: true,
                 templateResult: formatSelectionTransactionFilterResultFilterSelect,
                 templateSelection: formatSelectionTransactionFilterResultSelectedData
             });
