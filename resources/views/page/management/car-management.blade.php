@@ -261,7 +261,7 @@
                                             Add Car
                                         </label>
                                         <input id="densoManagementCar_carNameInput" type="text"
-                                            class="form-control uppercase" maxlength="10">
+                                            class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                                 <div class="row">
@@ -331,7 +331,7 @@
                                             Add Car
                                         </label>
                                         <input id="densoManagementCar_carNameInput" type="text"
-                                            class="form-control uppercase" maxlength="10">
+                                            class="form-control uppercase" maxlength="30">
                                     </div>
                                 </div>
                                 <div class="row">

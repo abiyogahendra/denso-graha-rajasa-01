@@ -210,7 +210,7 @@
                                             Frame Number
                                         </label>
                                         <input id="transactionService_inpt_data_frameNumber" type="text"
-                                            class="form-control uppercase" maxlength="15" placeholder="Input Frame Number">
+                                            class="form-control uppercase" maxlength="30" placeholder="Input Frame Number">
                                     </div>
                                 </div>
                             </div>
