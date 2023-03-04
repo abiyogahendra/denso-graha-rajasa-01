@@ -121,6 +121,17 @@ class MasterDropDownController extends Controller
         return response()->json($dattaReturn, 200);
     }
 
+    public function GetDataListFrameNumberTransactionListFilter(Request $re)
+    {
+        $dattaReturn = DB::select('SELECT DISTINCT carfrmNumber id, carfrmNumber text FROM hdr_transaction where carfrmNumber like "%' . $re->search . '%" ');
+        return response()->json($dattaReturn, 200);
+    }
+    public function GetDataListEngineNumberTransactionListFilter(Request $re)
+    {
+        $dattaReturn = DB::select('SELECT DISTINCT carEngnNumber id, carEngnNumber text FROM hdr_transaction where carEngnNumber like "%' . $re->search . '%" ');
+        return response()->json($dattaReturn, 200);
+    }
+
     public function GetDataListCarCategoryBrandAddTransaction(Request $re)
     {
         $dattaReturn = DB::select('SELECT m.`carMaintainID` id, m.`ctgryID`, m.`brandID`, carName text, ctgName, brndName, m.updated_at, m.updated_by FROM car_maintain_brand_category m INNER JOIN car_category c ON m.ctgryID = c.categoryID INNER JOIN car_brand b ON m.brandID = b.brandID where carName like "%' . $re->search . '%" ');

@@ -46,6 +46,8 @@ Route::group(['middleware' => ['check.auth']], function () {
     Route::post('master/master-car-name-list-transaction', [MasterDropdownController::class, 'GetDataListCarNameTransactionListFilter']);
     Route::post('master/master-car-license-list-transaction', [MasterDropdownController::class, 'GetDataListCarLicenseTransactionListFilter']);
     Route::post('master/master-owner-name-list-transaction', [MasterDropdownController::class, 'GetDataListOwnerNameTransactionListFilter']);
+    Route::post('master/master-frm-number-list-transaction', [MasterDropdownController::class, 'GetDataListFrameNumberTransactionListFilter']);
+    Route::post('master/master-engn-number-list-transaction', [MasterDropdownController::class, 'GetDataListEngineNumberTransactionListFilter']);
 
     // ----------------------------- process data -----------------------------------------------------
 

@@ -256,6 +256,38 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group large-font">
+                                                    <div class="row">
+                                                        <div class="col-md-11 form-group"
+                                                            style="padding-left: 0px !important;">
+                                                            <label class="control-label"
+                                                                for="transactionService_fltr_data_frmNumber_select">
+                                                                Frame Number
+                                                            </label>
+                                                            <select id="transactionService_fltr_data_frmNumber_select"
+                                                                class="form-control uppercase">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group large-font">
+                                                    <div class="row">
+                                                        <div class="col-md-11 form-group"
+                                                            style="padding-left: 0px !important;">
+                                                            <label class="control-label"
+                                                                for="transactionService_fltr_data_engnNumber_select">
+                                                                Engine Number
+                                                            </label>
+                                                            <select id="transactionService_fltr_data_engnNumber_select"
+                                                                class="form-control uppercase">
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -907,6 +939,8 @@
             $("#transactionService_fltr_data_startTransaction_date").val('');
             $("#transactionService_fltr_data_endTransaction_date").val('');
             $("#transactionService_fltr_data_ownerName_select").empty().trigger('change')
+            $("#transactionService_fltr_data_frmNumber_select").empty().trigger('change')
+            $("#transactionService_fltr_data_engnNumber_select").empty().trigger('change')
 
         }
 
@@ -1307,7 +1341,9 @@
                 'LICENSE': $("#transactionService_fltr_data_licensePlate_select option:selected").val(),
                 'STARDATE': $("#transactionService_fltr_data_startTransaction_date").val(),
                 'ENDDATE': $("#transactionService_fltr_data_endTransaction_date").val(),
-                'OWNER': $("#transactionService_fltr_data_ownerName_select option:selected").val()
+                'OWNER': $("#transactionService_fltr_data_ownerName_select option:selected").val(),
+                'FRAME': $("#transactionService_fltr_data_frmNumber_select option:selected").val(),
+                'ENGINE': $("#transactionService_fltr_data_engnNumber_select option:selected").val()
             };
 
             if (params.sort == undefined) {
@@ -1333,6 +1369,7 @@
         }
 
         function densoSelectedListofTransactionListInputDataGenerateData() {
+            // generate car name
             $("#transactionService_fltr_data_carName_select").select2({
                 ajax: {
                     url: '/master/master-car-name-list-transaction',
@@ -1361,6 +1398,7 @@
                 templateSelection: formatSelectionTransactionFilterResultSelectedData
             });
 
+            // generate ownername
             $("#transactionService_fltr_data_ownerName_select").select2({
                 ajax: {
                     url: '/master/master-owner-name-list-transaction',
@@ -1383,12 +1421,72 @@
                     cache: true
                 },
                 minimumInputLength: 2,
-                placeholder: 'Search for a car name',
+                placeholder: 'Search for a owner name',
                 allowClear: true,
                 templateResult: formatSelectionTransactionFilterResultFilterSelect,
                 templateSelection: formatSelectionTransactionFilterResultSelectedData
             });
 
+            // generate frame number
+            $("#transactionService_fltr_data_frmNumber_select").select2({
+                ajax: {
+                    url: '/master/master-frm-number-list-transaction',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term, // search term
+                        };
+                    },
+                    processResults: function(data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 2,
+                placeholder: 'Search for a frame number',
+                allowClear: true,
+                templateResult: formatSelectionTransactionFilterResultFilterSelect,
+                templateSelection: formatSelectionTransactionFilterResultSelectedData
+            });
+
+            // generate engine number
+            $("#transactionService_fltr_data_engnNumber_select").select2({
+                ajax: {
+                    url: '/master/master-engn-number-list-transaction',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term, // search term
+                        };
+                    },
+                    processResults: function(data, params) {
+                        return {
+                            results: data,
+                        };
+                    },
+                    cache: true
+                },
+                minimumInputLength: 2,
+                placeholder: 'Search for a engine number',
+                allowClear: true,
+                templateResult: formatSelectionTransactionFilterResultFilterSelect,
+                templateSelection: formatSelectionTransactionFilterResultSelectedData
+            });
+
+
+            // generate license plate
             $("#transactionService_fltr_data_licensePlate_select").select2({
                 ajax: {
                     url: '/master/master-car-license-list-transaction',
@@ -1417,33 +1515,6 @@
                 templateSelection: formatSelectionTransactionFilterResultSelectedData
             });
 
-            $("#transactionService_fltr_data_licensePlate_select").select2({
-                ajax: {
-                    url: '/master/master-car-license-list-transaction',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: 'post',
-                    dataType: 'json',
-                    delay: 250,
-                    data: function(params) {
-                        return {
-                            search: params.term, // search term
-                        };
-                    },
-                    processResults: function(data, params) {
-                        return {
-                            results: data,
-                        };
-                    },
-                    cache: true
-                },
-                minimumInputLength: 2,
-                placeholder: 'Search for Car License Plate',
-                allowClear: true,
-                templateResult: formatSelectionTransactionFilterResultFilterSelect,
-                templateSelection: formatSelectionTransactionFilterResultSelectedData
-            });
         }
 
         function formatSelectionTransactionFilterResultFilterSelect(repo) {

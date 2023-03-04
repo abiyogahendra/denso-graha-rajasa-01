@@ -43,15 +43,15 @@ class TransactionServiceController extends Controller
 
         $dataComplaint = DB::select('SELECT complaint, measure FROM dtl_cmpln_txn WHERE `hdrTxnID` = ?', [$d]);
 
-        $dataEstimation = DB::select('SELECT CONCAT(partName,partNumber,qty,totalCost) d, partName name, partNumber partNumber, qty, 
+        $dataEstimation = DB::select('SELECT CONCAT(partName,partNumber,qty,totalCost) d, partName name, partNumber partNumber, qty,
         CONCAT("RP. ", FORMAT(totalCost,2,"id_ID")) price, (totalCost * qty) total, CONCAT("RP. ", FORMAT((totalCost * qty),2,"id_ID")) totalRP FROM dtl_cost_txn WHERE hdrTxnID = ?', [$d]);
         $dataService = DB::select('SELECT CONCAT(`srvcName`,`srvcCost`) d, srvcName n, CONCAT("RP. ", FORMAT(srvcCost,2,"id_ID")) c FROM dtl_srvc_cost_txn WHERE hdrTxnID = ?', [$d]);
 
-        $dataSum = DB::select('WITH sumdatacost AS 
+        $dataSum = DB::select('WITH sumdatacost AS
         (SELECT SUM(totalCost * qty) jumlah FROM dtl_cost_txn WHERE hdrTxnID = ? ),
         sumdataservice AS (SELECT SUM(srvcCost) jumlah FROM dtl_srvc_cost_txn WHERE hdrTxnID = ?),
         sumalldata AS (SELECT (SELECT * FROM sumdatacost) + (SELECT * FROM sumdataservice) jumlah FROM DUAL)
-        SELECT CONCAT("RP. ", FORMAT((SELECT * FROM sumalldata),2,"id_ID")) dataSum, CONCAT("RP. ", FORMAT(ROUND((SELECT * FROM sumalldata) + (((SELECT * FROM sumalldata)) * 11 / 100)),2,"id_ID")) dataPPN FROM DUAL', [$d,$d]);
+        SELECT CONCAT("RP. ", FORMAT((SELECT * FROM sumalldata),2,"id_ID")) dataSum, CONCAT("RP. ", FORMAT(ROUND((SELECT * FROM sumalldata) + (((SELECT * FROM sumalldata)) * 11 / 100)),2,"id_ID")) dataPPN FROM DUAL', [$d, $d]);
         // return view('page.transaction.transaction-download-pdf', ['data' => $dataMaster[0]]);
         // dd($dataSum);
         $pdf = PDF::loadview('page.transaction.transaction-download-pdf', [
@@ -59,7 +59,7 @@ class TransactionServiceController extends Controller
             'dataComplaint' => $dataComplaint,
             'dataEstimation' => $dataEstimation,
             'dataService' => $dataService,
-            'dataSum' => $dataSum[0]
+            'dataSum' => $dataSum[0],
         ])->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'potrait');
         return $pdf->stream();
     }
@@ -72,7 +72,15 @@ class TransactionServiceController extends Controller
         $dataLimit = null;
         $dataOffset = null;
 
-        if ($req->search['CARNAME'] != null || $req->search['LICENSE'] || $req->search['STARDATE'] || $req->search['ENDDATE'] || $req->search['OWNER']) {
+        if ($req->search['CARNAME'] != null ||
+            $req->search['LICENSE'] ||
+            $req->search['STARDATE'] ||
+            $req->search['ENDDATE'] ||
+            $req->search['FRAME'] ||
+            $req->search['ENGINE'] ||
+            $req->search['OWNER']
+
+        ) {
             $query = $query . ' WHERE 1 = 1 ';
             if ($req->search['CARNAME'] != null) {
                 $query = $query . 'AND H.`carID` = "' . $req->search['CARNAME'] . '"';
@@ -97,6 +105,12 @@ class TransactionServiceController extends Controller
             if ($req->search['OWNER'] != null) {
                 $query = $query . 'AND H.`custID` = "' . $req->search['OWNER'] . '"';
             }
+            if ($req->search['FRAME'] != null) {
+                $query = $query . 'AND H.`carfrmNumber` = "' . $req->search['FRAME'] . '"';
+            }
+            if ($req->search['ENGINE'] != null) {
+                $query = $query . 'AND H.`carEngnNumber` = "' . $req->search['ENGINE'] . '"';
+            }
         }
 
         if ($req->sort != null) {
@@ -108,7 +122,7 @@ class TransactionServiceController extends Controller
         if ($req->offset != null) {
             $query = $query . ' OFFSET ' . $req->offset;
         }
-
+        // dd($query);
         return $query;
 
     }
@@ -122,8 +136,8 @@ class TransactionServiceController extends Controller
         $newQuery = $this->GetQueryDataTable($query, $table);
         // try {
 
-            $dataUser = DB::select($newQuery);
-            //code...
+        $dataUser = DB::select($newQuery);
+        //code...
         // } catch (\Throwable $th) {
         //     return response()->json([
         //         'gagal' => 404,
