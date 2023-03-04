@@ -33,7 +33,7 @@ class MasterDropDownController extends Controller
     public function GetDataListMechanic(Request $table)
     {
 
-        $query = 'SELECT mechanicName name, mechanicID no, updated_at, updated_by FROM mechanic';
+        $query = 'SELECT mechanicName name, mechanicID no, updated_at, updated_by FROM mechanic where status = "T"';
         $countDataUser = DB::select('select count(*) jumlah FROM mechanic');
         $newQuery = $this->GetQueryDataTable($query, $table);
         try {
