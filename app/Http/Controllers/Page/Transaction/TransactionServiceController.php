@@ -158,9 +158,20 @@ class TransactionServiceController extends Controller
     public function CreateNewTransactionService(Request $re)
     {
 
-        // try {
+        
         $idOwner = 0;
         if ($re->qnewOwner == 'F') {
+
+            try {
+                //code...
+                $dataGmailExisting = DB::select('SELECT custEmail FROM customer WHERE custEmail LIKE ?', [$re->qownerEmail]);
+                if($dataGmailExisting.length > 0){
+                    return response()->json(['message' => 'Email is existing'], 500);
+                }
+            } catch (\Throwable $th) {
+                return response()->json(['message' => 'error while processing data'], 500);
+            }
+
             $idOwner = DB::table('customer')
                 ->insertGetId([
                     'custName' => $re->qownerName,
@@ -280,7 +291,7 @@ class TransactionServiceController extends Controller
             } else {
                 DB::delete('delete from hdr_transaction where hdrTransactionID = ? ', [$generateDataHeaderID]);
             }
-            return response()->json($th, 500);
+            return response()->json(['message' => 'error while processing data'], 500);
         }
 
         DB::commit();
@@ -482,7 +493,7 @@ class TransactionServiceController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollback();
-            return response()->json(['message' => $th], 500);
+            return response()->json(['message' => 'error while processing data'], 500);
         }
 
         DB::commit();
