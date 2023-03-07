@@ -251,6 +251,18 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- Hour Meter --}}
+                            <div class="form-group large-font">
+                                <div class="row">
+                                    <div class="col-md-4" style="padding-left: 0px !important;">
+                                        <label class="control-label" for="transactionService_inpt_data_hourMeter">
+                                            Hour Meter
+                                        </label>
+                                        <input id="transactionService_inpt_data_hourMeter" type="number" oninput="this.value = Math.abs(this.value)" 
+                                            placeholder="Input Car Hour Meter" class="form-control uppercase" maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
                             {{-- New Owner / Existing Owner --}}
                             <div class="form-group large-font">
                                 <div class="row">
@@ -1085,6 +1097,12 @@
                 )
                 return false
             }
+            if ($('#transactionService_inpt_data_hourMeter').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Hour Meter cannot be empty", 'error'
+                )
+                return false
+            }
             if ($('#transactionService_inpt_data_licensePlate').val() == '') {
                 Swal.fire(
                     'Validation Failed', "License Plate cannot be empty", 'error'
@@ -1106,6 +1124,7 @@
             let engineNumber = $('#transactionService_inpt_data_engineNumber').val();
             let licensePlate = $('#transactionService_inpt_data_licensePlate').val();
             let miles = $('#transactionService_inpt_data_miles').val();
+            let hourMeter = $('#transactionService_inpt_data_hourMeter').val();
 
             let toggleSwitch = 'N'
             if ($('#transactionService_inpt_data_userSelect').is(":checked")) {
@@ -1200,6 +1219,7 @@
                     qengnNumber: engineNumber,
                     qlicensePlate: licensePlate,
                     qmiles: miles,
+                    qhourMeter: hourMeter,
                     qnewOwner: toggleSwitch,
                     qownerName: ownerName,
                     qownerAddress: ownerAddress,
