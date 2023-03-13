@@ -292,7 +292,7 @@ class TransactionServiceController extends Controller
             } else {
                 DB::delete('delete from hdr_transaction where hdrTransactionID = ? ', [$generateDataHeaderID]);
             }
-            return response()->json(['message' => 'error while processing data'], 500);
+            return response()->json(['message' => $th], 500);
         }
 
         DB::commit();
