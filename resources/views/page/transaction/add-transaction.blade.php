@@ -251,6 +251,18 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- Car Year --}}
+                            <div class="form-group large-font">
+                                <div class="row">
+                                    <div class="col-md-4" style="padding-left: 0px !important;">
+                                        <label class="control-label" for="transactionService_inpt_data_miles">
+                                            Car Year
+                                        </label>
+                                        <input id="transactionService_inpt_data_vehicleYear" type="number" oninput="this.value = Math.abs(this.value)" 
+                                            placeholder="Input Car Mile" class="form-control uppercase" maxlength="50">
+                                    </div>
+                                </div>
+                            </div>
                             {{-- Hour Meter --}}
                             <div class="form-group large-font">
                                 <div class="row">
@@ -1115,16 +1127,24 @@
                 )
                 return false
             }
-            let transactionDate = $('#transactionService_inpt_data_transactionDate').val();
-            let estimationDate = $('#transactionService_inpt_data_estimationDate').val();
-            let carCategory = $('#transactionService_inpt_data_carCategory_hidden').val();
-            let carBrand = $('#transactionService_inpt_data_carBrand_hidden').val();
-            let carName = $('#transactionService_inpt_data_carName option:selected').val();
-            let frameNumber = $('#transactionService_inpt_data_frameNumber').val();
-            let engineNumber = $('#transactionService_inpt_data_engineNumber').val();
-            let licensePlate = $('#transactionService_inpt_data_licensePlate').val();
-            let miles = $('#transactionService_inpt_data_miles').val();
-            let hourMeter = $('#transactionService_inpt_data_hourMeter').val();
+            if ($('#transactionService_inpt_data_vehicleYear').val() == '') {
+                Swal.fire(
+                    'Validation Failed', "Car Year cannot be empty", 'error'
+                )
+                return false
+            }
+
+            const transactionDate = $('#transactionService_inpt_data_transactionDate').val();
+            const estimationDate = $('#transactionService_inpt_data_estimationDate').val();
+            const carCategory = $('#transactionService_inpt_data_carCategory_hidden').val();
+            const carBrand = $('#transactionService_inpt_data_carBrand_hidden').val();
+            const carName = $('#transactionService_inpt_data_carName option:selected').val();
+            const frameNumber = $('#transactionService_inpt_data_frameNumber').val();
+            const engineNumber = $('#transactionService_inpt_data_engineNumber').val();
+            const licensePlate = $('#transactionService_inpt_data_licensePlate').val();
+            const miles = $('#transactionService_inpt_data_miles').val();
+            const hourMeter = $('#transactionService_inpt_data_hourMeter').val();
+            const carYear = $('#transactionService_inpt_data_vehicleYear').val();
 
             let toggleSwitch = 'N'
             if ($('#transactionService_inpt_data_userSelect').is(":checked")) {
@@ -1220,6 +1240,7 @@
                     qlicensePlate: licensePlate,
                     qmiles: miles,
                     qhourMeter: hourMeter,
+                    qcarYear: carYear,
                     qnewOwner: toggleSwitch,
                     qownerName: ownerName,
                     qownerAddress: ownerAddress,

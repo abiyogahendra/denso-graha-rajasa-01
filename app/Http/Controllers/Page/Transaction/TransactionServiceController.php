@@ -207,6 +207,7 @@ class TransactionServiceController extends Controller
                 'carFrmNumber' => $re->qfrmNumber,
                 'miles' => $re->qmiles,
                 'hourMeter' => $re->qhourMeter,
+                'carYear' => $re->qcarYear,
                 'licensePlate' => $re->qlicensePlate,
                 'techLeadID' => $techLead[0]->tchLeadID,
                 'totalPayment' => $re->qtotalPayment,
