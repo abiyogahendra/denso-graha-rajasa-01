@@ -399,25 +399,23 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($dataEstimation as $f)
-                                            
-                                        
-                                        <tr>
-                                            <td>
-                                               {{$f->name}}
-                                            </td>
-                                            <td>
-                                                {{$f->partNumber}}
-                                            </td>
-                                            <td>
-                                                {{$f->qty}}
-                                            </td>
-                                            <td>
-                                                {{$f->price}}
-                                            </td>
-                                            <td>
-                                                {{$f->totalRP}}
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td>
+                                                    {{ $f->name }}
+                                                </td>
+                                                <td>
+                                                    {{ $f->partNumber }}
+                                                </td>
+                                                <td>
+                                                    {{ $f->qty }}
+                                                </td>
+                                                <td>
+                                                    {{ $f->price }}
+                                                </td>
+                                                <td>
+                                                    {{ $f->totalRP }}
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -430,7 +428,8 @@
                                             Total biaya keseluruhan
                                         </label>
                                         <br>
-                                        <h3 class="title-3 bold" id="densoDataTotalGross">{{$dataSum->dataSum}}</h3>
+                                        <h3 class="title-3 bold" id="densoDataTotalGross">{{ $dataSum->dataSum }}
+                                        </h3>
                                     </div>
                                 </div>
                             </div>
@@ -442,7 +441,8 @@
                                             Total biaya keseluruhan + PPN 11 %
                                         </label>
                                         <br>
-                                        <h3 class="title-3 bold" id="densoDataTotalFinal">{{$dataSum->dataPPN}}</h3>
+                                        <h3 class="title-3 bold" id="densoDataTotalFinal">{{ $dataSum->dataPPN }}
+                                        </h3>
                                     </div>
                                 </div>
                             </div>
@@ -455,18 +455,19 @@
                                                 style="border: 1px solid silver; align-content: center;border-collapse: collapse;">
                                                 <tbody>
                                                     <tr>
-                                                        <td style="width: 80px">
+                                                        <td style="width: 100px">
                                                             <div class="form-group large-font center">
-                                                                <label class="control-label center">
+                                                                <label class="control-label">
                                                                     Frontman
                                                                 </label>
                                                                 <br>
                                                                 <br>
                                                                 <br>
                                                                 <br>
+                                                                <div class="center"></div>
                                                             </div>
                                                         </td>
-                                                        <td style="width: 80px">
+                                                        <td style="width: 100px">
                                                             <div class="form-group large-font center">
                                                                 <label class="control-label center">
                                                                     Mechanic
@@ -475,9 +476,10 @@
                                                                 <br>
                                                                 <br>
                                                                 <br>
+                                                                <div class="center">{{ $dataMechanic->name }}</div>
                                                             </div>
                                                         </td>
-                                                        <td style="width: 80px">
+                                                        <td style="width: 100px">
                                                             <div class="form-group large-font center">
                                                                 <label class="control-label center"
                                                                     for="transactionService_inpt_data_licensePlate">
@@ -487,6 +489,8 @@
                                                                 <br>
                                                                 <br>
                                                                 <br>
+                                                                <div class="center">{{ $data->tchLeadName }}
+                                                                </div>
                                                             </div>
                                                         </td>
                                                     </tr>

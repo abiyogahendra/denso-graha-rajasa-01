@@ -34,14 +34,19 @@ class TransactionServiceController extends Controller
         C.`custName`,
         C.`custAddress`,
         C.`custEmail`,
-        C.`custNumber`
+        C.`custNumber`,
+        tech.`tchLeadName`
         FROM hdr_transaction H
+        INNER JOIN technical_lead tech ON H.`techLeadID` = tech.`tchLeadID`
         INNER JOIN customer C ON H.`custID` = C.`customerID`
         INNER JOIN car_maintain_brand_category M ON H.`carID` = M.carMaintainID
         INNER JOIN car_category CC ON M.`ctgryID` = CC.`categoryID`
         INNER JOIN car_brand CB ON M.`brandID` = CB.`brandID` where H.hdrTransactionID = ?', [$d]);
 
         $dataComplaint = DB::select('SELECT complaint, measure FROM dtl_cmpln_txn WHERE `hdrTxnID` = ?', [$d]);
+
+        $dataMechanic = DB::select('SELECT mech.`mechanicName` name FROM `dtl_mchnc_txn` dtl JOIN mechanic mech ON dtl.`mechID` = mech.`mechanicID`  WHERE hdrTxnID = ?', [$d]);
+
 
         $dataEstimation = DB::select('SELECT CONCAT(partName,partNumber,qty,totalCost) d, partName name, partNumber partNumber, qty,
         CONCAT("RP. ", FORMAT(totalCost,2,"id_ID")) price, (totalCost * qty) total, CONCAT("RP. ", FORMAT((totalCost * qty),2,"id_ID")) totalRP FROM dtl_cost_txn WHERE hdrTxnID = ?', [$d]);
@@ -59,6 +64,7 @@ class TransactionServiceController extends Controller
             'dataComplaint' => $dataComplaint,
             'dataEstimation' => $dataEstimation,
             'dataService' => $dataService,
+            'dataMechanic' => $dataMechanic[0],
             'dataSum' => $dataSum[0],
         ])->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'potrait');
         return $pdf->stream();

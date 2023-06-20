@@ -246,8 +246,9 @@
                                         <label class="control-label" for="transactionService_inpt_data_miles">
                                             Miles
                                         </label>
-                                        <input id="transactionService_inpt_data_miles" type="number" oninput="this.value = Math.abs(this.value)" 
-                                            placeholder="Input Car Mile" class="form-control uppercase" maxlength="50">
+                                        <input id="transactionService_inpt_data_miles" type="number"
+                                            oninput="this.value = Math.abs(this.value)" placeholder="Input Car Mile"
+                                            class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                             </div>
@@ -258,8 +259,9 @@
                                         <label class="control-label" for="transactionService_inpt_data_miles">
                                             Car Year
                                         </label>
-                                        <input id="transactionService_inpt_data_vehicleYear" type="number" oninput="this.value = Math.abs(this.value)" 
-                                            placeholder="Input Car Mile" class="form-control uppercase" maxlength="50">
+                                        <input id="transactionService_inpt_data_vehicleYear" type="number"
+                                            oninput="this.value = Math.abs(this.value)" placeholder="Input Car Mile"
+                                            class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                             </div>
@@ -270,8 +272,9 @@
                                         <label class="control-label" for="transactionService_inpt_data_hourMeter">
                                             Hour Meter
                                         </label>
-                                        <input id="transactionService_inpt_data_hourMeter" type="number" oninput="this.value = Math.abs(this.value)" 
-                                            placeholder="Input Car Hour Meter" class="form-control uppercase" maxlength="50">
+                                        <input id="transactionService_inpt_data_hourMeter" type="number"
+                                            oninput="this.value = Math.abs(this.value)" placeholder="Input Car Hour Meter"
+                                            class="form-control uppercase" maxlength="50">
                                     </div>
                                 </div>
                             </div>
@@ -319,7 +322,7 @@
                                                         Address
                                                     </label>
                                                     <textarea style="border: 1px solid silver;" id="transactionService_inpt_data_newOwner_address" rows="2"
-                                                        cols="84%" placeholder=" -- Input Owner Address -- "></textarea>
+                                                        cols="56%" placeholder=" -- Input Owner Address -- "></textarea>
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-left: 0px">
@@ -373,7 +376,7 @@
                                                         Address
                                                     </label>
                                                     <textarea style="border: 1px solid silver;" id="transactionService_inpt_data_addressExistingOwner" rows="2"
-                                                        cols="82%" placeholder=" -- Input Owner Address -- " disabled></textarea>
+                                                        cols="53%" placeholder=" -- Input Owner Address -- " disabled></textarea>
                                                 </div>
                                             </div>
                                             <div class="row" style="margin-left: 0px">
@@ -409,16 +412,16 @@
                                             <span>Complaint Description</span>
                                         </legend>
                                         <div class="form-horizontal">
-                                            <table class="" id="densoTableListofComplaintInputData"
+                                            <table class="" id="densoTableListofComplaintInputData" width="50px"
                                                 data-toggle="table" data-data-type="json" data-query-params-type="limit"
                                                 data-pagination="true" data-unique-id="concat">
                                                 <thead>
                                                     <tr>
                                                         <th data-field="complaint" data-halign="center"
-                                                            data-sortable="true">
+                                                            data-sortable="true" data-width="10">
                                                             Complaint</th>
-                                                        <th data-field="handling" data-halign="center">Handling</th>
-                                                        <th data-field="name" data-halign="center" data-align="center"
+                                                        <th data-field="handling" data-width="10" data-halign="center">Handling</th>
+                                                        <th data-field="name" data-halign="center" data-width="10" data-align="center"
                                                             data-formatter="densoTableListofComplaintInputDataFormaterAction">
                                                             Action</th>
                                                     </tr>
@@ -429,7 +432,7 @@
                                                         <!-- complaint ---->
                                                         <th data-field="complaint" data-align="left">
                                                             <div class="col-md-12 lookup-wrapper">
-                                                                <textarea id="transactionService_inpt_tableComplaint_complaint" rows="2" cols="80%"
+                                                                <textarea id="transactionService_inpt_tableComplaint_complaint" rows="2" cols="50%"
                                                                     placeholder="Input Complaint"></textarea>
                                                             </div>
                                                         </th>
@@ -437,7 +440,7 @@
                                                         {{-- handling --}}
                                                         <th data-field="handling" data-align="left">
                                                             <div class="col-md-12 lookup-wrapper">
-                                                                <textarea id="transactionService_inpt_tableComplaint_handling" rows="2" cols="80%"
+                                                                <textarea id="transactionService_inpt_tableComplaint_handling" rows="2" cols="50%"
                                                                     placeholder="Input Handling"></textarea>
                                                             </div>
                                                         </th>
@@ -465,8 +468,11 @@
                                         <label class="control-label" for="transactionService_inpt_data_TotalCostOfPart">
                                             Total Cost of Parts
                                         </label>
-                                        <input id="transactionService_inpt_data_TotalCostOfPart" type="text"
+                                        <input id="transactionService_inpt_data_TotalCostOfPartDisplay" type="text"
                                             class="form-control uppercase" maxlength="50" value="0" disabled>
+                                        <input id="transactionService_inpt_data_TotalCostOfPart" type="text"
+                                            class="form-control uppercase custom-hidding" maxlength="50" value="0"
+                                            disabled>
                                     </div>
                                 </div>
                             </div>
@@ -523,7 +529,8 @@
                                                         <th data-field="qty" data-align="left">
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input id="transactionService_inpt_tableEstimationCost_qty"
-                                                                    placeholder="Input Part Quantity" type="number" oninput="this.value = Math.abs(this.value)"
+                                                                    placeholder="Input Part Quantity" type="number"
+                                                                    oninput="this.value = Math.abs(this.value)"
                                                                     min="0" class="form-control uppercase"
                                                                     maxlength="50">
                                                             </div>
@@ -534,7 +541,8 @@
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input
                                                                     id="transactionService_inpt_tableEstimationCost_price"
-                                                                    placeholder="Input Part Price" type="number" oninput="this.value = Math.abs(this.value)" 
+                                                                    placeholder="Input Part Price" type="number"
+                                                                    oninput="this.value = Math.abs(this.value)"
                                                                     min="0" class="form-control uppercase"
                                                                     maxlength="50">
                                                             </div>
@@ -569,8 +577,11 @@
                                             for="transactionService_inpt_data_TotalCostOfService">
                                             Total Cost of Service
                                         </label>
-                                        <input id="transactionService_inpt_data_TotalCostOfService" type="text"
+                                        <input id="transactionService_inpt_data_TotalCostOfServiceDisplay" type="text"
                                             class="form-control uppercase" maxlength="50" value="0" disabled>
+                                        <input id="transactionService_inpt_data_TotalCostOfService" type="text"
+                                            class="form-control uppercase custom-hidding" maxlength="50" value="0"
+                                            disabled>
                                     </div>
                                 </div>
                             </div>
@@ -614,7 +625,8 @@
                                                         <th data-field="price" data-align="left">
                                                             <div class="col-md-12 lookup-wrapper">
                                                                 <input id="transactionService_inpt_tableServiceFee_price"
-                                                                    placeholder="Input Service Cost" type="number" oninput="this.value = Math.abs(this.value)" 
+                                                                    placeholder="Input Service Cost" type="number"
+                                                                    oninput="this.value = Math.abs(this.value)"
                                                                     class="form-control uppercase">
                                                             </div>
                                                         </th>
@@ -750,17 +762,14 @@
         }
 
         function densoChangeTotalyOffAllTransactionInputDataGenerateData() {
+            debugger
             let totalCostofPart = parseInt($('#transactionService_inpt_data_TotalCostOfPart').val());
             let totalServiceFee = parseInt($('#transactionService_inpt_data_TotalCostOfService').val())
             let totalyOfAllTransaction = totalCostofPart + totalServiceFee;
 
-            console.log(totalyOfAllTransaction);
-
-
             $('#transactionService_inpt_data_totalyOfAllTransaction').val(formatRupiah(totalyOfAllTransaction, null, null));
 
-            let totalyOfAllTransactionPlusPPN = totalyOfAllTransaction + (totalyOfAllTransaction * 11 /
-                100);
+            let totalyOfAllTransactionPlusPPN = totalyOfAllTransaction + (totalyOfAllTransaction * 11 / 100);
             $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPNHidden').val(totalyOfAllTransactionPlusPPN);
             $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPN').val(formatRupiah(totalyOfAllTransactionPlusPPN,
                 null, null));
@@ -842,6 +851,10 @@
             let sumTotalCostOfService = parseInt($('#transactionService_inpt_data_TotalCostOfService').val()) + parseInt(
                 data_obj.price);
             $('#transactionService_inpt_data_TotalCostOfService').val(sumTotalCostOfService)
+            $('#transactionService_inpt_data_TotalCostOfServiceDisplay').val(formatRupiah(sumTotalCostOfService,
+                null, null));
+            $('#transactionService_inpt_tableServiceFee_description').val('')
+            $('#transactionService_inpt_tableServiceFee_price').val('')
 
             densoTableListofServiceFeeInputData_Obj_datas.push(data_obj);
             densoChangeTotalyOffAllTransactionInputDataGenerateData();
@@ -888,6 +901,8 @@
 
             let sumTotalCostOfPart = parseInt($('#transactionService_inpt_data_TotalCostOfPart').val()) + data_obj.total;
             $('#transactionService_inpt_data_TotalCostOfPart').val(sumTotalCostOfPart)
+            $('#transactionService_inpt_data_TotalCostOfPartDisplay').val(formatRupiah(sumTotalCostOfPart,
+                null, null))
 
 
             densoTableListofEstimationCostInputData_Obj_datas.push(data_obj);
