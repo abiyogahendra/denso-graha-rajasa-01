@@ -650,7 +650,7 @@
                                                 data-unique-id="no">
                                                 <thead>
                                                     <tr>
-                                                        <th data-checkbox="true"></th>
+                                                        <th data-radio="true"></th>
                                                         <th data-field="name" data-halign="center" data-sortable="true">
                                                             Mechanic Name</th>
                                                     </tr>

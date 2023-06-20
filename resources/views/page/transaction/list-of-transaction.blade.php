@@ -354,7 +354,7 @@
                                 <th data-field="carFrmNumber" data-align="left" data-halign="center">Frame Number</th>
                                 <th data-field="miles" data-align="right" data-halign="center">Miles</th>
                                 <th data-field="txnDate" data-formatter="dataTableDateFormater" data-align="center"
-                                    data-halign="center">Transaction Date</th>
+                                    data-halign="center" data-sortable="true">Transaction Date</th>
                                 <th data-halign="center" data-align="center"
                                     data-formatter="densoTableListofTransactionServiceHistoryActionFormater">Action
                                 </th>
@@ -854,7 +854,7 @@
                                                     data-unique-id="no">
                                                     <thead>
                                                         <tr>
-                                                            <th data-checkbox="true"></th>
+                                                            <th data-radio="true"></th>
                                                             <th data-field="name" data-halign="center"
                                                                 data-sortable="true">
                                                                 Mechanic Name</th>

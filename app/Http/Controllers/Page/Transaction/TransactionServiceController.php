@@ -169,7 +169,7 @@ class TransactionServiceController extends Controller
                     return response()->json(['message' => 'Email is existing'], 500);
                 }
             } catch (\Throwable $th) {
-                return response()->json(['message' => 'error while processing data'], 500);
+                return response()->json(['message' => $th], 500);
             }
 
             $idOwner = DB::table('customer')
@@ -495,7 +495,7 @@ class TransactionServiceController extends Controller
 
         } catch (\Throwable $th) {
             DB::rollback();
-            return response()->json(['message' => 'error while processing data'], 500);
+            return response()->json(['message' => $th], 500);
         }
 
         DB::commit();
