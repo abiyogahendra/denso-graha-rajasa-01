@@ -161,11 +161,11 @@ class TransactionServiceController extends Controller
         
         $idOwner = 0;
         if ($re->qnewOwner == 'F') {
-
             try {
                 //code...
-                $dataGmailExisting = DB::select('SELECT custEmail FROM customer WHERE custEmail LIKE ?', [$re->qownerEmail]);
-                if($dataGmailExisting.length > 0){
+                $dataGmailExisting = DB::select('SELECT count(custEmail) as jumlah FROM customer WHERE custEmail LIKE ?', [$re->qownerEmail]);
+                
+                if($dataGmailExisting[0]->jumlah > 0){
                     return response()->json(['message' => 'Email is existing'], 500);
                 }
             } catch (\Throwable $th) {
