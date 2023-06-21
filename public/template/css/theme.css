@@ -401,7 +401,7 @@ section {
 .register-link {
     padding-top: 15px;
     text-align: center;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .register-link > p > a {
@@ -542,7 +542,7 @@ section {
 }
 
 .au-btn-filter {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
     background: #fff;
     -webkit-border-radius: 3px;
@@ -563,7 +563,7 @@ section {
 .au-btn--small {
     padding: 0 20px;
     line-height: 40px;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 /*Page Loader*/
@@ -714,7 +714,7 @@ section {
 .au-input {
     line-height: 43px;
     border: 1px solid #e5e5e5;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #666;
     padding: 0 17px;
     -webkit-border-radius: 3px;
@@ -730,7 +730,7 @@ section {
     color: #808080;
     line-height: 43px;
     border: 1px solid #e5e5e5;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     padding: 0 17px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -928,7 +928,7 @@ section {
 
 .rs-select2--dark .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #fff;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .rs-select2--dark .select2-container .select2-selection--single .select2-selection__rendered {
@@ -953,7 +953,7 @@ section {
 .rs-select2--trans .select2-container--open .select2-dropdown,
 .rs-select2--light .select2-container--open .select2-dropdown,
 .rs-select2--trans .select2-container--open .select2-dropdown {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     box-shadow: 0px 2px 15px 3px rgba(0,0,0,0.1);
     border-radius: 4px;
     border-top-left-radius: 4px;
@@ -1023,7 +1023,7 @@ section {
 
 .rs-select2--light .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #808080;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .rs-select2--light .select2-container .select2-selection--single .select2-selection__rendered {
@@ -1045,7 +1045,7 @@ section {
 }
 
 .rs-select2--light v .select2-container--open .select2-dropdown {
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .rs-select2--border .select2-container--default .select2-selection--single {
@@ -1072,12 +1072,12 @@ section {
 
 .rs-select2--trans .select2-container--default .select2-selection--single .select2-selection__rendered {
     color: #808080;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     padding-left: 0;
 }
 
 .rs-select2--trans .select2-container--open .select2-dropdown {
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .au-checkbox {
@@ -1534,7 +1534,7 @@ section {
     display: block;
     color: #333;
     padding: 15px 25px;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .account-dropdown__item a:hover {
@@ -1561,7 +1561,7 @@ section {
     display: block;
     color: #333;
     padding: 15px 25px;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .account-dropdown__footer a:hover {
@@ -1912,7 +1912,7 @@ section {
     line-height: -webkit-calc(29/14);
     line-height: -moz-calc(29/14);
     line-height: calc(29/14);
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
 }
 
@@ -1920,7 +1920,7 @@ section {
     display: block;
     text-transform: capitalize;
     text-align: center;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #4272d7;
     padding: 24px 0;
 }
@@ -1965,13 +1965,13 @@ section {
 }
 
 .mess__item .content h6 {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     font-weight: 600;
     padding-top: 4px;
 }
 
 .mess__item .content p {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #555;
     line-height: -webkit-calc(24/14);
     line-height: -moz-calc(24/14);
@@ -2017,7 +2017,7 @@ section {
     width: -moz-calc(100% - 55px);
     width: calc(100% - 55px);
     text-align: left;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .email__item .content p {
@@ -2083,7 +2083,7 @@ section {
     width: -moz-calc(100% - 55px);
     width: calc(100% - 55px);
     text-align: left;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .notifi__item .content p {
@@ -2196,7 +2196,7 @@ section {
 }
 
 .account2 > a {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #999;
 }
 
@@ -2291,7 +2291,7 @@ section {
     background: #ff4b5a;
     text-align: center;
     line-height: 30px;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #fff;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -2512,7 +2512,7 @@ section {
 
 .search-dropdown form .au-input {
     padding-left: 53px;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     border: none;
     color: #666;
 }
@@ -3231,7 +3231,7 @@ section {
     }
 
     .overview-box .text span {
-        font-size: 0.7px;
+        font-size: 0.7rem;
     }
 }
 
@@ -3391,7 +3391,7 @@ section {
     padding-left: 40px;
     padding-bottom: 22px;
     border-bottom: 1px solid #f2f2f2;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .au-task-list {
@@ -3433,7 +3433,7 @@ section {
 }
 
 .au-task__item-inner .time {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #555;
     text-transform: uppercase;
     font-weight: 600;
@@ -3485,7 +3485,7 @@ section {
 }
 
 .au-message__noti p {
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .au-message__noti p span {
@@ -3559,7 +3559,7 @@ section {
 }
 
 .au-message__item-time span {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
 }
 
@@ -3748,7 +3748,7 @@ section {
 }
 
 .mess-time {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #999;
 }
 
@@ -4007,7 +4007,7 @@ section {
 }
 
 .recent-report3 .title-wrap .chart-note {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     margin-right: 30px;
 }
 
@@ -4017,7 +4017,7 @@ section {
 
 .chart-percent-3 .chart-note {
     display: block;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 /* ----- Charts ----- */
@@ -4063,14 +4063,14 @@ section {
     -ms-flex-align: baseline;
     align-items: baseline;
     margin-bottom: 30px;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .chart-note {
     text-transform: capitalize;
     display: inline-block;
     margin-right: 12px;
-    font-size: 0.7px;
+    font-size: 0.7rem;
 }
 
 .chart-note .dot {
@@ -4185,7 +4185,7 @@ section {
 }
 
 .statistic-chart-1-note span {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
 }
 
@@ -4279,7 +4279,7 @@ section {
 
 .table-top-countries tbody td {
     white-space: nowrap;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #fff;
     padding: 14px 5px;
     border-top: none;
@@ -4341,7 +4341,7 @@ section {
 }
 
 .table-style1 .table td {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
     border-top: none;
     border-bottom: 1px solid #f2f2f2;
@@ -4383,7 +4383,7 @@ section {
 }
 
 .table-data__info h6 {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
     text-transform: capitalize;
     font-weight: 400;
@@ -4435,7 +4435,7 @@ section {
 .role {
     display: inline-block;
     line-height: 30px;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #fff;
     padding: 0 15px;
     -webkit-border-radius: 3px;
@@ -4459,7 +4459,7 @@ section {
 .table-top-campaign.table td {
     border-top: none;
     border-bottom: 1px solid #e5e5e5;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     padding: 12px 6px;
 }
 
@@ -4541,7 +4541,7 @@ section {
 }
 
 .table-data2.table tbody td {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
     vertical-align: middle;
     padding: 25px 40px;
@@ -4650,7 +4650,7 @@ section {
 }
 
 .block-email {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
     display: inline-block;
     background: #f2f2f2;
@@ -4724,7 +4724,7 @@ section {
 .table-data3 tbody td {
     border-bottom: 1px solid #f5f5f5;
     background: #fff;
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
     padding: 12px 40px;
     padding-right: 10px;
@@ -4746,7 +4746,7 @@ section {
 }
 
 .copyright p {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #666;
     line-height: -webkit-calc(24/14);
     line-height: -moz-calc(24/14);
@@ -4828,7 +4828,7 @@ section {
 }
 
 .au-breadcrumb-span {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #999;
     display: inline-block;
 }
@@ -4839,7 +4839,7 @@ section {
 }
 
 .au-breadcrumb__list li {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #999;
 }
 
@@ -4955,7 +4955,7 @@ section {
 }
 
 .welcome2-greeting p {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
 }
 
@@ -5087,14 +5087,14 @@ section {
 }
 
 .au-progress__title {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
     display: inline-block;
     margin-bottom: 9px;
 }
 
 .au-progress__value {
-    font-size: 0.7px;
+    font-size: 0.7rem;
     color: #808080;
     position: absolute;
     top: -28px;
