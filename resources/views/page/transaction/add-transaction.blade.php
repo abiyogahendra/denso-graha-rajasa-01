@@ -769,7 +769,7 @@
 
             $('#transactionService_inpt_data_totalyOfAllTransaction').val(formatRupiah(totalyOfAllTransaction, null, null));
 
-            let totalyOfAllTransactionPlusPPN = totalyOfAllTransaction + (totalyOfAllTransaction * 11 / 100);
+            let totalyOfAllTransactionPlusPPN = totalyOfAllTransaction + (Math.ceil(totalyOfAllTransaction * 11 / 100));
             $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPNHidden').val(totalyOfAllTransactionPlusPPN);
             $('#transactionService_inpt_data_totalyOfAllTransactionPlusPPN').val(formatRupiah(totalyOfAllTransactionPlusPPN,
                 null, null));
