@@ -38,6 +38,7 @@ class LoginProcessController extends Controller
         ];
 
         if (Auth::attempt($newCredential)) {
+            // $request->session()->put($newCredential);
             return redirect()->route('dashboard');
         } else {
             return response()->json([

@@ -19,9 +19,9 @@ class UserSeeder extends Seeder
     {
         //
         DB::table('user')->insert([
-            'userID' => '15022023',
-            'username' => 'Rajasa2022',
-            'password' => Hash::make('D3ns0'),
+            'userID' => '25052023',
+            'username' => 'cokrominoto',
+            'password' => Hash::make('Minoto2506'),
             'created_at' => Carbon::now(),
             'created_by' => '13022023'
         ]);

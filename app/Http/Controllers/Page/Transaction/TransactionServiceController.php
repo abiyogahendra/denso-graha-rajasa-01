@@ -12,7 +12,7 @@ use PDF;
 class TransactionServiceController extends Controller
 {
 
-    public function TransactionServiceIndex()
+    public function TransactionServiceIndex(Request $request)
     {
         return view('page.transaction.list-of-transaction');
     }
@@ -47,7 +47,6 @@ class TransactionServiceController extends Controller
 
         $dataMechanic = DB::select('SELECT mech.`mechanicName` name FROM `dtl_mchnc_txn` dtl JOIN mechanic mech ON dtl.`mechID` = mech.`mechanicID`  WHERE hdrTxnID = ?', [$d]);
 
-
         $dataEstimation = DB::select('SELECT CONCAT(partName,partNumber,qty,totalCost) d, partName name, partNumber partNumber, qty,
         CONCAT("RP. ", FORMAT(totalCost,2,"id_ID")) price, (totalCost * qty) total, CONCAT("RP. ", FORMAT((totalCost * qty),2,"id_ID")) totalRP FROM dtl_cost_txn WHERE hdrTxnID = ?', [$d]);
         $dataService = DB::select('SELECT CONCAT(`srvcName`,`srvcCost`) d, srvcName n, CONCAT("RP. ", FORMAT(srvcCost,2,"id_ID")) c FROM dtl_srvc_cost_txn WHERE hdrTxnID = ?', [$d]);
@@ -72,12 +71,12 @@ class TransactionServiceController extends Controller
 
     public function GetQueryDataTable(String $query, Request $req)
     {
+
         $dataSort = null;
         $dataSearch = null;
         $dataOrder = null;
         $dataLimit = null;
         $dataOffset = null;
-
         if ($req->search['CARNAME'] != null ||
             $req->search['LICENSE'] ||
             $req->search['STARDATE'] ||
@@ -87,7 +86,6 @@ class TransactionServiceController extends Controller
             $req->search['OWNER']
 
         ) {
-            $query = $query . ' WHERE 1 = 1 ';
             if ($req->search['CARNAME'] != null) {
                 $query = $query . 'AND H.`carID` = "' . $req->search['CARNAME'] . '"';
             }
@@ -128,16 +126,17 @@ class TransactionServiceController extends Controller
         if ($req->offset != null) {
             $query = $query . ' OFFSET ' . $req->offset;
         }
-        // dd($query);
         return $query;
 
     }
 
     public function GetDataListTransactionService(Request $table)
     {
-
-        $query = 'SELECT H.`hdrTransactionID` number, H.licensePlate, H.`txnDate`, C.`custName`, M.carName, H.carEngnNumber, H.carFrmNumber, H.miles FROM hdr_transaction H INNER JOIN customer C ON H.`custID` = C.`customerID` INNER JOIN car_maintain_brand_category M ON H.`carID` = M.carMaintainID';
-
+        $dAuth = '';
+        if (Auth::user()->site != 'Z') {
+            $dAuth = Auth::user()->site;
+        }
+        $query = 'SELECT H.`hdrTransactionID` number, H.licensePlate, H.`txnDate`, C.`custName`, M.carName, H.carEngnNumber, H.carFrmNumber, H.miles FROM hdr_transaction H INNER JOIN customer C ON H.`custID` = C.`customerID` INNER JOIN car_maintain_brand_category M ON H.`carID` = M.carMaintainID WHERE H.site like ' . "'" . $dAuth . "'";
         $countDataUser = DB::select('select count(*) jumlah FROM hdr_transaction');
         $newQuery = $this->GetQueryDataTable($query, $table);
         // try {
@@ -164,14 +163,13 @@ class TransactionServiceController extends Controller
     public function CreateNewTransactionService(Request $re)
     {
 
-        
         $idOwner = 0;
         if ($re->qnewOwner == 'F') {
             try {
                 //code...
                 $dataGmailExisting = DB::select('SELECT count(custEmail) as jumlah FROM customer WHERE custEmail LIKE ?', [$re->qownerEmail]);
-                
-                if($dataGmailExisting[0]->jumlah > 0){
+
+                if ($dataGmailExisting[0]->jumlah > 0) {
                     return response()->json(['message' => 'Email is existing'], 500);
                 }
             } catch (\Throwable $th) {
@@ -217,6 +215,7 @@ class TransactionServiceController extends Controller
                 'licensePlate' => $re->qlicensePlate,
                 'techLeadID' => $techLead[0]->tchLeadID,
                 'totalPayment' => $re->qtotalPayment,
+                'site' => Auth::user()->site,
                 'created_at' => Carbon::now(),
                 'created_by' => Auth::user()->userID,
                 'updated_at' => Carbon::now(),
