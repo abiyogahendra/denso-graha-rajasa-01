@@ -62,9 +62,9 @@ class MechanicManagementController extends Controller
 
     public function CreateMechanicLeader(Request $re)
     {
-        DB::beginTransaction();
         try {
             //code...
+
             DB::update('update technical_lead set status = "F" where status = "T" ');
 
             $idDataBaru = DB::table('technical_lead')
@@ -126,7 +126,6 @@ class MechanicManagementController extends Controller
     {
         try {
             //code...
-
             $idDataBaru = DB::table('mechanic')
                 ->where('mechanicID', '=', $re->number)
                 ->update([
