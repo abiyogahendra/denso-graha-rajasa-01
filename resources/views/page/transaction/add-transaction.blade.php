@@ -420,8 +420,10 @@
                                                         <th data-field="complaint" data-halign="center"
                                                             data-sortable="true" data-width="10">
                                                             Complaint</th>
-                                                        <th data-field="handling" data-width="10" data-halign="center">Handling</th>
-                                                        <th data-field="name" data-halign="center" data-width="10" data-align="center"
+                                                        <th data-field="handling" data-width="10" data-halign="center">
+                                                            Handling</th>
+                                                        <th data-field="name" data-halign="center" data-width="10"
+                                                            data-align="center"
                                                             data-formatter="densoTableListofComplaintInputDataFormaterAction">
                                                             Action</th>
                                                     </tr>
@@ -987,9 +989,10 @@
                     $("#transactionService_inpt_data_existingOwner_select").select2({
                         data: respon,
                         placeholder: 'Search for a repository',
-                        minimumInputLength: 1,
+                        minimumInputLength: 2,
                         templateResult: formatSelectionExistingOwnerTransactionAdd,
-                        templateSelection: formatSelectionExistingOwnerTransactionAddSelection
+                        templateSelection: formatSelectionExistingOwnerTransactionAddSelection,
+                        matcher : customMatcher
                     });
                 },
                 error: function(data) {
@@ -1030,7 +1033,7 @@
         }
 
         function formatSelectionExistingOwnerTransactionAdd(repo) {
-            if (repo.loading) {
+            if (!repo.id) {
                 return repo.text;
             }
 
@@ -1043,8 +1046,8 @@
             );
 
             $container.find(".select2-result-repository__Name").text(repo.text);
-            $container.find(".select2-result-repository__Number").text(repo.number);
             $container.find(".select2-result-repository__Email").text(repo.email);
+            $container.find(".select2-result-repository__Number").text(repo.number);
 
             return $container;
         }
@@ -1056,6 +1059,31 @@
 
 
             return repo.full_name || repo.text;
+        }
+
+        function customMatcher(params, data) {
+            // Jika tidak ada istilah pencarian, kembalikan semua data
+            if ($.trim(params.term) === "") {
+                return data;
+            }
+
+            // Pisahkan istilah pencarian menjadi kata-kata individual
+            var terms = params.term.toLowerCase().split(" ");
+
+            // Loop melalui kata-kata pencarian
+            for (var i = 0; i < terms.length; i++) {
+                // Cocokkan istilah pencarian dengan teks, email, dan nomor dalam data
+                if (
+                    data.text.toLowerCase().indexOf(terms[i]) > -1 ||
+                    data.email.toLowerCase().indexOf(terms[i]) > -1 ||
+                    data.number.indexOf(terms[i]) > -1
+                ) {
+                    return data;
+                }
+            }
+
+            // Jika tidak ada kecocokan, kembalikan null untuk menghilangkan opsi dari hasil pencarian
+            return null;
         }
 
         function formatSelectionCarCategoryBrandTransactionAdd(repo) {
