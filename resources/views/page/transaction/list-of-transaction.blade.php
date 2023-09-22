@@ -126,11 +126,11 @@
                                 {{-- Filter Car --}}
                                 <fieldset class="color-fieldset form-horizontal">
                                     <legend class="color-legend">
-                                        <span>Car</span>
+                                        <span>Owner</span>
                                     </legend>
                                     <div class="form-horizontal">
                                         <div class="row" style="margin-left: 0px">
-                                            <div class="col-md-4">
+                                            <div class="col-md-4" style="display: none">
                                                 <div class="form-group large-font">
                                                     <div class="form-group large-font">
                                                         <div class="row">
@@ -164,6 +164,22 @@
                                                                     class="form-control uppercase">
                                                                 </select>
                                                             </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group large-font">
+                                                    <div class="row">
+                                                        <div class="col-md-11 form-group"
+                                                            style="padding-left: 0px !important;">
+                                                            <label class="control-label"
+                                                                for="transactionService_fltr_data_ownerName_select">
+                                                                Owner Name
+                                                            </label>
+                                                            <select id="transactionService_fltr_data_ownerName_select"
+                                                                class="form-control uppercase">
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -234,28 +250,13 @@
                                 </fieldset>
 
                                 {{-- Filter Owner --}}
-                                <fieldset class="color-fieldset form-horizontal">
+                                <fieldset class="color-fieldset form-horizontal" style="display: none">
                                     <legend class="color-legend">
                                         <span>Owner</span>
                                     </legend>
                                     <div class="form-horizontal">
                                         <div class="row" style="margin-left: 0px">
-                                            <div class="col-md-4">
-                                                <div class="form-group large-font">
-                                                    <div class="row">
-                                                        <div class="col-md-11 form-group"
-                                                            style="padding-left: 0px !important;">
-                                                            <label class="control-label"
-                                                                for="transactionService_fltr_data_ownerName_select">
-                                                                Owner Name
-                                                            </label>
-                                                            <select id="transactionService_fltr_data_ownerName_select"
-                                                                class="form-control uppercase">
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                             <div class="col-md-4">
                                                 <div class="form-group large-font">
                                                     <div class="row">
@@ -1322,11 +1323,9 @@
 
 
                 },
-                error: function(data) {
-                    swalWithBootstrapButtons.fire(
-                        'Error',
-                        'Something Wrong While Processing data',
-                        'error'
+                error   : function(data) {
+                    Swal.fire(
+                        'Validation Failed', "Something Wrong While Processing data", 'error'
                     )
                 }
             })

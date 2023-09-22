@@ -26,6 +26,10 @@
                             <a href="{{ route('transaction-list') }}">
                                 <i class="fas fa-tags"></i>List of Transaction</a>
                         </li>
+                        <li>
+                            <a href="{{ route('index-download-monthly') }}">
+                                <i class="fas fa-tags"></i>Download Monthly</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="has-sub">

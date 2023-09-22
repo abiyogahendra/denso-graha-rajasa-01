@@ -8,6 +8,8 @@ use App\Http\Controllers\Page\Management\MechanicManagementController;
 use App\Http\Controllers\Page\Management\UserManagementController;
 use App\Http\Controllers\Page\Transaction\TransactionServiceController;
 use App\Http\Controllers\Transaction\MasterDropdownController;
+use App\Http\Controllers\Page\Transaction\DownloadMonthlyReport;
+use App\Exports\ExportBulanan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +33,7 @@ Route::group(['middleware' => ['check.auth']], function () {
     Route::get('transaction-dashboard', [TransactionServiceController::class, 'TransactionServiceIndex'])->name('transaction-list');
     Route::get('transaction-add', [TransactionServiceController::class, 'TransactionServiceAddIndex'])->name('transaction-add');
     Route::get('transaction-print-data-service-detail/{d}', [TransactionServiceController::class, 'TransactionServicePrintPDF'])->name('transaction-print');
+    Route::get('transaction/download-report-monthly/', [DownloadMonthlyReport::class, 'MonthlyReportIndexInput'])->name("index-download-monthly");
 
     // ----------------------------- Master data -----------------------------------------------------
 
@@ -107,8 +110,16 @@ Route::group(['middleware' => ['check.auth']], function () {
     Route::post('transaction/load-data-detail-transaction-service-table-mechanic', [TransactionServiceController::class, 'GetDataDetailServiceTransactionModalTableMechanic']);
     Route::post('transaction/get-all-data-transaction-service-table-complaint-estimation-service', [TransactionServiceController::class, 'GetALLDataTableTransactionComplaintEstimationandService']);
 
-    
 
+
+
+
+    //-------------------- management report monthly --------------------- 
+    Route::get('transaction/generate-excel/invoice/{id}', [DownloadMonthlyReport::class, 'MonthlyDataExcelGenerate']);
+    // Route::get('transaction/generate-excel/invoice/{id}', [ExportBulanan::class, 'MonthlyDataExcelGenerate']);
+    Route::get('transaction/generate-excel/', [ExportBulanan::class, 'MonthlyDataExcelGenerate']);
+
+   
 
 
 
