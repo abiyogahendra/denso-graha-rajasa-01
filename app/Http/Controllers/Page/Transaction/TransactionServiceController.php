@@ -56,10 +56,26 @@ class TransactionServiceController extends Controller
         sumdataservice AS (SELECT SUM(srvcCost) jumlah FROM dtl_srvc_cost_txn WHERE hdrTxnID = ?),
         sumalldata AS (SELECT (SELECT * FROM sumdatacost) + (SELECT * FROM sumdataservice) jumlah FROM DUAL)
         SELECT CONCAT("RP. ", FORMAT((SELECT * FROM sumalldata),2,"id_ID")) dataSum, CONCAT("RP. ", FORMAT(ROUND((SELECT * FROM sumalldata) + (((SELECT * FROM sumalldata)) * 11 / 100)),2,"id_ID")) dataPPN FROM DUAL', [$d, $d]);
-        // return view('page.transaction.transaction-download-pdf', ['data' => $dataMaster[0]]);
+        $dataLeaderTechnical = DB::select("select * from technical_lead where status like 'T' ");
+        // return view('page.transaction.transaction-download-pdf',
+        //  ['data' => $dataMaster[0],
+        //     'dataLeader' => $dataLeaderTechnical[0],
+        //     'dataComplaint' => $dataComplaint,
+        //     'dataEstimation' => $dataEstimation,
+        //     'dataService' => $dataService,
+        //     'dataMechanic' => $dataMechanic[0],
+        //     'dataSum' => $dataSum[0],
+         
+         
+        //  ]
+        
+        // );
+
+
         // dd($dataSum);
         $pdf = PDF::loadview('page.transaction.transaction-download-pdf', [
             'data' => $dataMaster[0],
+            'dataLeader' => $dataLeaderTechnical[0],
             'dataComplaint' => $dataComplaint,
             'dataEstimation' => $dataEstimation,
             'dataService' => $dataService,
@@ -67,6 +83,7 @@ class TransactionServiceController extends Controller
             'dataSum' => $dataSum[0],
         ])->setOptions(['defaultFont' => 'sans-serif'])->setPaper('a4', 'potrait');
         return $pdf->stream();
+
     }
 
     public function GetQueryDataTable(String $query, Request $req)

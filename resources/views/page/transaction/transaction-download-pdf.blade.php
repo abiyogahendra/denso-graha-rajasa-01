@@ -456,7 +456,7 @@
                                                 <tbody>
                                                     <tr>
                                                         <td style="width: 100px">
-                                                            <div class="form-group large-font center">
+                                                            <div class="center">
                                                                 <label class="control-label">
                                                                     Frontman
                                                                 </label>
@@ -464,11 +464,11 @@
                                                                 <br>
                                                                 <br>
                                                                 <br>
-                                                                <div class="center"></div>
+                                                                <div class="center">.</div>
                                                             </div>
                                                         </td>
                                                         <td style="width: 100px">
-                                                            <div class="form-group large-font center">
+                                                            <div class="center">
                                                                 <label class="control-label center">
                                                                     Mechanic
                                                                 </label>
@@ -480,7 +480,7 @@
                                                             </div>
                                                         </td>
                                                         <td style="width: 100px">
-                                                            <div class="form-group large-font center">
+                                                            <div class="center">
                                                                 <label class="control-label center"
                                                                     for="transactionService_inpt_data_licensePlate">
                                                                     Leader
@@ -489,7 +489,7 @@
                                                                 <br>
                                                                 <br>
                                                                 <br>
-                                                                <div class="center">{{ $data->tchLeadName }}
+                                                                <div class="center">{{ $dataLeader->tchLeadName }}
                                                                 </div>
                                                             </div>
                                                         </td>
