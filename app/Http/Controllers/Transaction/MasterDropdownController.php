@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class MasterDropDownController extends Controller
 {
 
-    public function GetQueryDataTable(String $query, Request $req)
+    public function GetQueryDataTable(string $query, Request $req)
     {
         $dataSort = null;
         $dataSearch = null;
@@ -134,7 +134,29 @@ class MasterDropDownController extends Controller
 
     public function GetDataListCarCategoryBrandAddTransaction(Request $re)
     {
-        $dattaReturn = DB::select('SELECT m.`carMaintainID` id, m.`ctgryID`, m.`brandID`, carName text, ctgName, brndName, m.updated_at, m.updated_by FROM car_maintain_brand_category m INNER JOIN car_category c ON m.ctgryID = c.categoryID INNER JOIN car_brand b ON m.brandID = b.brandID where carName like "%' . $re->search . '%" ');
+        $searchTerm = '%' . strtoupper($re->search) . '%';
+
+        $dattaReturn = DB::select("
+            SELECT 
+                m.carMaintainID AS id, 
+                m.ctgryID, 
+                m.brandID, 
+                m.carName AS text, 
+                c.ctgName, 
+                b.brndName, 
+                m.updated_at, 
+                m.updated_by 
+            FROM 
+                car_maintain_brand_category m 
+            INNER JOIN 
+                car_category c ON m.ctgryID = c.categoryID 
+            INNER JOIN 
+                car_brand b ON m.brandID = b.brandID 
+            WHERE 
+                upper(m.carName) LIKE ? 
+                OR upper(b.brndName) LIKE ?",
+                    [$searchTerm, $searchTerm]
+        );
         return response()->json($dattaReturn, 200);
     }
 
